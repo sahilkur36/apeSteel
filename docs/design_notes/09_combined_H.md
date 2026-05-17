@@ -316,6 +316,26 @@ Chapters D/E/F/G is legal (all are earlier layers).
 - **Seismic.** AISC 341 capacity-design demands (amplified `Pr` with
   overstrength, `Ω0`) feed the same H1 calculator from the seismic facade
   layer; not a Chapter-H concern.
+- **§H3.3 open-section torsion — Design Guide 9 (FUTURE DEVELOPMENT).**
+  Today `compute_nonHSS_torsion_limit_H3_3` returns **only the
+  code-level limiting nominal stress** `Fn` (the lowest of `Fy`
+  Eq. H3-7, `0.6·Fy` Eq. H3-8, `Fcr` Eq. H3-9). It does **not** compute
+  the *stress demand* on an open section (W/C/WT) under torsion — the
+  warping normal stress `σw`, the St-Venant shear `τsv`, and the warping
+  shear `τw` from the torsion differential equation — which is the
+  AISC **Design Guide 9** procedure. The caller must supply the already-
+  computed `σ`, `τ` (e.g. from DG 9 charts/closed form or an analysis).
+  A future phase should add a dedicated DG-9 module (its own design
+  note) that, given the section's torsional properties (`J`, `Cw`, `a =
+  √(ECw/GJ)`, `Wns`, `Sw`, `Qw`), the torsional loading, and the BC
+  case, returns `σw(z)`, `τsv(z)`, `τw(z)` and the §H3.3 combined-stress
+  check (`σ` against `φ·Fn`, `τ` against `φ·0.6·Fy`, and the
+  normal+shear interaction). It is a *demand* producer feeding the
+  existing §H3.3 *capacity* — the `torsion_H3` calculator stays
+  unchanged; DG 9 is a new upstream layer, exactly as Chapters E/F feed
+  §H1. Scope flags: non-uniform torsion, concentrated vs distributed
+  torque, fixed/pinned/free warping ends, and the von-Mises vs
+  stress-by-stress option in DG 9 §4.
 
 ---
 
@@ -329,9 +349,8 @@ Chapters D/E/F/G is legal (all are earlier layers).
    maximum combined stress. apeSteel takes the point's stresses as
    inputs (no automatic extreme-fibre search); the facade documents that
    the caller supplies the governing point.
-3. **§H3.3 / DG 9.** The non-HSS torsion path produces only the
-   code-level limiting `Fn`. Whether apeSteel should ever implement the
-   DG 9 warping-stress derivation is deferred to a future torsion design
-   note; for now the calculator raises an explanatory pointer if asked
-   for an open-section combined-stress result without caller-supplied
-   stresses.
+3. **§H3.3 / DG 9.** Resolved as a tracked **future-development** item —
+   see §7 "§H3.3 open-section torsion — Design Guide 9" and the ROADMAP
+   future-work bullet. The non-HSS torsion path ships the code-level
+   limiting `Fn` only; the DG-9 warping/St-Venant *stress demand* is a
+   future upstream layer, not a defect in the current calculator.

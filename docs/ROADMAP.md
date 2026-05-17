@@ -407,6 +407,14 @@ I.xlsm` → `W!J29` §H1.1 bit-match) landed in the H-6 follow-up PR.
 - AISC 358 prequalified moment connections (RBS, BFP, BUEEP, …).
 - AISC 341 system-level checks (SMF/IMF/OMF criteria,
   capacity-design Vu, doubler/continuity plates).
+- **AISC Design Guide 9 — open-section torsion (feeds §H3.3).** Phase H
+  ships only the §H3.3 *code-level limiting stress* `Fn` (Eq. H3-7/8/9);
+  the warping normal stress `σw`, St-Venant shear `τsv` and warping
+  shear `τw` *demand* on W/C/WT members under torsion are out of scope.
+  A future DG-9 phase adds a dedicated *demand* layer (σ, τ from the
+  torsion differential equation for the relevant warping-BC cases) that
+  feeds the existing `combined.torsion_H3` §H3.3 capacity unchanged —
+  exactly as Chapters E/F feed §H1. See design note 09 §7.
 - AISC Design Guide 11 floor vibrations.
 
 Each of these will get its own design note and roadmap update when we
