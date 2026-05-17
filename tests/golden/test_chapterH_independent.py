@@ -23,6 +23,7 @@ from apeSteel.combined import (
     compute_combined_strength_H1_1,
     compute_combined_strength_H1_2,
     compute_combined_strength_H1_3,
+    compute_combined_strength_H2,
     compute_Pey_H1_2,
 )
 from tests.golden._chapterH_aisc_oracle import (
@@ -31,6 +32,7 @@ from tests.golden._chapterH_aisc_oracle import (
     interaction_H1_1,
     interaction_H1_3_in_plane,
     interaction_H1_3_out_of_plane,
+    interaction_H2,
 )
 
 # Stronger than the doctrine's 1e-9 floor: the facade and the oracle
@@ -194,3 +196,43 @@ def test_H1_3_guards_and_applicability() -> None:
         compute_combined_strength_H1_3(100.0e3, 0.0, 2.0e6, 100.0e6, 600.0e6, 500.0e6, 1.0, 660.0e6)
     with pytest.raises(ValueError, match="available_axial_out_of_plane_Pcy must be positive"):
         compute_combined_strength_H1_3(100.0e3, 3.0e6, 0.0, 100.0e6, 600.0e6, 500.0e6, 1.0, 660.0e6)
+
+
+# --------------------------------------------------------------------------- #
+# §H2 - unsymmetric / other members.  Signed elastic-stress interaction
+# Eq. H2-1, bit-exact vs the oracle.
+# (fra, Fca, frbw, Fcbw, frbz, Fcbz) - signed required, positive available
+# --------------------------------------------------------------------------- #
+_H2_CASES: tuple[tuple[float, float, float, float, float, float], ...] = (
+    (-50.0, 150.0, 80.0, 200.0, 20.0, 100.0),  # mixed signs, passes
+    (120.0, 200.0, 90.0, 180.0, 40.0, 90.0),  # 1.544 -> fails
+    (0.0, 100.0, 150.0, 200.0, 0.0, 50.0),  # pure flexure, 0.75
+    (-200.0, 250.0, -60.0, 150.0, 30.0, 120.0),  # |sum| = 0.95
+    (300.0, 300.0, 0.0, 1.0, 0.0, 1.0),  # exactly 1.0 boundary -> passes
+)
+
+
+@pytest.mark.parametrize(("fra", "Fca", "frbw", "Fcbw", "frbz", "Fcbz"), _H2_CASES)
+def test_H2_facade_matches_independent_oracle(
+    fra: float,
+    Fca: float,
+    frbw: float,
+    Fcbw: float,
+    frbz: float,
+    Fcbz: float,
+) -> None:
+    rep = compute_combined_strength_H2(fra, Fca, frbw, Fcbw, frbz, Fcbz)
+    ora = interaction_H2(fra, Fca, frbw, Fcbw, frbz, Fcbz)
+    assert rep.governing_limit_state == ora.equation
+    assert math.isclose(rep.demand_capacity_ratio, ora.dcr, rel_tol=REL_TOL)
+    assert rep.unity_check_passes is ora.passes
+    assert rep.phi_LRFD == 1.0
+
+
+def test_H2_facade_guards_match_oracle() -> None:
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_combined_strength_H2(10.0, 0.0, 10.0, 100.0, 10.0, 100.0)
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_combined_strength_H2(10.0, 100.0, 10.0, 0.0, 10.0, 100.0)
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_combined_strength_H2(10.0, 100.0, 10.0, 100.0, 10.0, -1.0)

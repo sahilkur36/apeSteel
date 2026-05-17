@@ -47,12 +47,16 @@ from apeSteel.combined.torsion_H3 import (
     compute_torsional_strength_rect_HSS_H3_1,
     compute_torsional_strength_round_HSS_H3_1,
 )
-from apeSteel.combined.unsymmetric_H2 import compute_combined_strength_H2
+from apeSteel.combined.unsymmetric_H2 import (
+    CombinedH2Report,
+    compute_combined_strength_H2,
+)
 
 __all__ = [
     "OMEGA_TORSION_ASD",
     "PHI_TORSION_LRFD",
     "CombinedH1Report",
+    "CombinedH2Report",
     "CombinedH13Report",
     "CombinedLimitState",
     "H13GoverningCheck",
