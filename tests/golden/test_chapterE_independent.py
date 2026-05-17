@@ -20,8 +20,10 @@ from apeSteel.compression import compute_compression_strength
 from apeSteel.core import units as u
 from apeSteel.sections.geometry import DoublySymmetricISection
 from apeSteel.sections.geometry.channel_section import ChannelSection
+from apeSteel.sections.geometry.double_angle_section import DoubleAngleSection
 from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
 from apeSteel.sections.geometry.round_hss import RoundHSS
+from apeSteel.sections.geometry.single_angle_section import SingleAngleSection
 from apeSteel.sections.geometry.tee_section import TeeSection
 from tests.golden._chapterE_aisc_oracle import (
     OracleElement,
@@ -74,6 +76,7 @@ def _to_oracle(sp: CompressionSectionProperties, mat: SteelMaterial) -> OraclePr
         ),
         D=sp.diameter_D,
         t_wall=sp.wall_thickness_t,
+        component_ri=sp.component_min_radius_of_gyration_ri,
     )
 
 
@@ -205,5 +208,82 @@ def test_singly_symmetric_FT_matches_independent_AISC(
 
     assert math.isclose(r.governing_critical_stress_Fcr, o.Fcr, rel_tol=REL_TOL)
     assert math.isclose(r.effective_area_Ae, o.Ae, rel_tol=REL_TOL)
+    assert math.isclose(r.nominal_compressive_strength_Pn, o.Pn, rel_tol=REL_TOL)
+    assert r.governing_compression_limit_state == o.governing
+
+
+# --- Single angle (§E5 modified Lc/r, and §E3+§E4) ; double angle (§E6) ----
+_ANGLE = SingleAngleSection(leg_length=75 * u.mm, thickness=6 * u.mm)
+_ANGLE_THICK = SingleAngleSection(leg_length=100 * u.mm, thickness=10 * u.mm)
+_DBL_ANGLE = DoubleAngleSection(leg_length=75 * u.mm, thickness=6 * u.mm, back_separation=10 * u.mm)
+
+
+@pytest.mark.parametrize(
+    ("name", "section", "material", "L_m", "e5"),
+    [
+        ("angle A36 noE5", _ANGLE, A36, 2.0, None),
+        ("angle A36 E5a", _ANGLE, A36, 3.0, "a"),
+        ("angle A36 E5b", _ANGLE, A36, 3.0, "b"),
+        ("angle A992 E5a", _ANGLE_THICK, A992, 4.0, "a"),
+        ("angle A992 noE5 long", _ANGLE_THICK, A992, 6.0, None),
+        ("angle S355 E5b", _ANGLE, S355, 2.5, "b"),
+    ],
+    ids=lambda v: v if isinstance(v, str) else "",
+)
+def test_single_angle_matches_independent_AISC(
+    name: str,
+    section: SingleAngleSection,
+    material: SteelMaterial,
+    L_m: float,
+    e5: str | None,
+) -> None:
+    sp = section.compute_compression_properties(material, "welded")
+    lc = L_m * u.m
+    r = compute_compression_strength(
+        sp,
+        material,
+        lc,
+        lc,
+        lc,
+        single_angle_E5_case=e5,  # type: ignore[arg-type]
+        single_angle_E5_length_L=lc if e5 is not None else None,
+    )
+    o = chapter_E_strength(_to_oracle(sp, material), lc, lc, lc, e5_case=e5, e5_L=lc)
+    assert math.isclose(r.governing_critical_stress_Fcr, o.Fcr, rel_tol=REL_TOL)
+    assert math.isclose(r.nominal_compressive_strength_Pn, o.Pn, rel_tol=REL_TOL)
+    assert r.governing_compression_limit_state == o.governing
+
+
+@pytest.mark.parametrize(
+    ("name", "material", "L_m", "a_mm", "conn"),
+    [
+        ("dbl A36 snug short", A36, 2.0, 600.0, "snug_bolted"),
+        ("dbl A36 snug long", A36, 5.0, 800.0, "snug_bolted"),
+        ("dbl A992 welded", A992, 4.0, 500.0, "welded_or_pretensioned"),
+        ("dbl A992 welded close", A992, 4.0, 150.0, "welded_or_pretensioned"),
+        ("dbl S355 snug", S355, 3.0, 700.0, "snug_bolted"),
+    ],
+    ids=lambda v: v if isinstance(v, str) else "",
+)
+def test_double_angle_E6_matches_independent_AISC(
+    name: str,
+    material: SteelMaterial,
+    L_m: float,
+    a_mm: float,
+    conn: str,
+) -> None:
+    sp = _DBL_ANGLE.compute_compression_properties(material, "welded")
+    lc = L_m * u.m
+    r = compute_compression_strength(
+        sp,
+        material,
+        lc,
+        lc,
+        lc,
+        builtup_connector_spacing_a=a_mm * u.mm,
+        builtup_connector_type=conn,  # type: ignore[arg-type]
+    )
+    o = chapter_E_strength(_to_oracle(sp, material), lc, lc, lc, a6=a_mm * u.mm, connector6=conn)
+    assert math.isclose(r.governing_critical_stress_Fcr, o.Fcr, rel_tol=REL_TOL)
     assert math.isclose(r.nominal_compressive_strength_Pn, o.Pn, rel_tol=REL_TOL)
     assert r.governing_compression_limit_state == o.governing

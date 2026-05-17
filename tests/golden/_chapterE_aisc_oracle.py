@@ -53,6 +53,7 @@ class OracleProps:
     elements: tuple[OracleElement, ...] = field(default_factory=tuple)
     D: float = 0.0  # round HSS
     t_wall: float = 0.0
+    component_ri: float = 0.0  # §E6 built-up component min radius of gyration
 
 
 @dataclass(frozen=True)
@@ -179,6 +180,8 @@ def chapter_E_strength(
     *,
     e5_case: str | None = None,
     e5_L: float | None = None,
+    a6: float | None = None,
+    connector6: str = "snug_bolted",
     evaluate_E4: bool = True,
 ) -> OracleResult:
     """Independent AISC 360-22 ``Pn`` (governing Fcr * Ae)."""
@@ -191,12 +194,16 @@ def chapter_E_strength(
         fcr, _ = _fcr_from_fe(Fy, _fe_flexural(E, lam))
         gov = "single_angle_flexural"
     else:
+        lcy = Lcy
+        if a6 is not None and p.section_kind == "double_angle":
+            m = modified_slenderness_E6(Lcy / p.ry, a6, p.component_ri, connector6, 0.50)
+            lcy = m * p.ry  # §E6 modified, fed to both E3-y and E4 Fey
         fcr_x, _ = _fcr_from_fe(Fy, _fe_flexural(E, Lcx / p.rx))
-        fcr_y, _ = _fcr_from_fe(Fy, _fe_flexural(E, Lcy / p.ry))
+        fcr_y, _ = _fcr_from_fe(Fy, _fe_flexural(E, lcy / p.ry))
         fcr = min(fcr_x, fcr_y)
         gov = "flexural_buckling"
         if evaluate_E4:
-            fcr_e4, _ = _fcr_from_fe(Fy, _fe_E4(p, E, G, Lcx, Lcy, Lcz))
+            fcr_e4, _ = _fcr_from_fe(Fy, _fe_E4(p, E, G, Lcx, lcy, Lcz))
             if fcr_e4 < fcr:
                 fcr = fcr_e4
                 gov = (

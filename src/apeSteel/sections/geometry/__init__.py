@@ -16,11 +16,13 @@ The :data:`ISection` union is exported for downstream typing.
 """
 
 from apeSteel.sections.geometry.channel_section import ChannelSection
+from apeSteel.sections.geometry.double_angle_section import DoubleAngleSection
 from apeSteel.sections.geometry.doubly_symmetric_i_section import (
     DoublySymmetricISection,
 )
 from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
 from apeSteel.sections.geometry.round_hss import RoundHSS
+from apeSteel.sections.geometry.single_angle_section import SingleAngleSection
 from apeSteel.sections.geometry.singly_symmetric_i_section import (
     CompressionFlangeSide,
     SinglySymmetricISection,
@@ -35,10 +37,12 @@ ISection = DoublySymmetricISection | SinglySymmetricISection
 __all__ = [
     "ChannelSection",
     "CompressionFlangeSide",
+    "DoubleAngleSection",
     "DoublySymmetricISection",
     "ISection",
     "RectangularHSS",
     "RoundHSS",
+    "SingleAngleSection",
     "SinglySymmetricISection",
     "TeeSection",
 ]

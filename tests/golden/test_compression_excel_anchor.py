@@ -43,8 +43,10 @@ from apeSteel.compression.torsional_flexural_E4 import (
 from apeSteel.core import units as u
 from apeSteel.sections.geometry import DoublySymmetricISection
 from apeSteel.sections.geometry.channel_section import ChannelSection
+from apeSteel.sections.geometry.double_angle_section import DoubleAngleSection
 from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
 from apeSteel.sections.geometry.round_hss import RoundHSS
+from apeSteel.sections.geometry.single_angle_section import SingleAngleSection
 from apeSteel.sections.geometry.tee_section import TeeSection
 
 _RAW = Path(__file__).parent / "data" / "_compression_excel_raw.json"
@@ -252,3 +254,42 @@ def test_round_HSS_matches_workbook() -> None:
     assert not r.section_has_slender_element
     phi_pn_tf = r.phi_strength_LRFD / (u.kgf * 1000.0)
     assert math.isclose(phi_pn_tf, _f(c, "C50"), rel_tol=3e-3)
+
+
+# ---------------------------------------------------------------------------
+# Single & double equal-leg angle geometry anchor (edition-independent).
+# Workbook Angulo / Doble Angulo Espalda run at Fy = 36 ksi -> A36.
+# ---------------------------------------------------------------------------
+def test_single_angle_geometry_matches_workbook() -> None:
+    c = _sheet_cells("Angulo")
+    leg, t = _f(c, "B4"), _f(c, "B6")
+    sp = SingleAngleSection(
+        leg_length=leg * u.mm, thickness=t * u.mm
+    ).compute_compression_properties(A36, "welded")
+    # E23 Ag (cm^2); E24/E25 principal I (cm^4); E35/E36 r (cm);
+    # E38 J (cm^4); E40 H; E33/E34 shear-centre offsets (cm).
+    assert math.isclose(sp.gross_area_Ag, _f(c, "E23") * _CM2_TO_MM2, rel_tol=2e-3)
+    assert math.isclose(sp.moment_of_inertia_x_Ix, _f(c, "E24") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.moment_of_inertia_y_Iy, _f(c, "E25") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_x_rx, _f(c, "E35") * _CM_TO_MM, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_y_ry, _f(c, "E36") * _CM_TO_MM, rel_tol=2e-3)
+    assert math.isclose(sp.torsional_constant_J, _f(c, "E38") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.flexural_constant_H, _f(c, "E40"), rel_tol=2e-3)
+    assert math.isclose(sp.shear_centre_x_xo, _f(c, "E33") * _CM_TO_MM, rel_tol=2e-3)
+
+
+def test_double_angle_geometry_matches_workbook() -> None:
+    c = _sheet_cells("Doble Angulo Espalda")
+    leg, t, sep = _f(c, "B5"), _f(c, "B7"), _f(c, "B4")
+    sp = DoubleAngleSection(
+        leg_length=leg * u.mm, thickness=t * u.mm, back_separation=sep * u.mm
+    ).compute_compression_properties(A36, "welded")
+    # F23 doubled Ag (cm^2); F24/F25 doubled I (cm^4); F31/F32 r (cm);
+    # F34 doubled J (cm^4); F36 built-up H.
+    assert math.isclose(sp.gross_area_Ag, _f(c, "F23") * _CM2_TO_MM2, rel_tol=2e-3)
+    assert math.isclose(sp.moment_of_inertia_x_Ix, _f(c, "F24") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.moment_of_inertia_y_Iy, _f(c, "F25") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_x_rx, _f(c, "F31") * _CM_TO_MM, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_y_ry, _f(c, "F32") * _CM_TO_MM, rel_tol=2e-3)
+    assert math.isclose(sp.torsional_constant_J, _f(c, "F34") * _CM4_TO_MM4, rel_tol=2e-3)
+    assert math.isclose(sp.flexural_constant_H, _f(c, "F36"), rel_tol=2e-3)

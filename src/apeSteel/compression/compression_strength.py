@@ -37,6 +37,11 @@ from apeSteel.compression._common import (
     BucklingRegime,
     CompressionLimitState,
 )
+from apeSteel.compression.built_up_E6 import (
+    KI_BACK_TO_BACK_ANGLES,
+    ConnectorType,
+    compute_modified_slenderness_E6,
+)
 from apeSteel.compression.effective_length_E2 import (
     compute_effective_length_Lc,
     compute_member_slenderness_Lc_over_r,
@@ -125,6 +130,8 @@ def compute_compression_strength(
     *,
     single_angle_E5_case: SingleAngleE5Case | None = None,
     single_angle_E5_length_L: float | None = None,
+    builtup_connector_spacing_a: float | None = None,
+    builtup_connector_type: ConnectorType = "snug_bolted",
     evaluate_E4: bool = True,
 ) -> CompressionStrengthReport:
     """Return the AISC 360-22 Chapter-E nominal compressive strength.
@@ -166,6 +173,24 @@ def compute_compression_strength(
 
     lc_over_rx: float = compute_member_slenderness_Lc_over_r(effective_length_x_Lcx, rx)
     lc_over_ry: float = compute_member_slenderness_Lc_over_r(effective_length_y_Lcy, ry)
+
+    # §E6 built-up modified slenderness about the built-up (y) axis.
+    # Applied consistently to §E3-y and (via an equivalent Lcy) to the
+    # §E4-3 Fey, so both modes see the same (Lc/r)m.
+    lcy_for_e4: float = effective_length_y_Lcy
+    if (
+        builtup_connector_spacing_a is not None
+        and section_properties.section_kind == "double_angle"
+        and section_properties.component_min_radius_of_gyration_ri > 0.0
+    ):
+        lc_over_ry = compute_modified_slenderness_E6(
+            builtup_slenderness_Lc_over_r_o=lc_over_ry,
+            connector_spacing_a=builtup_connector_spacing_a,
+            component_min_radius_of_gyration_ri=section_properties.component_min_radius_of_gyration_ri,
+            connector_type=builtup_connector_type,
+            Ki=KI_BACK_TO_BACK_ANGLES,
+        )
+        lcy_for_e4 = lc_over_ry * ry
 
     e3x = compute_flexural_buckling_critical_stress_E3(fy, e_mod, lc_over_rx)
     e3y = compute_flexural_buckling_critical_stress_E3(fy, e_mod, lc_over_ry)
@@ -209,7 +234,7 @@ def compute_compression_strength(
                 elastic_modulus_E=e_mod,
                 shear_modulus_G=g_mod,
                 effective_length_x_Lcx=effective_length_x_Lcx,
-                effective_length_y_Lcy=effective_length_y_Lcy,
+                effective_length_y_Lcy=lcy_for_e4,
                 effective_length_torsional_Lcz=effective_length_torsional_Lcz,
             )
             fe_e4 = e4.elastic_buckling_stress_Fe

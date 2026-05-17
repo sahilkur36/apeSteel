@@ -289,12 +289,22 @@ Sub-items:
   bit-match the workbook). Project total: **1410 tests passing**;
   pyright strict clean; ruff clean.
 
-- ☐ **E-3 — Rectangular and round HSS.** §E3 + §E7.2(a) rect-HSS effective
-  width; §E7.2(c) round-HSS reduced area; oracle tests for HSS and PIPE types.
+- ✅ **E-3 — Rectangular and round HSS.** `RectangularHSS` / `RoundHSS`
+  geometries; facade + oracle skip §E4 for closed HSS (§E3-only).
+  §E7.2 rect-HSS-wall effective width (Table E7.1 HSS-wall c1/c2);
+  §E7.2(c) round-HSS reduced area (Eq. E7-6/E7-7, retained from
+  360-16). +10 tests: 8 oracle bit-exact (incl. slender HSS); 2 Excel
+  anchors bit-match the workbook's **full governing φPn** (non-slender
+  ⇒ 360-16 == 360-22 — the strongest external anchor).
 
-- ☐ **E-4 — Single and double angle.** Modified `(KL/r)_eff` §E5
-  (Eq. E5-1 / E5-3); double-angle flexural–torsional §E4; oracle tests for L
-  and 2L types.
+- ✅ **E-4 — Single and double angle.** `SingleAngleSection` (equal-leg,
+  principal-axis Mohr rotation) with §E5 modified `Lc/r`
+  (Eq. E5-1…E5-4) and §E3+§E4; `DoubleAngleSection` (back-to-back) with
+  §E6 modified slenderness (Eq. E6-1/E6-2) wired through the facade.
+  +21 tests: 11 oracle bit-exact (E5 cases a/b, E6 snug/welded across
+  grades); 2 Excel geometry anchors (the Excel caught & fixed a
+  back-to-back built-up-Iy convention error). Project total: **1433
+  tests passing**; pyright strict 0 errors; ruff/format clean.
 
 - ☐ **E-5 — Facade routing + Element methods + φPn-vs-length curve.**
   `ColumnCheck` facade; `Element.compute_phi_Pn(KL_x, KL_y)`;
