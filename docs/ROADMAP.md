@@ -323,12 +323,83 @@ pyright strict 0 errors; ruff + ruff-format clean; coverage 95 %.
 
 ---
 
+## Phase H — AISC 360-22 Chapter H (Combined forces + torsion) 🟧
+
+**Goal:** the **full** Chapter H — §H1.1, §H1.2, §H1.3, §H2, and
+§H3.1/3.2/3.3 — anchored to an independent AISC 360-22 oracle and (for
+edition-independent quantities) to the engineer's Chapter-H Excel
+workbook. Chapter H is a *consumer* layer: §H1/§H2 compose the existing
+Chapter-E `φ·Pn` and Chapter-F `φ·Mn` (no changes to those layers);
+the only nominal strength that originates here is the §H3.1 HSS
+torsional `Tn`. Second-order `Mr` is caller-supplied (DAM) — no
+Appendix-8 B1/B2. §H1.2 consumes a thin `apeSteel.tension` slice
+(D2-1 gross-section yielding only; D2-2 rupture out of scope).
+
+Design note: `docs/design_notes/09_combined_H.md`.
+
+Sub-items:
+
+- ✅ **H-0 — Scaffold + oracle.** `combined/` + `tension/` module stubs
+  (every calculator raises `NotImplementedError` pointing at the design
+  note); standalone stdlib oracle
+  (`tests/golden/_chapterH_aisc_oracle.py`) re-deriving §H1.1/1.2/1.3,
+  §H2, §H3.1/3.2/3.3; design note 09; this ROADMAP section.
+  pyright strict / ruff / ruff-format clean; suite green.
+
+- ✅ **H-1 — §H1.1.** Eq. H1-1a/H1-1b calculator + `CombinedH1Report`;
+  9-case oracle grid bit-exact (both regimes + biaxial + boundary) +
+  5 reviewer hand calcs.
+
+- ✅ **H-2 — §H1.2.** `tension/yielding_D2.py` (Eq. D2-1, `φt=0.90`) +
+  flexure+tension interaction (`Pc=φt·Pn`) + `compute_Pey_H1_2` +
+  `Cb` amplifier `√(1+α·Pr/Pey)` (LRFD/ASD `α`).  Oracle bit-exact +
+  hand calcs.  `Mn≤Mp` cap is applied by the caller/facade (pure-
+  consumer layering, design note 09 §2/§4).
+
+- ✅ **H-3 — §H1.3.** In-plane Eq. H1-1 + out-of-plane Eq. H1-2
+  (`Cb·Mcx` capped at `φb·Mp`) + `ensure_h1_3_applicable` guard
+  (DS / rolled / compact / `KLz≤KLy`).  Oracle bit-exact (cap
+  active/inactive, both governing) + hand calcs.
+
+- ✅ **H-4 — §H2.** Eq. H2-1 signed elastic-stress interaction.
+  Oracle bit-exact + hand calcs (incl. the sign-convention case).
+
+- ✅ **H-5 — §H3.** Round/rect HSS `Tn=Fcr·C` (Eq. H3-1..H3-5,
+  `φT=0.90`); Eq. H3-6 HSS combined (with `Tr≤0.2·Tc` neglect path);
+  §H3.3 limiting `Fn` (Eq. H3-7/8/9; DG 9 warping out of scope).
+  Oracle bit-exact (every regime/branch + guards) + hand calcs.
+
+- ⏳ **H-6 — Excel anchor.** **Blocked** — awaiting the engineer's
+  Chapter-H workbook filename (per doctrine the filename is not
+  assumed).  Faithful workbook dump to `tests/golden/data/`;
+  edition-independent quantities bit-matched at workbook precision;
+  any slender-`Pc`/`Mc` 360-22-vs-360-16 divergence documented and
+  bounded.  The independent stdlib oracle is in place and is the
+  primary correctness anchor; the Excel anchor is the secondary
+  external check and lands once the filename is provided.
+
+- ✅ **H-7 — Element/facade integration.** `Element.combined_strength_H1`
+  resolves `Pc` from Chapter E + `Mcx` from the governing Chapter-F
+  result and evaluates §H1.1 (DS-only, biaxial requires explicit
+  `Mcy` — no §F6 in apeSteel); the §H1.2/1.3/H2/H3 pure calculators
+  are re-exported at `apeSteel.*` for direct use; ROADMAP ticked;
+  design note status updated.
+
+**Done when:** all sub-items green; oracle + Excel-anchor suites pass;
+pyright + ruff clean; coverage ≥ 90 %.  **Engine + facade (H-0..H-5,
+H-7) DONE** — 1532 tests passing; pyright strict 0 errors; ruff +
+ruff-format clean; coverage 95 %; `combined/*` & `tension/*` at 100 %.
+**H-6 (Excel anchor) deferred** pending the workbook filename.
+
+---
+
 ## After v1 — explicit non-goals (for later phases)
 
-- AISC §E (compression) — **underway (Phase E above)**.
-- AISC §D (tension) — for braces, hangers.
-- AISC §H (combined loading) — for beam-columns (H1 interaction will consume
-  `φ·Pn` from Phase E and `φ·Mn` from Phases 3–5; see design note §7).
+- AISC §E (compression) — **done (Phase E above)**.
+- AISC §H (combined loading) — **underway (Phase H above)**.
+- AISC §D (tension) — full chapter (D2-2 net-section rupture, §J4 block
+  shear) for braces / hangers; Phase H ships only the thin D2-1 slice
+  that §H1.2 consumes.
 - AISC §I (composite construction).
 - AISC §J / §K (connections — bolts, welds, plate-element checks).
 - AISC 358 prequalified moment connections (RBS, BFP, BUEEP, …).

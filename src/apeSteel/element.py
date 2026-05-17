@@ -37,6 +37,10 @@ from apeSteel.classification import (
     classify_flexural_compactness_B4_1b,
     classify_seismic_compactness_341_D1,
 )
+from apeSteel.combined import (
+    CombinedH1Report,
+    compute_combined_strength_H1_1,
+)
 from apeSteel.compression import (
     CapacityCurvePoint,
     CompressionStrengthReport,
@@ -531,6 +535,68 @@ class Element:
         )
 
     # ------------------------------------------------------------------ #
+    # Combined flexure + axial - AISC 360-22 §H1.1 (Eq. H1-1a/H1-1b)
+    # ------------------------------------------------------------------ #
+    def combined_strength_H1(
+        self,
+        required_axial_Pr: float,
+        required_moment_x_Mrx: float,
+        *,
+        effective_length_factor_Kx: float,
+        unbraced_length_Lx: float,
+        effective_length_factor_Ky: float,
+        unbraced_length_Ly: float,
+        effective_length_factor_Kz: float,
+        unbraced_length_Lz: float,
+        required_moment_y_Mry: float = 0.0,
+        available_moment_y_Mcy: float = 0.0,
+        transverse_stiffener_spacing_a: float | None = None,
+    ) -> CombinedH1Report:
+        """AISC 360-22 §H1.1 beam-column interaction (Eq. H1-1a/H1-1b).
+
+        Resolves ``Pc`` from this element's Chapter-E strength
+        (``phi_c*Pn``) and ``Mcx`` from its governing Chapter-F major-
+        axis strength (``phi_b*Mnx``), then evaluates the §H1.1 unity
+        equation.  Doubly-symmetric I only (the ``Element`` spine; the
+        same restriction as :meth:`compression_strength` /
+        :meth:`run_full_check`).
+
+        ``Pr``/``Mrx``/``Mry`` are the *required second-order* strengths
+        (Direct Analysis Method - already amplified; no Appendix-8
+        machinery, per design note 09).  ``Mry``/``Mcy`` default to 0:
+        apeSteel does not yet implement §F6 minor-axis flexure, so for a
+        biaxial check the caller must pass ``available_moment_y_Mcy``
+        explicitly (its own ``phi_b*Mny``).
+
+        Requires :attr:`bracing` to be set (for the Chapter-F ``Mcx``).
+        """
+        self._require_doubly_symmetric_section("combined_strength_H1")
+        if required_moment_y_Mry != 0.0 and available_moment_y_Mcy <= 0.0:
+            raise ValueError(
+                "available_moment_y_Mcy must be supplied (apeSteel has no §F6 "
+                "minor-axis flexure) when required_moment_y_Mry is non-zero"
+            )
+        compression = self.compression_strength(
+            effective_length_factor_Kx,
+            unbraced_length_Lx,
+            effective_length_factor_Ky,
+            unbraced_length_Ly,
+            effective_length_factor_Kz,
+            unbraced_length_Lz,
+        )
+        beam_check = self.run_full_check(
+            transverse_stiffener_spacing_a=transverse_stiffener_spacing_a,
+        )
+        return compute_combined_strength_H1_1(
+            required_axial_Pr=required_axial_Pr,
+            available_axial_Pc=compression.phi_strength_LRFD,
+            required_moment_x_Mrx=required_moment_x_Mrx,
+            available_moment_x_Mcx=beam_check.governing_flexural_phi_Mn,
+            required_moment_y_Mry=required_moment_y_Mry,
+            available_moment_y_Mcy=available_moment_y_Mcy,
+        )
+
+    # ------------------------------------------------------------------ #
     # F5 LTB + CFY + FLB - plate girder (slender web)
     # ------------------------------------------------------------------ #
     def flexural_strength_F5_top_flange(self) -> FlexureF5Report:
@@ -681,6 +747,7 @@ __all__ = [
     "BothFlangesFlexureF3Report",
     "BothFlangesFlexureF4Report",
     "BothFlangesFlexureF5Report",
+    "CombinedH1Report",
     "Element",
     "GoverningFlange",
     "ShearG2Report",
