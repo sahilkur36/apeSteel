@@ -15,12 +15,7 @@ import math
 
 import pytest
 
-from apeSteel.combined import (
-    compute_combined_strength,
-    compute_combined_strength_H3_2,
-    compute_torsional_strength_rect_HSS_H3_1,
-    compute_torsional_strength_round_HSS_H3_1,
-)
+from apeSteel.combined import compute_combined_strength
 from apeSteel.combined._common import PHI_TORSION_LRFD
 from tests.golden._chapterH_aisc_oracle import (
     cb_amplification_H1_2,
@@ -37,22 +32,11 @@ _REL = 1e-12
 
 
 # --------------------------------------------------------------------------- #
-# H-0: every public calculator is still a NotImplementedError stub.
+# §H1.1/§H1.2/§H1.3 (H-1..H-3), §H2 (H-4) and §H3 (H-5) are implemented
+# and anchored in their own files.  Only the top-level orchestrator
+# facade remains a stub until H-7.
 # --------------------------------------------------------------------------- #
-def test_combined_and_tension_stubs_raise() -> None:
-    # §H1.1 (phase H-1) and §H1.2 + the thin §D2(a) tension slice
-    # (phase H-2) are implemented; their behaviour is anchored in
-    # test_combined_H1_1.py / test_combined_H1_2.py /
-    # test_tension_yielding_D2.py / test_chapterH_independent.py.
-    # §H1.1/§H1.2/§H1.3 (H-1..H-3) and §H2 (H-4) are implemented and
-    # anchored in their own files.  The §H3 calculators below are still
-    # H-5 stubs.
-    with pytest.raises(NotImplementedError, match="H-5"):
-        compute_torsional_strength_round_HSS_H3_1(345.0, 200000.0, 200.0, 10.0, 3000.0)
-    with pytest.raises(NotImplementedError, match="H-5"):
-        compute_torsional_strength_rect_HSS_H3_1(345.0, 200000.0, 65.0, 1.0e6)
-    with pytest.raises(NotImplementedError, match="H-5"):
-        compute_combined_strength_H3_2(100.0, 900.0, 200.0, 400.0, 50.0, 300.0, 30.0, 100.0)
+def test_orchestrator_facade_still_a_stub_until_H7() -> None:
     with pytest.raises(NotImplementedError, match="09_combined_H"):
         compute_combined_strength()
 

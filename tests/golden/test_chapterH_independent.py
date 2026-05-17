@@ -24,7 +24,11 @@ from apeSteel.combined import (
     compute_combined_strength_H1_2,
     compute_combined_strength_H1_3,
     compute_combined_strength_H2,
+    compute_combined_strength_H3_2,
+    compute_nonHSS_torsion_limit_H3_3,
     compute_Pey_H1_2,
+    compute_torsional_strength_rect_HSS_H3_1,
+    compute_torsional_strength_round_HSS_H3_1,
 )
 from tests.golden._chapterH_aisc_oracle import (
     Pey_H1_2,
@@ -33,6 +37,10 @@ from tests.golden._chapterH_aisc_oracle import (
     interaction_H1_3_in_plane,
     interaction_H1_3_out_of_plane,
     interaction_H2,
+    interaction_H3_2,
+    nonHSS_limiting_Fn_H3_3,
+    torsion_rect_HSS_H3_1,
+    torsion_round_HSS_H3_1,
 )
 
 # Stronger than the doctrine's 1e-9 floor: the facade and the oracle
@@ -236,3 +244,158 @@ def test_H2_facade_guards_match_oracle() -> None:
         compute_combined_strength_H2(10.0, 100.0, 10.0, 0.0, 10.0, 100.0)
     with pytest.raises(ValueError, match="must be positive"):
         compute_combined_strength_H2(10.0, 100.0, 10.0, 100.0, 10.0, -1.0)
+
+
+# --------------------------------------------------------------------------- #
+# §H3.1 round HSS - (Fy, E, D, t, L); buckling- vs cap-governed.
+# --------------------------------------------------------------------------- #
+_ROUND_HSS_CASES: tuple[tuple[float, float, float, float, float], ...] = (
+    (345.0, 200000.0, 200.0, 10.0, 3000.0),  # thick/short -> 0.6Fy cap
+    (345.0, 200000.0, 350.0, 4.0, 9000.0),  # thin/long -> buckling (H3-2a)
+    (250.0, 200000.0, 300.0, 6.0, 6000.0),  # mid -> buckling, lower Fy
+    (345.0, 200000.0, 320.0, 4.0, 12800.0),  # thin + very long -> Eq. H3-2b
+)
+
+
+@pytest.mark.parametrize(("Fy", "E", "D", "t", "L"), _ROUND_HSS_CASES)
+def test_H3_1_round_HSS_matches_independent_oracle(
+    Fy: float, E: float, D: float, t: float, L: float
+) -> None:
+    rep = compute_torsional_strength_round_HSS_H3_1(Fy, E, D, t, L)
+    ora = torsion_round_HSS_H3_1(Fy, E, D, t, L)
+    assert rep.governing_torsion_state == ora.governing
+    assert math.isclose(rep.critical_stress_Fcr, ora.Fcr, rel_tol=REL_TOL)
+    assert math.isclose(rep.torsional_constant_C, ora.C, rel_tol=REL_TOL)
+    assert math.isclose(rep.nominal_torsional_strength_Tn, ora.Tn, rel_tol=REL_TOL)
+    # phi_T = 0.90
+    assert math.isclose(rep.phi_strength_LRFD, 0.90 * ora.Tn, rel_tol=REL_TOL)
+
+
+# --------------------------------------------------------------------------- #
+# §H3.1 rect HSS - (Fy, E, h/t, C); one case per regime + the >260 guard.
+# --------------------------------------------------------------------------- #
+def _rect_ht(coeff: float, Fy: float = 345.0, E: float = 200000.0) -> float:
+    return coeff * math.sqrt(E / Fy)
+
+
+_RECT_HSS_CASES: tuple[tuple[float, float, float, float], ...] = (
+    (345.0, 200000.0, 0.5 * _rect_ht(2.45), 1.0e6),  # < 2.45 sqrt -> 0.6Fy
+    (345.0, 200000.0, _rect_ht(2.76), 1.0e6),  # H3-4 band
+    (345.0, 200000.0, _rect_ht(4.0), 1.0e6),  # H3-5 band
+    (250.0, 200000.0, _rect_ht(3.5, 250.0), 8.0e5),  # H3-5 band, lower Fy
+)
+
+
+@pytest.mark.parametrize(("Fy", "E", "h_t", "C"), _RECT_HSS_CASES)
+def test_H3_1_rect_HSS_matches_independent_oracle(
+    Fy: float, E: float, h_t: float, C: float
+) -> None:
+    rep = compute_torsional_strength_rect_HSS_H3_1(Fy, E, h_t, C)
+    ora = torsion_rect_HSS_H3_1(Fy, E, h_t, C)
+    assert rep.governing_torsion_state == ora.governing
+    assert math.isclose(rep.critical_stress_Fcr, ora.Fcr, rel_tol=REL_TOL)
+    assert math.isclose(rep.nominal_torsional_strength_Tn, ora.Tn, rel_tol=REL_TOL)
+
+
+def test_H3_1_rect_HSS_over_260_raises_like_oracle() -> None:
+    with pytest.raises(ValueError, match="260"):
+        compute_torsional_strength_rect_HSS_H3_1(345.0, 200000.0, 300.0, 1.0e6)
+    with pytest.raises(ValueError, match="over 260"):
+        torsion_rect_HSS_H3_1(345.0, 200000.0, 300.0, 1.0e6)
+
+
+# --------------------------------------------------------------------------- #
+# §H3.2 HSS combined (Eq. H3-6) - neglect path + interaction.
+# (Pr, Pc, Mr, Mc, Vr, Vc, Tr, Tc)
+# --------------------------------------------------------------------------- #
+_H3_2_CASES: tuple[tuple[float, float, float, float, float, float, float, float], ...] = (
+    (100.0, 900.0, 200.0, 400.0, 50.0, 300.0, 10.0, 100.0),  # Tr<=0.2Tc neglect
+    (100.0, 900.0, 200.0, 400.0, 50.0, 300.0, 30.0, 100.0),  # combined
+    (500.0, 800.0, 300.0, 500.0, 120.0, 250.0, 90.0, 110.0),  # combined, near/over 1
+)
+
+
+@pytest.mark.parametrize(("Pr", "Pc", "Mr", "Mc", "Vr", "Vc", "Tr", "Tc"), _H3_2_CASES)
+def test_H3_2_facade_matches_independent_oracle(
+    Pr: float,
+    Pc: float,
+    Mr: float,
+    Mc: float,
+    Vr: float,
+    Vc: float,
+    Tr: float,
+    Tc: float,
+) -> None:
+    rep = compute_combined_strength_H3_2(Pr, Pc, Mr, Mc, Vr, Vc, Tr, Tc)
+    ora_res, ora_negligible = interaction_H3_2(Pr, Pc, Mr, Mc, Vr, Vc, Tr, Tc)
+    assert rep.torsion_is_negligible is ora_negligible
+    if ora_negligible:
+        assert ora_res is None
+        assert rep.governing_limit_state == "torsion_negligible_H1"
+        assert rep.unity_check_passes is True
+    else:
+        assert ora_res is not None
+        assert math.isclose(rep.demand_capacity_ratio, ora_res.dcr, rel_tol=REL_TOL)
+        assert rep.unity_check_passes is ora_res.passes
+        assert rep.governing_limit_state == "H3-6"
+
+
+def test_H3_2_guards() -> None:
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_combined_strength_H3_2(1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_combined_strength_H3_2(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0)
+
+
+# --------------------------------------------------------------------------- #
+# §H3.3 non-HSS limiting Fn (Eq. H3-7/8/9).
+# --------------------------------------------------------------------------- #
+def test_H3_3_nonHSS_limiting_Fn_matches_independent_oracle() -> None:
+    # No Fcr -> governing is 0.6Fy (Eq. H3-8).
+    rep = compute_nonHSS_torsion_limit_H3_3(345.0)
+    _, _, _, fn_gov, label = nonHSS_limiting_Fn_H3_3(345.0)
+    assert rep.governing_limit_state == label
+    assert math.isclose(rep.governing_Fn, fn_gov, rel_tol=REL_TOL)
+
+    # With a low Fcr -> buckling (Eq. H3-9) governs; C -> Tn.
+    rep2 = compute_nonHSS_torsion_limit_H3_3(
+        345.0, buckling_stress_Fcr=120.0, torsional_constant_C=5.0e5
+    )
+    _, _, _, fn_gov2, label2 = nonHSS_limiting_Fn_H3_3(345.0, Fcr=120.0)
+    assert rep2.governing_limit_state == label2
+    assert math.isclose(rep2.governing_Fn, fn_gov2, rel_tol=REL_TOL)
+    assert rep2.nominal_torsional_strength_Tn is not None
+    assert math.isclose(rep2.nominal_torsional_strength_Tn, 120.0 * 5.0e5, rel_tol=REL_TOL)
+    assert math.isclose(rep2.phi_strength_LRFD, 0.90 * 120.0 * 5.0e5, rel_tol=REL_TOL)
+
+
+def test_H3_input_guards() -> None:
+    # Round HSS geometry guards.
+    with pytest.raises(ValueError, match="yield_stress_Fy must be positive"):
+        compute_torsional_strength_round_HSS_H3_1(0.0, 200000.0, 200.0, 10.0, 3000.0)
+    with pytest.raises(ValueError, match="must be positive"):
+        compute_torsional_strength_round_HSS_H3_1(345.0, 200000.0, 200.0, -1.0, 3000.0)
+    with pytest.raises(ValueError, match="less than outside_diameter_D"):
+        compute_torsional_strength_round_HSS_H3_1(345.0, 200000.0, 200.0, 200.0, 3000.0)
+    with pytest.raises(ValueError, match="member_length_L must be positive"):
+        compute_torsional_strength_round_HSS_H3_1(345.0, 200000.0, 200.0, 10.0, 0.0)
+    # Rect HSS guards.
+    with pytest.raises(ValueError, match="yield_stress_Fy must be positive"):
+        compute_torsional_strength_rect_HSS_H3_1(0.0, 200000.0, 50.0, 1.0e6)
+    with pytest.raises(ValueError, match="flat_width_to_thickness"):
+        compute_torsional_strength_rect_HSS_H3_1(345.0, 200000.0, 0.0, 1.0e6)
+    with pytest.raises(ValueError, match="torsional_constant_C must be positive"):
+        compute_torsional_strength_rect_HSS_H3_1(345.0, 200000.0, 50.0, 0.0)
+    # Non-HSS §H3.3 guards.
+    with pytest.raises(ValueError, match="yield_stress_Fy must be positive"):
+        compute_nonHSS_torsion_limit_H3_3(0.0)
+    with pytest.raises(ValueError, match="buckling_stress_Fcr must be positive"):
+        compute_nonHSS_torsion_limit_H3_3(345.0, buckling_stress_Fcr=0.0)
+    with pytest.raises(ValueError, match="torsional_constant_C must be positive"):
+        compute_nonHSS_torsion_limit_H3_3(345.0, torsional_constant_C=-1.0)
+
+
+def test_H1_3_out_of_plane_denominator_guard() -> None:
+    # Cb*Mcx = 0 and phi_b*Mp = 0 -> min(.) = 0 -> Eq. H1-2 denominator guard.
+    with pytest.raises(ValueError, match="H1-2 denominator"):
+        compute_combined_strength_H1_3(100.0e3, 3.0e6, 2.0e6, 100.0e6, 600.0e6, 0.0, 0.0, 0.0)
