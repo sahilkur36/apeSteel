@@ -17,7 +17,6 @@ import pytest
 
 from apeSteel.combined import (
     compute_combined_strength,
-    compute_combined_strength_H1_3,
     compute_combined_strength_H2,
     compute_combined_strength_H3_2,
     compute_torsional_strength_rect_HSS_H3_1,
@@ -46,9 +45,9 @@ def test_combined_and_tension_stubs_raise() -> None:
     # (phase H-2) are implemented; their behaviour is anchored in
     # test_combined_H1_1.py / test_combined_H1_2.py /
     # test_tension_yielding_D2.py / test_chapterH_independent.py.
-    # The remaining calculators below are still H-3..H-5 stubs.
-    with pytest.raises(NotImplementedError, match="H-3"):
-        compute_combined_strength_H1_3(300.0, 1500.0, 1500.0, 900.0, 1500.0, 1000.0, 1.14, 1500.0)
+    # §H1.3 (phase H-3) is implemented (test_combined_H1_3.py /
+    # test_chapterH_independent.py).  The remaining calculators below
+    # are still H-4..H-5 stubs.
     with pytest.raises(NotImplementedError, match="H-4"):
         compute_combined_strength_H2(-50.0, 150.0, 80.0, 200.0, 20.0, 100.0)
     with pytest.raises(NotImplementedError, match="H-5"):

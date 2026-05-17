@@ -22,12 +22,15 @@ from apeSteel.combined import (
     compute_Cb_amplification_factor_H1_2,
     compute_combined_strength_H1_1,
     compute_combined_strength_H1_2,
+    compute_combined_strength_H1_3,
     compute_Pey_H1_2,
 )
 from tests.golden._chapterH_aisc_oracle import (
     Pey_H1_2,
     cb_amplification_H1_2,
     interaction_H1_1,
+    interaction_H1_3_in_plane,
+    interaction_H1_3_out_of_plane,
 )
 
 # Stronger than the doctrine's 1e-9 floor: the facade and the oracle
@@ -134,3 +137,60 @@ def test_H1_2_amplifier_guards() -> None:
         compute_Pey_H1_2(200000.0, 20.0e6, 0.0)
     with pytest.raises(ValueError, match="must be >= 0"):
         compute_Cb_amplification_factor_H1_2(-1.0, 200000.0, 20.0e6, 4000.0)
+
+
+# --------------------------------------------------------------------------- #
+# §H1.3 - DS rolled compact, single-axis.  Both sub-checks (in-plane
+# Eq. H1-1, out-of-plane Eq. H1-2 with the min(Cb*Mcx, phi_b*Mp) cap)
+# must bit-match the independent oracle.
+# (Pr, Pcx, Pcy, Mrx, Mcx_in_plane, Mcx_ltb_Cb1, Cb, phi_b_Mp)
+# --------------------------------------------------------------------------- #
+_H1_3_CASES: tuple[tuple[float, float, float, float, float, float, float, float], ...] = (
+    # cap inactive (Cb*Mcx < phi_b*Mp); out-of-plane governs
+    (600.0e3, 3.0e6, 2.0e6, 250.0e6, 600.0e6, 480.0e6, 1.14, 660.0e6),
+    # cap active (Cb*Mcx > phi_b*Mp -> use phi_b*Mp)
+    (400.0e3, 3.2e6, 2.4e6, 300.0e6, 620.0e6, 560.0e6, 1.67, 600.0e6),
+    # in-plane governs (weak in-plane Pcx, strong out-of-plane)
+    (1.4e6, 1.6e6, 3.0e6, 120.0e6, 640.0e6, 600.0e6, 2.30, 660.0e6),
+    # low axial -> in-plane uses H1-1b; out-of-plane mild
+    (90.0e3, 3.0e6, 2.8e6, 380.0e6, 600.0e6, 560.0e6, 1.00, 620.0e6),
+    # both well below unity
+    (200.0e3, 4.0e6, 3.6e6, 150.0e6, 650.0e6, 610.0e6, 1.30, 670.0e6),
+)
+
+
+@pytest.mark.parametrize(
+    ("Pr", "Pcx", "Pcy", "Mrx", "Mcx_ip", "Mcx_ltb", "Cb", "phi_b_Mp"),
+    _H1_3_CASES,
+)
+def test_H1_3_facade_matches_independent_oracle(
+    Pr: float,
+    Pcx: float,
+    Pcy: float,
+    Mrx: float,
+    Mcx_ip: float,
+    Mcx_ltb: float,
+    Cb: float,
+    phi_b_Mp: float,
+) -> None:
+    rep = compute_combined_strength_H1_3(Pr, Pcx, Pcy, Mrx, Mcx_ip, Mcx_ltb, Cb, phi_b_Mp)
+    ora_ip = interaction_H1_3_in_plane(Pr, Pcx, Mrx, Mcx_ip)
+    ora_oop = interaction_H1_3_out_of_plane(Pr, Pcy, Mrx, Cb, Mcx_ltb, phi_b_Mp)
+
+    # in-plane sub-check bit-exact
+    assert rep.in_plane.governing_equation == ora_ip.equation
+    assert math.isclose(rep.in_plane.demand_capacity_ratio, ora_ip.dcr, rel_tol=REL_TOL)
+    # out-of-plane Eq. H1-2 bit-exact
+    assert math.isclose(rep.out_of_plane_demand_capacity_ratio, ora_oop.dcr, rel_tol=REL_TOL)
+    # governing selection + overall pass consistent with the oracle pair
+    expected_overall = max(ora_ip.dcr, ora_oop.dcr)
+    assert math.isclose(rep.demand_capacity_ratio, expected_overall, rel_tol=REL_TOL)
+    assert rep.unity_check_passes is (ora_ip.passes and ora_oop.passes)
+    assert rep.governing_check == ("out_of_plane" if ora_oop.dcr >= ora_ip.dcr else "in_plane")
+
+
+def test_H1_3_guards_and_applicability() -> None:
+    with pytest.raises(ValueError, match="available_axial_in_plane_Pcx must be positive"):
+        compute_combined_strength_H1_3(100.0e3, 0.0, 2.0e6, 100.0e6, 600.0e6, 500.0e6, 1.0, 660.0e6)
+    with pytest.raises(ValueError, match="available_axial_out_of_plane_Pcy must be positive"):
+        compute_combined_strength_H1_3(100.0e3, 3.0e6, 0.0, 100.0e6, 600.0e6, 500.0e6, 1.0, 660.0e6)

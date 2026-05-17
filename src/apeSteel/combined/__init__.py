@@ -36,7 +36,12 @@ from apeSteel.combined.flexure_tension_H1_2 import (
     compute_combined_strength_H1_2,
     compute_Pey_H1_2,
 )
-from apeSteel.combined.single_axis_H1_3 import compute_combined_strength_H1_3
+from apeSteel.combined.single_axis_H1_3 import (
+    CombinedH13Report,
+    H13GoverningCheck,
+    compute_combined_strength_H1_3,
+    ensure_h1_3_applicable,
+)
 from apeSteel.combined.torsion_H3 import (
     compute_combined_strength_H3_2,
     compute_torsional_strength_rect_HSS_H3_1,
@@ -48,7 +53,9 @@ __all__ = [
     "OMEGA_TORSION_ASD",
     "PHI_TORSION_LRFD",
     "CombinedH1Report",
+    "CombinedH13Report",
     "CombinedLimitState",
+    "H13GoverningCheck",
     "compute_Cb_amplification_factor_H1_2",
     "compute_Pey_H1_2",
     "compute_combined_strength",
@@ -59,4 +66,5 @@ __all__ = [
     "compute_combined_strength_H3_2",
     "compute_torsional_strength_rect_HSS_H3_1",
     "compute_torsional_strength_round_HSS_H3_1",
+    "ensure_h1_3_applicable",
 ]
