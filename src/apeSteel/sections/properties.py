@@ -142,13 +142,21 @@ class SectionProperties:
         return self.compression_flange_thickness_tfc or self.flange_thickness_tf
 
     def resolved_Sxc(self) -> float:
-        return self.elastic_section_modulus_compression_flange_Sxc or self.elastic_section_modulus_strong_axis_Sx
+        return (
+            self.elastic_section_modulus_compression_flange_Sxc
+            or self.elastic_section_modulus_strong_axis_Sx
+        )
 
     def resolved_Sxt(self) -> float:
-        return self.elastic_section_modulus_tension_flange_Sxt or self.elastic_section_modulus_strong_axis_Sx
+        return (
+            self.elastic_section_modulus_tension_flange_Sxt
+            or self.elastic_section_modulus_strong_axis_Sx
+        )
 
     def resolved_Iyc(self) -> float:
-        return self.moment_of_inertia_compression_flange_about_y_Iyc or (self.moment_of_inertia_weak_axis_Iy / 2.0)
+        return self.moment_of_inertia_compression_flange_about_y_Iyc or (
+            self.moment_of_inertia_weak_axis_Iy / 2.0
+        )
 
     def resolved_iyc_over_iy(self) -> float:
         return self.resolved_Iyc() / self.moment_of_inertia_weak_axis_Iy

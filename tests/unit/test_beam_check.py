@@ -103,6 +103,8 @@ def test_stiffener_spacing_propagates_to_shear() -> None:
     r_unstiff = run_full_beam_check(e)
     r_stiff = run_full_beam_check(e, transverse_stiffener_spacing_a=0.5 * u.m)
     # Stiffened web -> higher kv -> higher Cv1 -> higher Vn
+    assert r_stiff.shear is not None
+    assert r_unstiff.shear is not None
     assert (
         r_stiff.shear.web_plate_buckling_coefficient_kv
         > r_unstiff.shear.web_plate_buckling_coefficient_kv

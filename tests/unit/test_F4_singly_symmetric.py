@@ -27,7 +27,6 @@ from apeSteel import (
 from apeSteel.flexure.F4 import (
     compute_FL_for_F4,
     compute_tension_flange_plastification_factor_Rpt,
-    compute_web_plastification_factor_Rpc,
 )
 
 TOL = 1e-9
@@ -45,24 +44,6 @@ def _ss_small_top_flange() -> SinglySymmetricISection:
         top_flange_thickness_tf_top=15.0,
         bot_flange_width_bf_bot=400.0,
         bot_flange_thickness_tf_bot=25.0,
-        web_clear_height_hw=1000.0,
-        web_thickness_tw=10.0,
-    )
-
-
-def _ss_large_top_flange() -> SinglySymmetricISection:
-    """Flip of the above - bot flange is small, top is large.
-
-    With bot in compression: Sxt < Sxc -> TFY active, FL = 0.7*Fy still.
-    With top in compression (the big flange):
-      Iyc/Iy > 0.23 -> Rpc/Rpt use F4-9/F4-16 (interpolation).
-      Sxt/Sxc < 1 -> Sxt/Sxc may or may not be below 0.7.
-    """
-    return SinglySymmetricISection(
-        top_flange_width_bf_top=400.0,
-        top_flange_thickness_tf_top=25.0,
-        bot_flange_width_bf_bot=200.0,
-        bot_flange_thickness_tf_bot=15.0,
         web_clear_height_hw=1000.0,
         web_thickness_tw=10.0,
     )
@@ -227,7 +208,7 @@ class TestF4OnSinglySymmetric:
 # Element wiring for SS
 # ---------------------------------------------------------------------------
 class TestElementSSWiring:
-    def _ss_element(self) -> "object":  # noqa: ANN401
+    def _ss_element(self) -> object:
         sec = _ss_small_top_flange()
         br = Bracing(
             unbraced_length_top_flange_Lb_top=2000.0,
@@ -237,34 +218,34 @@ class TestElementSSWiring:
         return sec.element(material=A992, construction="welded", bracing=br)
 
     def test_top_flange_method_uses_top_compression_properties(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         r_top = el.flexural_strength_F4_top_flange()  # type: ignore[attr-defined]
         # The result corresponds to "top in compression", so Sxt > Sxc
         assert r_top.Sxc_over_Sxt_ratio < 1.0
 
     def test_bot_flange_method_uses_bot_compression_properties(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         r_bot = el.flexural_strength_F4_bot_flange()  # type: ignore[attr-defined]
         # The result corresponds to "bot in compression", so Sxc > Sxt
         assert r_bot.Sxc_over_Sxt_ratio > 1.0
 
     def test_F2_raises_NotImplementedError_for_SS(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
             el.flexural_strength_F2_top_flange()  # type: ignore[attr-defined]
 
     def test_F3_raises_NotImplementedError_for_SS(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
             el.flexural_strength_F3_bot_flange()  # type: ignore[attr-defined]
 
     def test_F5_raises_NotImplementedError_for_SS(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
             el.flexural_strength_F5_top_flange()  # type: ignore[attr-defined]
 
     def test_G2_raises_NotImplementedError_for_SS(self) -> None:
-        el = self._ss_element()  # type: ignore[assignment]
+        el = self._ss_element()
         with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
             el.shear_strength_G2()  # type: ignore[attr-defined]
 

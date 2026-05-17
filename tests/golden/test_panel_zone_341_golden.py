@@ -75,7 +75,7 @@ def _section_properties_from_csv(kind: str, value_repr: str) -> SectionPropertie
     raise AssertionError(f"Unknown section kind: {kind!r}")
 
 
-@pytest.mark.golden
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "row",
     _load_rows(),

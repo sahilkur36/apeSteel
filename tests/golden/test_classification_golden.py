@@ -6,9 +6,18 @@ lambda, lambda_p, lambda_r, and the classification labels for every
 care about. 180 rows total at the time of writing - spans 5 sections,
 3 materials, 2 constructions, 3 code editions, 2 ductility levels.
 
-The CSV is committed to git so changes are diffable. If a calculator
-formula changes intentionally, regenerate the CSV (the generator
-script lives in the commit history) and review the diff.
+SCOPE: regression only, NOT correctness.  ``classification.csv`` is a
+snapshot of apeSteel's own classifier output; it detects *unintended
+drift* but cannot prove the limits are correct, since the expected
+values came from the code under test.  Correctness of every B4.1b /
+B4.1a / 341-D1 lambda_p / lambda_r coefficient is anchored independently
+by the hand-derived assertions in ``tests/unit/test_flexural_compactness_B4_1b.py``,
+``tests/unit/test_axial_compression_B4_1a.py`` and
+``tests/unit/test_seismic_compactness_341_D1.py``.
+
+The CSV is committed so changes are diffable.  To refresh after an
+intentional formula change, regenerate the CSV from the current output
+and review the diff (the independent unit tests must still pass).
 """
 
 from __future__ import annotations
@@ -66,7 +75,7 @@ def _parse_optional_float(value: str) -> float | None:
     return float(value)
 
 
-@pytest.mark.golden
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "row",
     _load_rows(),

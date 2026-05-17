@@ -36,7 +36,7 @@ def _isclose(a: float, b: float) -> bool:
     return math.isclose(a, b, rel_tol=TOL, abs_tol=TOL)
 
 
-@pytest.mark.golden
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "row",
     _load_rows(),
