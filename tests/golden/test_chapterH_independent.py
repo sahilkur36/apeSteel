@@ -18,8 +18,17 @@ import math
 
 import pytest
 
-from apeSteel.combined import compute_combined_strength_H1_1
-from tests.golden._chapterH_aisc_oracle import interaction_H1_1
+from apeSteel.combined import (
+    compute_Cb_amplification_factor_H1_2,
+    compute_combined_strength_H1_1,
+    compute_combined_strength_H1_2,
+    compute_Pey_H1_2,
+)
+from tests.golden._chapterH_aisc_oracle import (
+    Pey_H1_2,
+    cb_amplification_H1_2,
+    interaction_H1_1,
+)
 
 # Stronger than the doctrine's 1e-9 floor: the facade and the oracle
 # evaluate the *same* float expression with the same literals, so they
@@ -69,3 +78,59 @@ def test_H1_1_facade_guards_match_oracle() -> None:
         compute_combined_strength_H1_1(100.0, 900.0, 50.0, 0.0)
     with pytest.raises(ValueError, match="available_moment_y_Mcy must be positive"):
         compute_combined_strength_H1_1(100.0, 900.0, 0.0, 1.0, 50.0, 0.0)
+
+
+# --------------------------------------------------------------------------- #
+# §H1.2 - flexure + axial tension.  Same Eq. H1-1a/1b kernel (anchored
+# against the oracle's interaction_H1_1 with the tension Pc), plus the
+# Cb amplifier sqrt(1 + alpha*Pr/Pey).
+# --------------------------------------------------------------------------- #
+@pytest.mark.parametrize(("Pr", "Pc", "Mrx", "Mcx", "Mry", "Mcy"), _H1_1_CASES)
+def test_H1_2_interaction_matches_independent_oracle(
+    Pr: float,
+    Pc: float,
+    Mrx: float,
+    Mcx: float,
+    Mry: float,
+    Mcy: float,
+) -> None:
+    # §H1.2 reuses the §H1.1 unity equation with the tensile Pc.
+    rep = compute_combined_strength_H1_2(Pr, Pc, Mrx, Mcx, Mry, Mcy)
+    ora = interaction_H1_1(Pr, Pc, Mrx, Mcx, Mry, Mcy)
+    assert rep.governing_equation == ora.equation
+    assert math.isclose(rep.demand_capacity_ratio, ora.dcr, rel_tol=REL_TOL)
+    assert rep.unity_check_passes is ora.passes
+    # §H1.2 citation block (not §H1.1).
+    assert any(c.section == "H1.2" for c in rep.cited_clauses)
+
+
+_PEY_CASES: tuple[tuple[float, float, float, float], ...] = (
+    (500.0e3, 200000.0, 20.0e6, 4000.0),
+    (1.2e6, 200000.0, 45.0e6, 6000.0),
+    (0.0, 210000.0, 12.5e6, 3500.0),  # zero tension -> amplifier == 1.0
+    (2.0e6, 200000.0, 90.0e6, 8000.0),
+)
+
+
+@pytest.mark.parametrize(("Pr", "E", "Iy", "Lb"), _PEY_CASES)
+def test_H1_2_Pey_and_Cb_amplifier_match_independent_oracle(
+    Pr: float,
+    E: float,
+    Iy: float,
+    Lb: float,
+) -> None:
+    pey_fac = compute_Pey_H1_2(E, Iy, Lb)
+    pey_ora = Pey_H1_2(E, Iy, Lb)
+    assert math.isclose(pey_fac, pey_ora, rel_tol=REL_TOL)
+
+    cb_fac = compute_Cb_amplification_factor_H1_2(Pr, E, Iy, Lb, alpha=1.0)
+    cb_ora = cb_amplification_H1_2(Pr, pey_ora, alpha=1.0)
+    assert math.isclose(cb_fac, cb_ora, rel_tol=REL_TOL)
+    assert cb_fac >= 1.0
+
+
+def test_H1_2_amplifier_guards() -> None:
+    with pytest.raises(ValueError, match="unbraced_length_Lb must be positive"):
+        compute_Pey_H1_2(200000.0, 20.0e6, 0.0)
+    with pytest.raises(ValueError, match="must be >= 0"):
+        compute_Cb_amplification_factor_H1_2(-1.0, 200000.0, 20.0e6, 4000.0)

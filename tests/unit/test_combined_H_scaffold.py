@@ -16,9 +16,7 @@ import math
 import pytest
 
 from apeSteel.combined import (
-    compute_Cb_amplification_factor_H1_2,
     compute_combined_strength,
-    compute_combined_strength_H1_2,
     compute_combined_strength_H1_3,
     compute_combined_strength_H2,
     compute_combined_strength_H3_2,
@@ -26,7 +24,6 @@ from apeSteel.combined import (
     compute_torsional_strength_round_HSS_H3_1,
 )
 from apeSteel.combined._common import PHI_TORSION_LRFD
-from apeSteel.tension import compute_tension_yielding_strength_D2
 from tests.golden._chapterH_aisc_oracle import (
     cb_amplification_H1_2,
     interaction_H1_1,
@@ -45,12 +42,11 @@ _REL = 1e-12
 # H-0: every public calculator is still a NotImplementedError stub.
 # --------------------------------------------------------------------------- #
 def test_combined_and_tension_stubs_raise() -> None:
-    # §H1.1 is implemented from phase H-1 onward (see test_combined_H1_1.py
-    # and test_chapterH_independent.py); it is no longer a stub.
-    with pytest.raises(NotImplementedError, match="H-2"):
-        compute_combined_strength_H1_2(100.0, 900.0, 2400.0, 4800.0)
-    with pytest.raises(NotImplementedError, match="H-2"):
-        compute_Cb_amplification_factor_H1_2(100.0, 200000.0, 20.0e6, 4000.0)
+    # §H1.1 (phase H-1) and §H1.2 + the thin §D2(a) tension slice
+    # (phase H-2) are implemented; their behaviour is anchored in
+    # test_combined_H1_1.py / test_combined_H1_2.py /
+    # test_tension_yielding_D2.py / test_chapterH_independent.py.
+    # The remaining calculators below are still H-3..H-5 stubs.
     with pytest.raises(NotImplementedError, match="H-3"):
         compute_combined_strength_H1_3(300.0, 1500.0, 1500.0, 900.0, 1500.0, 1000.0, 1.14, 1500.0)
     with pytest.raises(NotImplementedError, match="H-4"):
@@ -63,8 +59,6 @@ def test_combined_and_tension_stubs_raise() -> None:
         compute_combined_strength_H3_2(100.0, 900.0, 200.0, 400.0, 50.0, 300.0, 30.0, 100.0)
     with pytest.raises(NotImplementedError, match="09_combined_H"):
         compute_combined_strength()
-    with pytest.raises(NotImplementedError, match="H-2"):
-        compute_tension_yielding_strength_D2(345.0, 5000.0)
 
 
 def test_phi_torsion_constant_is_0p90() -> None:

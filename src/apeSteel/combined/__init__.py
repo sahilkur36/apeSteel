@@ -34,6 +34,7 @@ from apeSteel.combined.flexure_axial_H1_1 import (
 from apeSteel.combined.flexure_tension_H1_2 import (
     compute_Cb_amplification_factor_H1_2,
     compute_combined_strength_H1_2,
+    compute_Pey_H1_2,
 )
 from apeSteel.combined.single_axis_H1_3 import compute_combined_strength_H1_3
 from apeSteel.combined.torsion_H3 import (
@@ -49,6 +50,7 @@ __all__ = [
     "CombinedH1Report",
     "CombinedLimitState",
     "compute_Cb_amplification_factor_H1_2",
+    "compute_Pey_H1_2",
     "compute_combined_strength",
     "compute_combined_strength_H1_1",
     "compute_combined_strength_H1_2",
