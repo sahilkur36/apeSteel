@@ -172,13 +172,7 @@ def mn_F4(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResu
         # Table B4.1b Case 16 (singly-symmetric web): re-derived here
         # independently of the library, capped at lrw.
         _den = 0.54 * (Mp / Myc) - 0.09
-        if _den > 0.0:
-            lpw = min(
-                (p.hc / p.hp) * math.sqrt(E / Fy) / _den**2,
-                lrw,
-            )
-        else:
-            lpw = lrw
+        lpw = min((p.hc / p.hp) * math.sqrt(E / Fy) / _den**2, lrw) if _den > 0.0 else lrw
     lpf, lrf, fcls = _classify_flange(p.lam_f, Fy, E, p.lam_w, construction)
 
     def _Rp(My: float) -> float:
