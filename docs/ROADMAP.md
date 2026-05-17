@@ -369,14 +369,15 @@ Sub-items:
   §H3.3 limiting `Fn` (Eq. H3-7/8/9; DG 9 warping out of scope).
   Oracle bit-exact (every regime/branch + guards) + hand calcs.
 
-- ⏳ **H-6 — Excel anchor.** **Blocked** — awaiting the engineer's
-  Chapter-H workbook filename (per doctrine the filename is not
-  assumed).  Faithful workbook dump to `tests/golden/data/`;
-  edition-independent quantities bit-matched at workbook precision;
-  any slender-`Pc`/`Mc` 360-22-vs-360-16 divergence documented and
-  bounded.  The independent stdlib oracle is in place and is the
-  primary correctness anchor; the Excel anchor is the secondary
-  external check and lands once the filename is provided.
+- ✅ **H-6 — Excel anchor.** `tools/dump_excel_workbook.py` dumps the
+  engineer-confirmed `Diseño Flexo-Compresion Viga I.xlsm` to
+  `tests/golden/data/_combined_excel_raw.json`;
+  `test_combined_excel_anchor.py` bit-matches apeSteel's §H1.1 DCR to
+  the workbook's `W!J29` (an independent Excel/VBA Eq. H1-1a/1b) at
+  `rel_tol=1e-9`, using the workbook's own `Pc`/`Mc` so the check is
+  isolated from any 360-16-vs-360-22 upstream difference.  The
+  workbook ships only the §H1.1 example; §H1.2/1.3/§H2/§H3 stay
+  oracle+hand-calc anchored (documented, not hidden).
 
 - ✅ **H-7 — Element/facade integration.** `Element.combined_strength_H1`
   resolves `Pc` from Chapter E + `Mcx` from the governing Chapter-F
@@ -386,17 +387,18 @@ Sub-items:
   design note status updated.
 
 **Done when:** all sub-items green; oracle + Excel-anchor suites pass;
-pyright + ruff clean; coverage ≥ 90 %.  **Engine + facade (H-0..H-5,
-H-7) DONE** — 1532 tests passing; pyright strict 0 errors; ruff +
-ruff-format clean; coverage 95 %; `combined/*` & `tension/*` at 100 %.
-**H-6 (Excel anchor) deferred** pending the workbook filename.
+pyright + ruff clean; coverage ≥ 90 %.  **DONE** (H-0..H-7) — 1534
+tests passing; pyright strict 0 errors; ruff + ruff-format clean;
+coverage 95 %; `combined/*` & `tension/*` at 100 %.  Engine + facade
+landed in PR #5; the H-6 Excel anchor (`Diseño Flexo-Compresion Viga
+I.xlsm` → `W!J29` §H1.1 bit-match) landed in the H-6 follow-up PR.
 
 ---
 
 ## After v1 — explicit non-goals (for later phases)
 
 - AISC §E (compression) — **done (Phase E above)**.
-- AISC §H (combined loading) — **underway (Phase H above)**.
+- AISC §H (combined loading) — **done (Phase H above)**.
 - AISC §D (tension) — full chapter (D2-2 net-section rupture, §J4 block
   shear) for braces / hangers; Phase H ships only the thin D2-1 slice
   that §H1.2 consumes.

@@ -1,14 +1,17 @@
 # Design note 09 — Combined forces per AISC 360-22 Chapter H
 
-> **Status:** Engine + facade **done** — H-0 (scaffold + oracle), H-1
+> **Status:** Phase H **complete** — H-0 (scaffold + oracle), H-1
 > (§H1.1), H-2 (§D2(a)+§H1.2), H-3 (§H1.3), H-4 (§H2), H-5 (§H3.1/3.2/3.3),
-> H-7 (`Element.combined_strength_H1` + `apeSteel` re-exports) all shipped
-> and green (1532 tests; pyright strict 0; ruff clean; `combined/*` &
-> `tension/*` 100 % covered).  **H-6 (Excel anchor) is deferred —
-> blocked on the engineer's Chapter-H workbook filename** (per doctrine
-> the filename is not assumed).  The independent stdlib oracle is the
-> primary correctness anchor and is complete; the Excel anchor is the
-> secondary external check and lands when the filename is supplied.
+> H-7 (`Element.combined_strength_H1` + `apeSteel` re-exports) merged in
+> PR #5; **H-6 (Excel anchor) done** — the engineer's
+> `Diseño Flexo-Compresion Viga I.xlsm` is dumped to
+> `tests/golden/data/_combined_excel_raw.json` (via
+> `tools/dump_excel_workbook.py`) and its §H1.1 worked example
+> (`W!J29` = Eq. H1-1a/1b) is bit-matched by
+> `test_combined_excel_anchor.py`.  1534 tests; pyright strict 0; ruff
+> clean; `combined/*` & `tension/*` 100 % covered.  The independent
+> stdlib oracle remains the primary anchor; the workbook is the
+> secondary external cross-check on §H1.1 (it ships only that clause).
 > **Drives:** `apeSteel.combined.*` and the thin `apeSteel.tension.*` slice.
 > **Spreadsheet source:** the engineer's Chapter-H Excel workbook (filename
 > to be confirmed before extraction — see §5; edition AISC 360-16, with the
@@ -254,13 +257,26 @@ Two independent anchors (unchanged doctrine):
    imports only `math`, re-derives every Chapter-H equation from the
    printed spec. The facade must match it **bit-exact** (`rel_tol=1e-9`).
    This is the ground truth.
-2. **Excel anchor** — a faithful dump of the engineer's Chapter-H
-   workbook to `tests/golden/data/`. Edition-independent quantities
-   (the H1 DCR, the H2 stress sum, the §H3.1 HSS `Fcr`/`Tn`) are
-   bit-matched at workbook precision (~2e-3, kgf-cm-tonne, `Fy = ksi·70.3`).
-   Any 360-22-vs-360-16 difference traceable to a slender `Pc`/`Mc` is
-   documented and bounded, never hidden. **The exact workbook filename is
-   confirmed with the engineer before extraction (phase H-6).**
+2. **Excel anchor** — `tools/dump_excel_workbook.py` faithfully dumps
+   the engineer-confirmed `Diseño Flexo-Compresion Viga I.xlsm`
+   (sheets `W` + `Seccion Tipo I`; the embedded AISC shapes database
+   is excluded) to `tests/golden/data/_combined_excel_raw.json`.
+   `test_combined_excel_anchor.py` reads the workbook's **own**
+   `Pr`/`Pc`/`Mr`/`Mc` (`W!J27`/`J3`/`J28`/`J4`) and bit-matches
+   apeSteel's §H1.1 DCR to the workbook's `W!J29`
+   (`=IF(J27/J3>=0.2, J27/J3+8/9*(J28/J4), J27/(2*J3)+J28/J4)` — an
+   independent Excel/VBA transcription of Eq. H1-1a/H1-1b).  Because
+   `Pc`/`Mc` are taken **as computed by the workbook** (not recomputed
+   by apeSteel), the comparison is fully isolated from any
+   360-16-vs-360-22 difference in the upstream strengths, and the
+   interaction equation itself is edition-independent — so agreement is
+   asserted at `rel_tol = 1e-9` (the only error source is the lossless
+   JSON double round-trip), not the looser ~2e-3 the Chapter-E
+   geometry anchor needed.  The workbook is intentionally basic: it
+   ships a **single §H1.1 worked example** (the H1-1b low-axial
+   branch); §H1.2/§H1.3/§H2/§H3 are not in it and remain anchored
+   bit-exact against the stdlib oracle (their primary anchor) plus
+   reviewer hand calcs — stated plainly, not hidden.
 
 Plus reviewer-signable hand calcs in `tests/unit/`.
 
