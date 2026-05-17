@@ -18,7 +18,6 @@ import pytest
 from apeSteel.combined import (
     compute_Cb_amplification_factor_H1_2,
     compute_combined_strength,
-    compute_combined_strength_H1_1,
     compute_combined_strength_H1_2,
     compute_combined_strength_H1_3,
     compute_combined_strength_H2,
@@ -46,8 +45,8 @@ _REL = 1e-12
 # H-0: every public calculator is still a NotImplementedError stub.
 # --------------------------------------------------------------------------- #
 def test_combined_and_tension_stubs_raise() -> None:
-    with pytest.raises(NotImplementedError, match="09_combined_H"):
-        compute_combined_strength_H1_1(180.0, 900.0, 2400.0, 4800.0)
+    # §H1.1 is implemented from phase H-1 onward (see test_combined_H1_1.py
+    # and test_chapterH_independent.py); it is no longer a stub.
     with pytest.raises(NotImplementedError, match="H-2"):
         compute_combined_strength_H1_2(100.0, 900.0, 2400.0, 4800.0)
     with pytest.raises(NotImplementedError, match="H-2"):

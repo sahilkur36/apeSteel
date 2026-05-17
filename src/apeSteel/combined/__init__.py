@@ -27,7 +27,10 @@ from apeSteel.combined._common import (
     CombinedLimitState,
 )
 from apeSteel.combined.combined_strength import compute_combined_strength
-from apeSteel.combined.flexure_axial_H1_1 import compute_combined_strength_H1_1
+from apeSteel.combined.flexure_axial_H1_1 import (
+    CombinedH1Report,
+    compute_combined_strength_H1_1,
+)
 from apeSteel.combined.flexure_tension_H1_2 import (
     compute_Cb_amplification_factor_H1_2,
     compute_combined_strength_H1_2,
@@ -43,6 +46,7 @@ from apeSteel.combined.unsymmetric_H2 import compute_combined_strength_H2
 __all__ = [
     "OMEGA_TORSION_ASD",
     "PHI_TORSION_LRFD",
+    "CombinedH1Report",
     "CombinedLimitState",
     "compute_Cb_amplification_factor_H1_2",
     "compute_combined_strength",
