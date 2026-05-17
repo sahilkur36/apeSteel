@@ -20,6 +20,8 @@ from apeSteel.compression import compute_compression_strength
 from apeSteel.core import units as u
 from apeSteel.sections.geometry import DoublySymmetricISection
 from apeSteel.sections.geometry.channel_section import ChannelSection
+from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
+from apeSteel.sections.geometry.round_hss import RoundHSS
 from apeSteel.sections.geometry.tee_section import TeeSection
 from tests.golden._chapterE_aisc_oracle import (
     OracleElement,
@@ -120,6 +122,43 @@ def test_W_compression_matches_independent_AISC(
     assert math.isclose(r.effective_area_Ae, o.Ae, rel_tol=REL_TOL)
     assert math.isclose(r.nominal_compressive_strength_Pn, o.Pn, rel_tol=REL_TOL)
     assert r.governing_compression_limit_state == o.governing
+
+
+# --- Closed HSS (§E3 only; round HSS exercises §E7.2(c)) -------------------
+_RECT_HSS = RectangularHSS(depth_H=250 * u.mm, width_B=150 * u.mm, wall_thickness_t=8 * u.mm)
+_RECT_HSS_SLEND = RectangularHSS(depth_H=400 * u.mm, width_B=400 * u.mm, wall_thickness_t=6 * u.mm)
+_ROUND_HSS = RoundHSS(outside_diameter_D=150 * u.mm, wall_thickness_t=8 * u.mm)
+_ROUND_HSS_SLEND = RoundHSS(outside_diameter_D=500 * u.mm, wall_thickness_t=5 * u.mm)
+
+_HSS_CASES = [
+    ("rectHSS A992 short", _RECT_HSS, A992, 2.0),
+    ("rectHSS A992 long", _RECT_HSS, A992, 8.0),
+    ("rectHSS-slender A992", _RECT_HSS_SLEND, A992, 5.0),
+    ("rectHSS-slender S355", _RECT_HSS_SLEND, S355, 7.0),
+    ("roundHSS A992 short", _ROUND_HSS, A992, 2.0),
+    ("roundHSS A992 long", _ROUND_HSS, A992, 7.0),
+    ("roundHSS-slender A992", _ROUND_HSS_SLEND, A992, 6.0),
+    ("roundHSS-slender S460", _ROUND_HSS_SLEND, S460, 6.0),
+]
+
+
+@pytest.mark.parametrize(
+    ("name", "section", "material", "L_m"), _HSS_CASES, ids=[c[0] for c in _HSS_CASES]
+)
+def test_HSS_compression_matches_independent_AISC(
+    name: str,
+    section: RectangularHSS | RoundHSS,
+    material: SteelMaterial,
+    L_m: float,
+) -> None:
+    sp = section.compute_compression_properties(material, "welded")
+    lc = L_m * u.m
+    r = compute_compression_strength(sp, material, lc, lc, lc)
+    o = chapter_E_strength(_to_oracle(sp, material), lc, lc, lc)
+    assert math.isclose(r.governing_critical_stress_Fcr, o.Fcr, rel_tol=REL_TOL)
+    assert math.isclose(r.effective_area_Ae, o.Ae, rel_tol=REL_TOL)
+    assert math.isclose(r.nominal_compressive_strength_Pn, o.Pn, rel_tol=REL_TOL)
+    assert r.governing_compression_limit_state == "flexural_buckling"
 
 
 # --- Singly-symmetric §E4-3 flexural-torsional: tee & channel --------------

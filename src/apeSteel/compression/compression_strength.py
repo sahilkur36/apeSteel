@@ -159,6 +159,11 @@ def compute_compression_strength(
     rx: float = section_properties.radius_of_gyration_x_rx
     ry: float = section_properties.radius_of_gyration_y_ry
 
+    # Closed HSS are torsionally stiff: AISC routes them through §E3
+    # only (§E4 torsional / FT is not a governing limit state).
+    if section_properties.section_kind in ("rectangular_HSS", "round_HSS"):
+        evaluate_E4 = False
+
     lc_over_rx: float = compute_member_slenderness_Lc_over_r(effective_length_x_Lcx, rx)
     lc_over_ry: float = compute_member_slenderness_Lc_over_r(effective_length_y_Lcy, ry)
 

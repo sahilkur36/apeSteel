@@ -43,6 +43,8 @@ from apeSteel.compression.torsional_flexural_E4 import (
 from apeSteel.core import units as u
 from apeSteel.sections.geometry import DoublySymmetricISection
 from apeSteel.sections.geometry.channel_section import ChannelSection
+from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
+from apeSteel.sections.geometry.round_hss import RoundHSS
 from apeSteel.sections.geometry.tee_section import TeeSection
 
 _RAW = Path(__file__).parent / "data" / "_compression_excel_raw.json"
@@ -207,3 +209,46 @@ def test_channel_geometry_matches_workbook() -> None:
     # Channel shear-centre x-offset xo (workbook B53, already mm).
     assert math.isclose(sp.shear_centre_x_xo, _f(c, "B53"), rel_tol=2e-3)
     assert math.isclose(sp.flexural_constant_H, _f(c, "B56"), rel_tol=2e-3)
+
+
+# ---------------------------------------------------------------------------
+# HSS: the workbook's rect & round HSS examples are NON-slender, so
+# 360-16 Q == 360-22 (no area reduction) and the FULL governing phi*Pn
+# is edition-independent -> a bit-anchor (workbook precision ~2e-3).
+# Both run at Fy = 50 ksi (B16 = 50*70.3) -> A992.
+# ---------------------------------------------------------------------------
+def test_rect_HSS_matches_workbook() -> None:
+    c = _sheet_cells("HSS")
+    H, B, t = (_f(c, x) for x in ("B26", "B27", "B28"))
+    L_m = _f(c, "B22")
+    kx, ky = _f(c, "B23"), _f(c, "B24")
+    sec = RectangularHSS(depth_H=H * u.mm, width_B=B * u.mm, wall_thickness_t=t * u.mm)
+    sp = sec.compute_compression_properties(A992, "welded")
+    # Geometry (workbook B43 Ag cm^2, B45 rx cm, B47 ry cm).
+    assert math.isclose(sp.gross_area_Ag, _f(c, "B43") * _CM2_TO_MM2, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_x_rx, _f(c, "B45") * _CM_TO_MM, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_y_ry, _f(c, "B47") * _CM_TO_MM, rel_tol=2e-3)
+    # Non-slender -> full phi*Pn is edition-independent.
+    r = compute_compression_strength_from_K_L(
+        sp, A992, kx, L_m * u.m, ky, L_m * u.m, 1.0, L_m * u.m
+    )
+    assert not r.section_has_slender_element
+    phi_pn_tf = r.phi_strength_LRFD / (u.kgf * 1000.0)
+    assert math.isclose(phi_pn_tf, _f(c, "J3"), rel_tol=3e-3)
+
+
+def test_round_HSS_matches_workbook() -> None:
+    c = _sheet_cells("HSS T")
+    D, t = _f(c, "B25"), _f(c, "B26")
+    L_m = _f(c, "B22")
+    k = _f(c, "B23")
+    sec = RoundHSS(outside_diameter_D=D * u.mm, wall_thickness_t=t * u.mm)
+    sp = sec.compute_compression_properties(A992, "welded")
+    # Geometry (workbook B38 Ag cm^2, B40 r cm).
+    assert math.isclose(sp.gross_area_Ag, _f(c, "B38") * _CM2_TO_MM2, rel_tol=2e-3)
+    assert math.isclose(sp.radius_of_gyration_x_rx, _f(c, "B40") * _CM_TO_MM, rel_tol=2e-3)
+    # Non-slender D/t -> §E7.2(c) factor = 1; phi*Pn edition-independent.
+    r = compute_compression_strength_from_K_L(sp, A992, k, L_m * u.m, k, L_m * u.m, k, L_m * u.m)
+    assert not r.section_has_slender_element
+    phi_pn_tf = r.phi_strength_LRFD / (u.kgf * 1000.0)
+    assert math.isclose(phi_pn_tf, _f(c, "C50"), rel_tol=3e-3)

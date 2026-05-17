@@ -183,6 +183,8 @@ def chapter_E_strength(
 ) -> OracleResult:
     """Independent AISC 360-22 ``Pn`` (governing Fcr * Ae)."""
     Fy, E, G = p.Fy, p.E, p.G
+    if p.section_kind in ("rectangular_HSS", "round_HSS"):
+        evaluate_E4 = False  # closed sections: §E3 only
     if e5_case is not None and p.section_kind == "single_angle":
         assert e5_L is not None
         lam = modified_slenderness_E5(e5_L / p.rx, e5_case)

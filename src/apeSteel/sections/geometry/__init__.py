@@ -19,6 +19,8 @@ from apeSteel.sections.geometry.channel_section import ChannelSection
 from apeSteel.sections.geometry.doubly_symmetric_i_section import (
     DoublySymmetricISection,
 )
+from apeSteel.sections.geometry.rectangular_hss import RectangularHSS
+from apeSteel.sections.geometry.round_hss import RoundHSS
 from apeSteel.sections.geometry.singly_symmetric_i_section import (
     CompressionFlangeSide,
     SinglySymmetricISection,
@@ -35,6 +37,8 @@ __all__ = [
     "CompressionFlangeSide",
     "DoublySymmetricISection",
     "ISection",
+    "RectangularHSS",
+    "RoundHSS",
     "SinglySymmetricISection",
     "TeeSection",
 ]
