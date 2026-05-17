@@ -71,9 +71,7 @@ if TYPE_CHECKING:
     from apeSteel.core.materials import SteelMaterial
     from apeSteel.sections.geometry import (
         CompressionFlangeSide,
-        DoublySymmetricISection,
         ISection,
-        SinglySymmetricISection,
     )
     from apeSteel.sections.properties import SectionProperties
 
@@ -530,6 +528,7 @@ class Element:
             live_load_limit_denominator=live_load_limit_denominator,
             total_load_limit_denominator=total_load_limit_denominator,
         )
+
     def serviceability_simply_supported_point_load_midspan(
         self,
         span_length_L: float,

@@ -70,7 +70,7 @@ testpaths = ["tests"]
 markers = [
     "fast: quick unit tests that run in pre-commit",
     "slow: slower tests, run only in CI",
-    "golden: golden-file regression tests pinned against the original spreadsheet",
+    "regression: snapshot tests pinning apeSteel's own output to catch unintended drift (regression-only, NOT a correctness oracle; see tests/golden/test_chapterF_independent.py for the independent AISC anchor)",
 ]
 
 # ---------------------------------------------------------------------------

@@ -73,7 +73,7 @@ GOLDEN_ATTRIBUTES: list[str] = [
 ]
 
 
-@pytest.mark.golden
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "row",
     _load_golden_rows(),

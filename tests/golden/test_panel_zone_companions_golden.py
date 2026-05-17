@@ -71,7 +71,7 @@ def _section_props(kind: str, value_repr: str) -> SectionProperties:
     raise AssertionError(f"Unknown section kind: {kind!r}")
 
 
-@pytest.mark.golden
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "row",
     _load_rows(),

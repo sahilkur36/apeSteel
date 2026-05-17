@@ -95,7 +95,7 @@ class SinglySymmetricISection:
     # ------------------------------------------------------------------ #
     # Section-property computation
     # ------------------------------------------------------------------ #
-    def compute_section_properties(
+    def compute_section_properties(  # noqa: PLR0915 - one sequential closed-form derivation; splitting risks the verified math
         self,
         compression_flange_side: CompressionFlangeSide = "top",
     ) -> SectionProperties:
@@ -138,16 +138,19 @@ class SinglySymmetricISection:
         y_c = (At * yt_centroid + Aw * yw_centroid + Ab * yb_centroid) / Ag
 
         # Distance between flange centroids (used by J, Cw, ho)
-        ho: float = (tft / 2.0 + hw + tfb / 2.0)
+        ho: float = tft / 2.0 + hw + tfb / 2.0
 
         # --- Strong-axis inertia about centroid (parallel-axis) ---
         It_self = bft * tft**3 / 12.0
         Iw_self = tw * hw**3 / 12.0
         Ib_self = bfb * tfb**3 / 12.0
         Ix: float = (
-            It_self + At * (yt_centroid - y_c) ** 2
-            + Iw_self + Aw * (yw_centroid - y_c) ** 2
-            + Ib_self + Ab * (yb_centroid - y_c) ** 2
+            It_self
+            + At * (yt_centroid - y_c) ** 2
+            + Iw_self
+            + Aw * (yw_centroid - y_c) ** 2
+            + Ib_self
+            + Ab * (yb_centroid - y_c) ** 2
         )
 
         # Elastic moduli to extreme fibers
@@ -179,14 +182,8 @@ class SinglySymmetricISection:
 
         # Zx = first moment of area about the plastic NA (both halves are
         # equal in area so we sum |y - dPNA|*dA over the section).
-        Zx_above = (
-            At * (yt_centroid - dPNA)
-            + tw * (tfb + hw - dPNA) ** 2 / 2.0
-        )
-        Zx_below = (
-            Ab * (dPNA - yb_centroid)
-            + tw * (dPNA - tfb) ** 2 / 2.0
-        )
+        Zx_above = At * (yt_centroid - dPNA) + tw * (tfb + hw - dPNA) ** 2 / 2.0
+        Zx_below = Ab * (dPNA - yb_centroid) + tw * (dPNA - tfb) ** 2 / 2.0
         Zx: float = Zx_above + Zx_below
 
         # --- Weak-axis inertia (about y-axis through web centerline) ---
@@ -197,7 +194,7 @@ class SinglySymmetricISection:
         # Sy referenced to the larger flange width / 2 (most-stressed fiber)
         max_half_flange_width = max(bft, bfb) / 2.0
         Sy: float = Iy / max_half_flange_width
-        Zy: float = (tft * bft**2 / 4.0 + tfb * bfb**2 / 4.0 + hw * tw**2 / 4.0)
+        Zy: float = tft * bft**2 / 4.0 + tfb * bfb**2 / 4.0 + hw * tw**2 / 4.0
         ry: float = math.sqrt(Iy / Ag)
 
         # --- Torsional and warping constants (open section approx) ---

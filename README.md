@@ -20,18 +20,18 @@ written in modern Python with an emphasis on:
 
 | Area | AISC ref | Implemented |
 | --- | --- | --- |
-| Section geometry (doubly-symmetric I, plate girder) | — | planned |
-| AISC v16 catalog (W, M, S, HP, C, MC, L, WT, MT, ST, HSS, Pipe) | Manual Tables 1-1 … 1-14 | planned |
-| European catalog (IPE, IPEA, HE-A/B/M) | EN 10365 | planned |
-| Flexural classification | 360 §B4.1b | planned |
-| Seismic compactness | 341 §D1.1 | planned |
-| Flexure — compact doubly-symmetric I | 360 §F2 | planned |
-| Flexure — non-compact / slender flange | 360 §F3 | planned |
-| Flexure — singly-symmetric I | 360 §F4 | planned |
-| Flexure — slender web plate girder | 360 §F5 | planned |
-| Shear (incl. tension-field action) | 360 §G2 | planned |
-| Serviceability deflections | — | planned |
-| Panel-zone column-flange tension check | 341 §E3.6e | planned |
+| Section geometry (doubly-symmetric I, plate girder) | — | ✅ shipped |
+| AISC v16 catalog (W, M, S, HP, C, MC, L, WT, MT, ST, HSS, Pipe) | Manual Tables 1-1 … 1-14 | ✅ shipped |
+| European catalog (IPE, IPEA, HE-A/B/M) | EN 10365 | ✅ shipped |
+| Flexural classification | 360 §B4.1b | ✅ shipped |
+| Seismic compactness | 341 §D1.1 | ✅ shipped |
+| Flexure — compact doubly-symmetric I | 360 §F2 | ✅ shipped |
+| Flexure — non-compact / slender flange | 360 §F3 | ✅ shipped |
+| Flexure — singly-symmetric I | 360 §F4 | ✅ shipped |
+| Flexure — slender web plate girder | 360 §F5 | ✅ shipped |
+| Shear (incl. tension-field action) | 360 §G2 | ✅ shipped |
+| Serviceability deflections | — | ✅ shipped |
+| Panel-zone column-flange tension check | 341 §E3.6e | ✅ shipped |
 
 Out of scope (for now): compression (E), tension (D), combined loading (H),
 composite members (I), connections (J/K) — these will be added in later
@@ -58,8 +58,13 @@ port from the original Excel sheets covers first.
    Inside short calculator functions, the bare AISC symbol (`Lp`, `Mp`, `Fy`)
    is allowed because that's what the code citation says.
 
-4. **Static-typing first.** pyright in strict mode. No `Any`. No implicit
-   `Optional`. Frozen dataclasses with `slots=True` for every result.
+4. **Static-typing first.** pyright runs in strict mode and the package
+   itself is `Any`-free with no implicit `Optional`; frozen dataclasses
+   with `slots=True` for every result. The only configured allowance is
+   that the `reportUnknown*` family is downgraded to warnings, because
+   numpy / pandas / pytest ship incomplete stubs — `pyright` reports
+   **0 errors** (CI enforces this), with the remaining warnings confined
+   to third-party-stub noise.
 
 5. **Citation discipline.** Every calculator carries a list of
    `AISCClauseReference(spec="AISC 360-22", section="F2.2", equation="F2-5",
@@ -164,10 +169,22 @@ APIs are first-class and stay in sync.
 
 ## Status
 
-Phases 0 – 3 of the roadmap shipped (scaffolding, section geometry +
-properties, classification, F2 flexural strength).  Phase 4+ (F3 / F5,
-shear, serviceability, panel zone) is upcoming — see
-[`docs/ROADMAP.md`](docs/ROADMAP.md) for the phased port plan.
+Phases 0 – 8c plus the Phase 9 singly-symmetric §F4 work have shipped:
+section geometry + properties, B4.1b/B4.1a classification, AISC 341
+seismic compactness, flexure §F2/§F3/§F4/§F5, §G2 shear, serviceability
+deflections, and the panel-zone / doubler-plate / continuity-plate
+checks. The `BeamCheck` facade routes a section to the correct flexural
+chapter automatically. See [`docs/ROADMAP.md`](docs/ROADMAP.md) for the
+phased port plan; chapters E/D/H/I/J/K remain out of scope.
+
+**Testing model.** The 1,300+ regression tests (`-m regression`) are
+*snapshots of apeSteel's own output* — they catch unintended drift, not
+formula errors. Numerical correctness of Chapter F is anchored
+*independently* by
+[`tests/golden/test_chapterF_independent.py`](tests/golden/test_chapterF_independent.py),
+which re-derives Mn from AISC 360-22 with no `apeSteel.flexure` import;
+classification limits are anchored by hand-derived unit tests. CI gates
+on `ruff`, `ruff format`, `pyright`, and `pytest` (coverage ≥ 90 %).
 
 ## License
 

@@ -229,8 +229,7 @@ def compute_FL_for_F4(
 ) -> float:
     """AISC Eq. F4-6a / F4-6b."""
     ratio = (
-        elastic_section_modulus_tension_flange_Sxt
-        / elastic_section_modulus_compression_flange_Sxc
+        elastic_section_modulus_tension_flange_Sxt / elastic_section_modulus_compression_flange_Sxc
     )
     if ratio >= F4_FL_FRACTION_OF_FY_0p7:
         return F4_FL_FRACTION_OF_FY_0p7 * yield_stress_Fy
@@ -246,9 +245,7 @@ def compute_Lp_for_F4(
 ) -> float:
     """AISC Eq. F4-7."""
     return (
-        F4_LP_COEFFICIENT_1p1
-        * effective_radius_rt
-        * math.sqrt(elastic_modulus_E / yield_stress_Fy)
+        F4_LP_COEFFICIENT_1p1 * effective_radius_rt * math.sqrt(elastic_modulus_E / yield_stress_Fy)
     )
 
 
@@ -262,8 +259,7 @@ def compute_Lr_for_F4(
 ) -> float:
     """AISC Eq. F4-8."""
     J_term = torsional_constant_J / (
-        elastic_section_modulus_compression_flange_Sxc
-        * distance_between_flange_centroids_ho
+        elastic_section_modulus_compression_flange_Sxc * distance_between_flange_centroids_ho
     )
     inner_sqrt = math.sqrt(
         J_term**2 + F4_LR_INSIDE_SQRT_6p76 * (limit_stress_FL / elastic_modulus_E) ** 2
@@ -294,10 +290,7 @@ def compute_Fcr_for_F4(
     J_factor = (
         F4_FCR_J_COEFFICIENT_0p078
         * torsional_constant_J
-        / (
-            elastic_section_modulus_compression_flange_Sxc
-            * distance_between_flange_centroids_ho
-        )
+        / (elastic_section_modulus_compression_flange_Sxc * distance_between_flange_centroids_ho)
     )
     return (
         Cb
@@ -322,8 +315,7 @@ def compute_inelastic_LTB_moment_Mn_F4_2(
     )
     raw = lateral_torsional_buckling_modification_factor_Cb * (
         plastic_anchor_moment_Rpc_times_Myc
-        - (plastic_anchor_moment_Rpc_times_Myc - limit_anchor_moment_FL_times_Sxc)
-        * fraction
+        - (plastic_anchor_moment_Rpc_times_Myc - limit_anchor_moment_FL_times_Sxc) * fraction
     )
     return min(raw, plastic_anchor_moment_Rpc_times_Myc)
 
@@ -339,9 +331,10 @@ def compute_compression_flange_local_buckling_moment_Mn_F4_13(
     fraction = (flange_slenderness_ratio_lambda_f - flange_compact_limit_lambda_pf) / (
         flange_noncompact_limit_lambda_rf - flange_compact_limit_lambda_pf
     )
-    return plastic_anchor_moment_Rpc_times_Myc - (
-        plastic_anchor_moment_Rpc_times_Myc - limit_anchor_moment_FL_times_Sxc
-    ) * fraction
+    return (
+        plastic_anchor_moment_Rpc_times_Myc
+        - (plastic_anchor_moment_Rpc_times_Myc - limit_anchor_moment_FL_times_Sxc) * fraction
+    )
 
 
 def compute_compression_flange_local_buckling_moment_Mn_F4_14(
@@ -624,6 +617,8 @@ compute_flexural_strength_F4_doubly_symmetric_noncompact_web = compute_flexural_
 
 
 __all__ = [
+    "F4_RT_AW_DIVISOR_6",
+    "F4_RT_DENOMINATOR_COEFFICIENT_12",
     "F4_CFLB_ELASTIC_COEFFICIENT_0p9",
     "F4_FCR_J_COEFFICIENT_0p078",
     "F4_FL_FRACTION_OF_FY_0p7",
@@ -632,8 +627,6 @@ __all__ = [
     "F4_LR_COEFFICIENT_1p95",
     "F4_LR_INSIDE_SQRT_6p76",
     "F4_MP_CAP_FY_SX_COEFFICIENT_1p6",
-    "F4_RT_AW_DIVISOR_6",
-    "F4_RT_DENOMINATOR_COEFFICIENT_12",
     "FlexureF4Report",
     "compute_FL_for_F4",
     "compute_Fcr_for_F4",

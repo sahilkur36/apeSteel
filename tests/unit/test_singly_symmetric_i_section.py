@@ -57,7 +57,17 @@ def _hand_areas_and_centroid() -> dict[str, float]:
     # = (3097500 + 5250000 + 125000) / 23000
     # = 8472500 / 23000 = 368.3695652...
     d = hw + tft + tfb  # 1040
-    return {"Ag": Ag, "y_c": y_c, "d": d, "At": At, "Aw": Aw, "Ab": Ab, "yt": yt, "yw": yw, "yb": yb}
+    return {
+        "Ag": Ag,
+        "y_c": y_c,
+        "d": d,
+        "At": At,
+        "Aw": Aw,
+        "Ab": Ab,
+        "yt": yt,
+        "yw": yw,
+        "yb": yb,
+    }
 
 
 class TestHandValues:
@@ -75,9 +85,12 @@ class TestHandValues:
         yt, yw, yb = e["yt"], e["yw"], e["yb"]
         y_c = e["y_c"]
         Ix_expected = (
-            (200.0 * 15.0**3) / 12.0 + At * (yt - y_c) ** 2
-            + (10.0 * 1000.0**3) / 12.0 + Aw * (yw - y_c) ** 2
-            + (400.0 * 25.0**3) / 12.0 + Ab * (yb - y_c) ** 2
+            (200.0 * 15.0**3) / 12.0
+            + At * (yt - y_c) ** 2
+            + (10.0 * 1000.0**3) / 12.0
+            + Aw * (yw - y_c) ** 2
+            + (400.0 * 25.0**3) / 12.0
+            + Ab * (yb - y_c) ** 2
         )
         sec = _hand_section()
         sp = sec.compute_section_properties("top")
@@ -149,14 +162,18 @@ class TestDoublySymmetricEquivalence:
         )
         return ds, ss
 
-    def test_areas_and_depth(self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]) -> None:
+    def test_areas_and_depth(
+        self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]
+    ) -> None:
         ds, ss = equal_flanges
         sp_ds = ds.compute_section_properties()
         sp_ss = ss.compute_section_properties("top")
         assert math.isclose(sp_ss.gross_area_Ag, sp_ds.gross_area_Ag, rel_tol=TOL)
         assert math.isclose(sp_ss.overall_depth_d, sp_ds.overall_depth_d, rel_tol=TOL)
 
-    def test_strong_axis(self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]) -> None:
+    def test_strong_axis(
+        self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]
+    ) -> None:
         ds, ss = equal_flanges
         sp_ds = ds.compute_section_properties()
         sp_ss = ss.compute_section_properties("top")
@@ -176,7 +193,9 @@ class TestDoublySymmetricEquivalence:
             rel_tol=TOL,
         )
 
-    def test_J_and_Cw_and_ho(self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]) -> None:
+    def test_J_and_Cw_and_ho(
+        self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]
+    ) -> None:
         ds, ss = equal_flanges
         sp_ds = ds.compute_section_properties()
         sp_ss = ss.compute_section_properties("top")
@@ -191,7 +210,7 @@ class TestDoublySymmetricEquivalence:
     def test_hc_equals_hw_for_doubly_symmetric(
         self, equal_flanges: tuple[DoublySymmetricISection, SinglySymmetricISection]
     ) -> None:
-        ds, ss = equal_flanges
+        _ds, ss = equal_flanges
         sp_ss = ss.compute_section_properties("top")
         # For DS-equivalent SS, hc should equal hw
         assert math.isclose(sp_ss.resolved_hc(), ss.web_clear_height_hw, rel_tol=TOL)
@@ -208,9 +227,7 @@ class TestDoublySymmetricEquivalence:
         """
         _, ss = equal_flanges
         sp_ss = ss.compute_section_properties("top")
-        expected_Iyc = (
-            ss.top_flange_thickness_tf_top * ss.top_flange_width_bf_top**3 / 12.0
-        )
+        expected_Iyc = ss.top_flange_thickness_tf_top * ss.top_flange_width_bf_top**3 / 12.0
         assert math.isclose(sp_ss.resolved_Iyc(), expected_Iyc, rel_tol=TOL)
         ratio = sp_ss.resolved_iyc_over_iy()
         assert 0.49 < ratio < 0.50
