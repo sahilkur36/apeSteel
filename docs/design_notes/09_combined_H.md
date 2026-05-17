@@ -1,8 +1,14 @@
 # Design note 09 — Combined forces per AISC 360-22 Chapter H
 
-> **Status:** H-0 scaffold + independent oracle done (stubs raise
-> `NotImplementedError`; `tests/golden/_chapterH_aisc_oracle.py` complete;
-> design note + ROADMAP Phase H landed). Engine phases H-1..H-7 follow.
+> **Status:** Engine + facade **done** — H-0 (scaffold + oracle), H-1
+> (§H1.1), H-2 (§D2(a)+§H1.2), H-3 (§H1.3), H-4 (§H2), H-5 (§H3.1/3.2/3.3),
+> H-7 (`Element.combined_strength_H1` + `apeSteel` re-exports) all shipped
+> and green (1532 tests; pyright strict 0; ruff clean; `combined/*` &
+> `tension/*` 100 % covered).  **H-6 (Excel anchor) is deferred —
+> blocked on the engineer's Chapter-H workbook filename** (per doctrine
+> the filename is not assumed).  The independent stdlib oracle is the
+> primary correctness anchor and is complete; the Excel anchor is the
+> secondary external check and lands when the filename is supplied.
 > **Drives:** `apeSteel.combined.*` and the thin `apeSteel.tension.*` slice.
 > **Spreadsheet source:** the engineer's Chapter-H Excel workbook (filename
 > to be confirmed before extraction — see §5; edition AISC 360-16, with the
