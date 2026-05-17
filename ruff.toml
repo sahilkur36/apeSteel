@@ -1,0 +1,60 @@
+# ruff configuration for apeSteel.
+# See docs/CODING_STYLE.md for the rationale of every choice here.
+
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+exclude = ["to_review"]
+
+[lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+    "UP",
+    "B",
+    "PL",
+    "RUF",
+    "ANN",
+    "SIM",
+    "TCH",
+    "PT",
+    "N",
+]
+ignore = [
+    # AISC naming convention - verbose name + AISC symbol suffix
+    # (flange_width_bf, limiting_length_plastic_Lp, phi_LRFD, ...).
+    "N802",
+    "N803",
+    "N806",
+    "N813",
+    "N815",
+    "N816",
+    "N999",
+    "PLR0913",
+    "PLR2004",
+    "ANN401",
+    # Ambiguous-Unicode rules. apeSteel deliberately uses engineering
+    # symbols inside docstrings, strings, and comments. The AISC v16
+    # missing-value marker is U+2013 EN DASH, baked into the shipped
+    # CSV; column names contain alpha and multiplication-sign characters.
+    "RUF001",
+    "RUF002",
+    "RUF003",
+]
+
+[lint.per-file-ignores]
+"tests/**/*.py" = ["PLR2004", "ANN", "D"]
+"src/apeSteel/**/__init__.py" = ["F401", "F403"]
+
+[lint.pydocstyle]
+convention = "numpy"
+
+[lint.isort]
+known-first-party = ["apeSteel"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"

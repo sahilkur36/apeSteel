@@ -1,0 +1,27 @@
+{
+  "include": [
+    "src",
+    "tests"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/.venv",
+    "**/node_modules",
+    "to_review"
+  ],
+  "stubPath": "typings",
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "strict",
+  "reportMissingTypeStubs": "warning",
+  "reportImplicitOverride": "warning",
+  "reportImportCycles": "warning",
+  "reportPrivateUsage": "error",
+  "reportUnnecessaryTypeIgnoreComment": "error",
+  "reportUnnecessaryIsInstance": "error",
+  "reportMissingParameterType": "error",
+  "reportMissingTypeArgument": "warning",
+  "reportUnknownMemberType": "warning",
+  "reportUnknownVariableType": "warning",
+  "reportUnknownParameterType": "warning",
+  "reportUnknownArgumentType": "warning"
+}

@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apeSteel"
+version = "0.0.0"
+description = "Structural-steel design library for AISC 360 and AISC 341 (seismic), composition-based, strictly typed."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Nicolas Mora Bowen", email = "nmorabowen@gmail.com" },
+]
+license = { text = "MIT" }
+keywords = ["AISC", "structural", "steel", "seismic", "LTB", "design"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "pydantic>=2.6",
+    "rapidfuzz>=3.6",
+    # baseUnits provides the N-mm-tonne-s consistent unit system.
+    "baseUnits @ git+https://github.com/nmorabowen/baseUnits.git",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyright>=1.1.360",
+    "ruff>=0.5",
+    "pytest>=8",
+    "pytest-cov>=5",
+    "pre-commit>=3",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/nmorabowen/apeSteel"
+"Bug Tracker" = "https://github.com/nmorabowen/apeSteel/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"apeSteel" = ["py.typed", "sections/catalog/data/*.pkl", "sections/catalog/data/*.csv"]
+
+# ---------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-ra",
+]
+testpaths = ["tests"]
+markers = [
+    "fast: quick unit tests that run in pre-commit",
+    "slow: slower tests, run only in CI",
+    "golden: golden-file regression tests pinned against the original spreadsheet",
+]
+
+# ---------------------------------------------------------------------------
+# coverage
+# ---------------------------------------------------------------------------
+[tool.coverage.run]
+source = ["apeSteel"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+fail_under = 90
+show_missing = true
