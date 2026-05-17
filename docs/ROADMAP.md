@@ -255,11 +255,63 @@ work (Phase 8c).
 
 ---
 
+## Phase E — AISC 360-22 Chapter E (Compression) 🟧
+
+**Goal:** a complete, section-family-by-section-family compression-strength
+calculator anchored to an independent AISC 360-22 oracle and (for
+edition-independent quantities) to the engineer's AISC 360-16 Excel workbook.
+Mirrors the flexure-layer architecture: pure functions, frozen Reports, two
+independent correctness anchors.
+
+Design note: `docs/design_notes/08_compression_E.md`.
+
+Sub-items:
+
+- ✅ **E-0 — Scaffold.** `CompressionSectionProperties` input contract;
+  `compression/` module stubs; standalone stdlib oracle
+  (`tests/golden/_chapterE_aisc_oracle.py`). pyright/ruff clean.
+
+- ✅ **E-1 — W-shape (doubly-symmetric I).** `flexural_buckling_E3.py`,
+  `torsional_flexural_E4.py` (torsional path, Eq. E4-2),
+  `slender_elements_E7.py` (effective-width §E7.2, Eq. E7-2),
+  `compression_strength.py` W-shape orchestrator.
+  Test impact: +13 tests (10 oracle bit-exact + 3 Excel anchor; Fe / Fe,torsion
+  / Pn non-slender all edition-independent; §E7 divergence from 360-16 is
+  bounded, documented, expected).
+  Project total: **1398 tests passing**; pyright strict clean; ruff clean.
+
+- ✅ **E-2 — Tee and channel.** `TeeSection` / `ChannelSection`
+  plate-built geometries (properties transcribed verbatim from the
+  validated workbook); §E4 singly-symmetric flexural–torsional path
+  (Eq. E4-3 / E4-7, axis-of-symmetry selection: tee→Fey, channel→Fex).
+  Test impact: +12 tests (10 oracle bit-exact incl. FT-governing across
+  4 grades + 2 Excel geometry anchors: Ag/Ix/Iy/rx/ry/J/Cw/xo·yo/H all
+  bit-match the workbook). Project total: **1410 tests passing**;
+  pyright strict clean; ruff clean.
+
+- ☐ **E-3 — Rectangular and round HSS.** §E3 + §E7.2(a) rect-HSS effective
+  width; §E7.2(c) round-HSS reduced area; oracle tests for HSS and PIPE types.
+
+- ☐ **E-4 — Single and double angle.** Modified `(KL/r)_eff` §E5
+  (Eq. E5-1 / E5-3); double-angle flexural–torsional §E4; oracle tests for L
+  and 2L types.
+
+- ☐ **E-5 — Facade routing + Element methods + φPn-vs-length curve.**
+  `ColumnCheck` facade; `Element.compute_phi_Pn(KL_x, KL_y)`;
+  `Element.phi_Pn_vs_length(KL_range)` → DataFrame; end-to-end oracle-anchored
+  test.
+
+**Done when:** all five sub-items green; oracle + Excel-anchor suites pass;
+pyright + ruff clean; coverage ≥ 90 % on `apeSteel.compression.*`.
+
+---
+
 ## After v1 — explicit non-goals (for later phases)
 
-- AISC §E (compression) — for columns.
+- AISC §E (compression) — **underway (Phase E above)**.
 - AISC §D (tension) — for braces, hangers.
-- AISC §H (combined loading) — for beam-columns.
+- AISC §H (combined loading) — for beam-columns (H1 interaction will consume
+  `φ·Pn` from Phase E and `φ·Mn` from Phases 3–5; see design note §7).
 - AISC §I (composite construction).
 - AISC §J / §K (connections — bolts, welds, plate-element checks).
 - AISC 358 prequalified moment connections (RBS, BFP, BUEEP, …).
