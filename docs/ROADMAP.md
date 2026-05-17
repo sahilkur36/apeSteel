@@ -306,13 +306,20 @@ Sub-items:
   back-to-back built-up-Iy convention error). Project total: **1433
   tests passing**; pyright strict 0 errors; ruff/format clean.
 
-- ☐ **E-5 — Facade routing + Element methods + φPn-vs-length curve.**
-  `ColumnCheck` facade; `Element.compute_phi_Pn(KL_x, KL_y)`;
-  `Element.phi_Pn_vs_length(KL_range)` → DataFrame; end-to-end oracle-anchored
-  test.
+- ✅ **E-5 — Element integration + φPn-vs-length curve.**
+  `compression/capacity_curve.py` (`compute_phi_Pn_vs_length` →
+  `CapacityCurvePoint` tuple, the workbook's Data-Table column as a
+  pure function); `Element.compression_strength(Kx,Lx,Ky,Ly,Kz,Lz)` and
+  `Element.phi_Pn_vs_length(...)` for doubly-symmetric I (SS-I guarded
+  with `NotImplementedError`, as F2/F3/F5); top-level `apeSteel`
+  re-exports. Tee/channel/HSS/angle compression use the dedicated
+  geometries with `apeSteel.compression.compute_compression_strength`.
+  +4 tests (Element≡free-function, curve monotone & point-consistent,
+  SS-I guard, non-positive-length guard).
 
 **Done when:** all five sub-items green; oracle + Excel-anchor suites pass;
-pyright + ruff clean; coverage ≥ 90 % on `apeSteel.compression.*`.
+pyright + ruff clean; coverage ≥ 90 %.  **DONE** — 1437 tests passing;
+pyright strict 0 errors; ruff + ruff-format clean; coverage 95 %.
 
 ---
 

@@ -22,6 +22,10 @@ from apeSteel.compression._common import (
     BucklingRegime,
     CompressionLimitState,
 )
+from apeSteel.compression.capacity_curve import (
+    CapacityCurvePoint,
+    compute_phi_Pn_vs_length,
+)
 from apeSteel.compression.compression_strength import (
     CompressionStrengthReport,
     compute_compression_strength,
@@ -45,6 +49,7 @@ __all__ = [
     "OMEGA_COMPRESSION_ASD",
     "PHI_COMPRESSION_LRFD",
     "BucklingRegime",
+    "CapacityCurvePoint",
     "CompressionLimitState",
     "CompressionStrengthReport",
     "CriticalStressE3",
@@ -56,4 +61,5 @@ __all__ = [
     "compute_effective_width_be",
     "compute_flexural_buckling_critical_stress_E3",
     "compute_modified_slenderness_E5",
+    "compute_phi_Pn_vs_length",
 ]

@@ -311,6 +311,8 @@ def compute_compression_strength_from_K_L(
     unbraced_length_Lz: float,
     *,
     single_angle_E5_case: SingleAngleE5Case | None = None,
+    builtup_connector_spacing_a: float | None = None,
+    builtup_connector_type: ConnectorType = "snug_bolted",
     evaluate_E4: bool = True,
 ) -> CompressionStrengthReport:
     """``K, L`` convenience wrapper (the spreadsheet's input form).
@@ -333,6 +335,8 @@ def compute_compression_strength_from_K_L(
         ),
         single_angle_E5_case=single_angle_E5_case,
         single_angle_E5_length_L=unbraced_length_Lz,
+        builtup_connector_spacing_a=builtup_connector_spacing_a,
+        builtup_connector_type=builtup_connector_type,
         evaluate_E4=evaluate_E4,
     )
 

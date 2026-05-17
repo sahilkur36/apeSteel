@@ -61,6 +61,13 @@ from apeSteel.classification import (
     classify_flexural_compactness_B4_1b,
     classify_seismic_compactness_341_D1,
 )
+from apeSteel.compression import (
+    CapacityCurvePoint,
+    CompressionStrengthReport,
+    compute_compression_strength,
+    compute_compression_strength_from_K_L,
+    compute_phi_Pn_vs_length,
+)
 from apeSteel.core.materials import (
     A36,
     A992,
@@ -154,10 +161,12 @@ __all__ = [
     "BothFlangesFlexureF5Report",
     "Bracing",
     "CantileverUDLAndTipLoadDeflectionReport",
+    "CapacityCurvePoint",
     "CatalogError",
     "CatalogRowAISCv16",
     "CatalogRowEuropeanIPE",
     "CompressionFlangeSide",
+    "CompressionStrengthReport",
     "ContinuityPlateRecommendationReport",
     "DoublerPlateRecommendationReport",
     "DoublySymmetricISection",
@@ -192,6 +201,8 @@ __all__ = [
     "classify_flexural_compactness_B4_1b",
     "classify_seismic_compactness_341_D1",
     "compute_Cb_from_quarter_point_moments",
+    "compute_compression_strength",
+    "compute_compression_strength_from_K_L",
     "compute_deflection_cantilever_udl_and_tip_load",
     "compute_deflection_simply_supported_point_load_arbitrary",
     "compute_deflection_simply_supported_point_load_midspan",
@@ -201,6 +212,7 @@ __all__ = [
     "compute_flexural_strength_F4",
     "compute_flexural_strength_F4_doubly_symmetric_noncompact_web",
     "compute_flexural_strength_F5_slender_web_plate_girder",
+    "compute_phi_Pn_vs_length",
     "compute_shear_strength_G2_doubly_symmetric",
     "recommend_camber_from_dead_load_deflection",
     "recommend_doubler_plate_thickness_341",
