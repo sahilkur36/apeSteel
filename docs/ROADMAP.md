@@ -255,11 +255,80 @@ work (Phase 8c).
 
 ---
 
+## Phase E — AISC 360-22 Chapter E (Compression) 🟧
+
+**Goal:** a complete, section-family-by-section-family compression-strength
+calculator anchored to an independent AISC 360-22 oracle and (for
+edition-independent quantities) to the engineer's AISC 360-16 Excel workbook.
+Mirrors the flexure-layer architecture: pure functions, frozen Reports, two
+independent correctness anchors.
+
+Design note: `docs/design_notes/08_compression_E.md`.
+
+Sub-items:
+
+- ✅ **E-0 — Scaffold.** `CompressionSectionProperties` input contract;
+  `compression/` module stubs; standalone stdlib oracle
+  (`tests/golden/_chapterE_aisc_oracle.py`). pyright/ruff clean.
+
+- ✅ **E-1 — W-shape (doubly-symmetric I).** `flexural_buckling_E3.py`,
+  `torsional_flexural_E4.py` (torsional path, Eq. E4-2),
+  `slender_elements_E7.py` (effective-width §E7.2, Eq. E7-2),
+  `compression_strength.py` W-shape orchestrator.
+  Test impact: +13 tests (10 oracle bit-exact + 3 Excel anchor; Fe / Fe,torsion
+  / Pn non-slender all edition-independent; §E7 divergence from 360-16 is
+  bounded, documented, expected).
+  Project total: **1398 tests passing**; pyright strict clean; ruff clean.
+
+- ✅ **E-2 — Tee and channel.** `TeeSection` / `ChannelSection`
+  plate-built geometries (properties transcribed verbatim from the
+  validated workbook); §E4 singly-symmetric flexural–torsional path
+  (Eq. E4-3 / E4-7, axis-of-symmetry selection: tee→Fey, channel→Fex).
+  Test impact: +12 tests (10 oracle bit-exact incl. FT-governing across
+  4 grades + 2 Excel geometry anchors: Ag/Ix/Iy/rx/ry/J/Cw/xo·yo/H all
+  bit-match the workbook). Project total: **1410 tests passing**;
+  pyright strict clean; ruff clean.
+
+- ✅ **E-3 — Rectangular and round HSS.** `RectangularHSS` / `RoundHSS`
+  geometries; facade + oracle skip §E4 for closed HSS (§E3-only).
+  §E7.2 rect-HSS-wall effective width (Table E7.1 HSS-wall c1/c2);
+  §E7.2(c) round-HSS reduced area (Eq. E7-6/E7-7, retained from
+  360-16). +10 tests: 8 oracle bit-exact (incl. slender HSS); 2 Excel
+  anchors bit-match the workbook's **full governing φPn** (non-slender
+  ⇒ 360-16 == 360-22 — the strongest external anchor).
+
+- ✅ **E-4 — Single and double angle.** `SingleAngleSection` (equal-leg,
+  principal-axis Mohr rotation) with §E5 modified `Lc/r`
+  (Eq. E5-1…E5-4) and §E3+§E4; `DoubleAngleSection` (back-to-back) with
+  §E6 modified slenderness (Eq. E6-1/E6-2) wired through the facade.
+  +21 tests: 11 oracle bit-exact (E5 cases a/b, E6 snug/welded across
+  grades); 2 Excel geometry anchors (the Excel caught & fixed a
+  back-to-back built-up-Iy convention error). Project total: **1433
+  tests passing**; pyright strict 0 errors; ruff/format clean.
+
+- ✅ **E-5 — Element integration + φPn-vs-length curve.**
+  `compression/capacity_curve.py` (`compute_phi_Pn_vs_length` →
+  `CapacityCurvePoint` tuple, the workbook's Data-Table column as a
+  pure function); `Element.compression_strength(Kx,Lx,Ky,Ly,Kz,Lz)` and
+  `Element.phi_Pn_vs_length(...)` for doubly-symmetric I (SS-I guarded
+  with `NotImplementedError`, as F2/F3/F5); top-level `apeSteel`
+  re-exports. Tee/channel/HSS/angle compression use the dedicated
+  geometries with `apeSteel.compression.compute_compression_strength`.
+  +4 tests (Element≡free-function, curve monotone & point-consistent,
+  SS-I guard, non-positive-length guard).
+
+**Done when:** all five sub-items green; oracle + Excel-anchor suites pass;
+pyright + ruff clean; coverage ≥ 90 %.  **DONE** — 1437 tests passing;
+pyright strict 0 errors; ruff + ruff-format clean; coverage 95 %.
+
+---
+
 ## After v1 — explicit non-goals (for later phases)
 
-- AISC §E (compression) — for columns.
+- AISC §E (compression) — **underway (Phase E above)**.
 - AISC §D (tension) — for braces, hangers.
-- AISC §H (combined loading) — for beam-columns.
+- AISC §H (combined loading) — for beam-columns (H1 interaction will consume
+  `φ·Pn` from Phase E and `φ·Mn` from Phases 3–5; see design note §7).
 - AISC §I (composite construction).
 - AISC §J / §K (connections — bolts, welds, plate-element checks).
 - AISC 358 prequalified moment connections (RBS, BFP, BUEEP, …).

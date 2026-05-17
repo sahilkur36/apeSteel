@@ -24,8 +24,18 @@ import math
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from apeSteel.classification._common import compute_kc_for_built_up_flange
+from apeSteel.compression._common import (
+    B4_1A_STIFFENED_WEB_COEFF,
+    B4_1A_UNSTIFFENED_BUILTUP_FLANGE_COEFF,
+    B4_1A_UNSTIFFENED_ROLLED_FLANGE_COEFF,
+)
 from apeSteel.core.materials import CARBON_STEEL_DENSITY_rho
 from apeSteel.core.units import g as gravitational_acceleration_g
+from apeSteel.sections.compression_properties import (
+    CompressionPlateElement,
+    CompressionSectionProperties,
+)
 from apeSteel.sections.properties import SectionProperties
 
 if TYPE_CHECKING:
@@ -115,6 +125,77 @@ class DoublySymmetricISection:
             k_design_kdes=tf,
             k_detailing_kdet=tf,
             k_one_k1=tw / 2.0,
+        )
+
+    def compute_compression_properties(
+        self,
+        material: SteelMaterial,
+        construction: SectionConstruction = "welded",
+    ) -> CompressionSectionProperties:
+        """Return the AISC 360-22 Chapter-E input snapshot.
+
+        Material-aware (unlike :meth:`compute_section_properties`):
+        the §E7 / Table B4.1a slender-element limits depend on ``Fy``,
+        so this resolves them here - exactly as
+        :func:`classify_axial_compression_B4_1a` pairs section + material.
+
+        For a doubly-symmetric I the shear centre coincides with the
+        centroid (``xo = yo = 0``, ``H = 1``); §E4 reduces to torsional
+        buckling about the longitudinal axis (Eq. E4-2).
+        """
+        bf: float = self.flange_width_bf
+        tf: float = self.flange_thickness_tf
+        hw: float = self.web_clear_height_hw
+        tw: float = self.web_thickness_tw
+
+        sp = self.compute_section_properties()
+        Ag: float = sp.gross_area_Ag
+        Ix: float = sp.moment_of_inertia_strong_axis_Ix
+        Iy: float = sp.moment_of_inertia_weak_axis_Iy
+
+        sqrt_E_over_Fy: float = math.sqrt(material.elastic_modulus_E / material.yield_stress_Fy)
+
+        # Flange: unstiffened projecting element, b = bf/2, t = tf.
+        if construction == "rolled":
+            flange_lambda_r: float = B4_1A_UNSTIFFENED_ROLLED_FLANGE_COEFF * sqrt_E_over_Fy
+        else:
+            kc: float = compute_kc_for_built_up_flange(hw / tw)
+            flange_lambda_r = B4_1A_UNSTIFFENED_BUILTUP_FLANGE_COEFF * math.sqrt(
+                kc * material.elastic_modulus_E / material.yield_stress_Fy
+            )
+        flange = CompressionPlateElement(
+            name="flange",
+            kind="unstiffened",
+            width_b=bf / 2.0,
+            thickness_t=tf,
+            slenderness_ratio_lambda=bf / (2.0 * tf),
+            nonslender_limit_lambda_r=flange_lambda_r,
+        )
+        # Web: stiffened element, b = hw (clear height), t = tw.
+        web = CompressionPlateElement(
+            name="web",
+            kind="stiffened",
+            width_b=hw,
+            thickness_t=tw,
+            slenderness_ratio_lambda=hw / tw,
+            nonslender_limit_lambda_r=B4_1A_STIFFENED_WEB_COEFF * sqrt_E_over_Fy,
+        )
+
+        return CompressionSectionProperties(
+            section_kind="doubly_symmetric_I",
+            symmetry="doubly_symmetric",
+            gross_area_Ag=Ag,
+            radius_of_gyration_x_rx=sp.radius_of_gyration_strong_axis_rx,
+            radius_of_gyration_y_ry=sp.radius_of_gyration_weak_axis_ry,
+            moment_of_inertia_x_Ix=Ix,
+            moment_of_inertia_y_Iy=Iy,
+            torsional_constant_J=sp.torsional_constant_J,
+            warping_constant_Cw=sp.warping_constant_Cw,
+            shear_centre_x_xo=0.0,
+            shear_centre_y_yo=0.0,
+            polar_radius_about_shear_centre_ro_bar=math.sqrt((Ix + Iy) / Ag),
+            flexural_constant_H=1.0,
+            plate_elements=(flange, web),
         )
 
     def element(

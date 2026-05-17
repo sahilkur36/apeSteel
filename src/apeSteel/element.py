@@ -37,6 +37,12 @@ from apeSteel.classification import (
     classify_flexural_compactness_B4_1b,
     classify_seismic_compactness_341_D1,
 )
+from apeSteel.compression import (
+    CapacityCurvePoint,
+    CompressionStrengthReport,
+    compute_compression_strength_from_K_L,
+    compute_phi_Pn_vs_length,
+)
 from apeSteel.flexure import (
     FlexureF2Report,
     FlexureF3Report,
@@ -65,6 +71,8 @@ from apeSteel.shear import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from apeSteel.beam_column_connection import BeamColumnConnection
     from apeSteel.bracing import Bracing
     from apeSteel.checks import BeamCheckReport
@@ -457,6 +465,69 @@ class Element:
             material=self.material,
             construction=self.construction,
             transverse_stiffener_spacing_a=transverse_stiffener_spacing_a,
+        )
+
+    # ------------------------------------------------------------------ #
+    # Compression - AISC 360-22 Chapter E (doubly-symmetric I via Element;
+    # the other section families use the free-function facade /
+    # apeSteel.compression directly)
+    # ------------------------------------------------------------------ #
+    def compression_strength(
+        self,
+        effective_length_factor_Kx: float,
+        unbraced_length_Lx: float,
+        effective_length_factor_Ky: float,
+        unbraced_length_Ly: float,
+        effective_length_factor_Kz: float,
+        unbraced_length_Lz: float,
+    ) -> CompressionStrengthReport:
+        """AISC 360-22 Chapter-E nominal compressive strength.
+
+        Doubly-symmetric I only (the ``Element`` composition spine is the
+        ``ISection`` union).  Tee / channel / HSS / angle compression use
+        the dedicated geometries with
+        :func:`apeSteel.compression.compute_compression_strength`.
+        """
+        self._require_doubly_symmetric_section("compression_strength")
+        from apeSteel.sections.geometry import (  # noqa: PLC0415
+            DoublySymmetricISection,
+        )
+
+        assert isinstance(self.section, DoublySymmetricISection)
+        props = self.section.compute_compression_properties(self.material, self.construction)
+        return compute_compression_strength_from_K_L(
+            section_properties=props,
+            material=self.material,
+            effective_length_factor_Kx=effective_length_factor_Kx,
+            unbraced_length_Lx=unbraced_length_Lx,
+            effective_length_factor_Ky=effective_length_factor_Ky,
+            unbraced_length_Ly=unbraced_length_Ly,
+            effective_length_factor_Kz=effective_length_factor_Kz,
+            unbraced_length_Lz=unbraced_length_Lz,
+        )
+
+    def phi_Pn_vs_length(
+        self,
+        lengths_L: Sequence[float],
+        effective_length_factor_Kx: float = 1.0,
+        effective_length_factor_Ky: float = 1.0,
+        effective_length_factor_Kz: float = 1.0,
+    ) -> tuple[CapacityCurvePoint, ...]:
+        """The φPn-vs-length capacity curve (doubly-symmetric I)."""
+        self._require_doubly_symmetric_section("phi_Pn_vs_length")
+        from apeSteel.sections.geometry import (  # noqa: PLC0415
+            DoublySymmetricISection,
+        )
+
+        assert isinstance(self.section, DoublySymmetricISection)
+        props = self.section.compute_compression_properties(self.material, self.construction)
+        return compute_phi_Pn_vs_length(
+            section_properties=props,
+            material=self.material,
+            lengths_L=lengths_L,
+            effective_length_factor_Kx=effective_length_factor_Kx,
+            effective_length_factor_Ky=effective_length_factor_Ky,
+            effective_length_factor_Kz=effective_length_factor_Kz,
         )
 
     # ------------------------------------------------------------------ #
