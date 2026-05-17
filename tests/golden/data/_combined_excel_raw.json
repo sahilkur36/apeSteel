@@ -1,0 +1,4566 @@
+{
+ "source_file": "Diseño Flexo-Compresion Viga I.xlsm",
+ "defined_names": {
+  "Perfiles": "'Database v13.2'!$B$3:$B$1975",
+  "Perfiles_lista": "[0]!Perfiles",
+  "Poli": "#REF!",
+  "X": "#REF!"
+ },
+ "sheets": {
+  "W": {
+   "max_row": 102,
+   "max_col": 22,
+   "cells": [
+    {
+     "coord": "A1",
+     "row": 1,
+     "col": 1,
+     "formula": "Diseño de elementos para Compresion.",
+     "value": "Diseño de elementos para Compresion."
+    },
+    {
+     "coord": "A2",
+     "row": 2,
+     "col": 1,
+     "formula": "Capitulo E.",
+     "value": "Capitulo E."
+    },
+    {
+     "coord": "I2",
+     "row": 2,
+     "col": 9,
+     "formula": "Resumen",
+     "value": "Resumen"
+    },
+    {
+     "coord": "L2",
+     "row": 2,
+     "col": 12,
+     "formula": "L",
+     "value": "L"
+    },
+    {
+     "coord": "M2",
+     "row": 2,
+     "col": 13,
+     "formula": "=J3",
+     "value": 516.7313457763228
+    },
+    {
+     "coord": "I3",
+     "row": 3,
+     "col": 9,
+     "formula": "Resistencia",
+     "value": "Resistencia"
+    },
+    {
+     "coord": "J3",
+     "row": 3,
+     "col": 10,
+     "formula": "=MIN(C68,C78,C88)",
+     "value": 516.7313457763228
+    },
+    {
+     "coord": "K3",
+     "row": 3,
+     "col": 11,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "L3",
+     "row": 3,
+     "col": 12,
+     "formula": 0.01,
+     "value": 0.01
+    },
+    {
+     "coord": "M3",
+     "row": 3,
+     "col": 13,
+     "formula": "<openpyxl.worksheet.formula.DataTableFormula object at 0x0000020833F52110>",
+     "value": 607.3912324568488
+    },
+    {
+     "coord": "U3",
+     "row": 3,
+     "col": 21,
+     "formula": "Pu",
+     "value": "Pu"
+    },
+    {
+     "coord": "B4",
+     "row": 4,
+     "col": 2,
+     "formula": "Tipo de Elemento",
+     "value": "Tipo de Elemento"
+    },
+    {
+     "coord": "I4",
+     "row": 4,
+     "col": 9,
+     "formula": "Resistencia",
+     "value": "Resistencia"
+    },
+    {
+     "coord": "J4",
+     "row": 4,
+     "col": 10,
+     "formula": "='Seccion Tipo I'!L11",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "K4",
+     "row": 4,
+     "col": 11,
+     "formula": 2,
+     "value": 2
+    },
+    {
+     "coord": "L4",
+     "row": 4,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K4-$K$3)",
+     "value": 0.65
+    },
+    {
+     "coord": "M4",
+     "row": 4,
+     "col": 13,
+     "formula": 604.1995353502989,
+     "value": 604.1995353502989
+    },
+    {
+     "coord": "U4",
+     "row": 4,
+     "col": 21,
+     "formula": 24000,
+     "value": 24000
+    },
+    {
+     "coord": "V4",
+     "row": 4,
+     "col": 22,
+     "formula": "=U4/B48",
+     "value": 125
+    },
+    {
+     "coord": "I5",
+     "row": 5,
+     "col": 9,
+     "formula": "Resistencia",
+     "value": "Resistencia"
+    },
+    {
+     "coord": "J5",
+     "row": 5,
+     "col": 10,
+     "formula": "=C102",
+     "value": 35.987975999999996
+    },
+    {
+     "coord": "K5",
+     "row": 5,
+     "col": 11,
+     "formula": 3,
+     "value": 3
+    },
+    {
+     "coord": "L5",
+     "row": 5,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K5-$K$3)",
+     "value": 1.3
+    },
+    {
+     "coord": "M5",
+     "row": 5,
+     "col": 13,
+     "formula": 594.7224670408544,
+     "value": 594.7224670408544
+    },
+    {
+     "coord": "U5",
+     "row": 5,
+     "col": 21,
+     "formula": "Mpc",
+     "value": "Mpc"
+    },
+    {
+     "coord": "I6",
+     "row": 6,
+     "col": 9,
+     "formula": "KL/r < 200",
+     "value": "KL/r < 200"
+    },
+    {
+     "coord": "J6",
+     "row": 6,
+     "col": 10,
+     "formula": "=IF(MAX(C62,C72)<=200,\"OK\",\"X\")",
+     "value": "OK"
+    },
+    {
+     "coord": "K6",
+     "row": 6,
+     "col": 11,
+     "formula": 4,
+     "value": 4
+    },
+    {
+     "coord": "L6",
+     "row": 6,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K6-$K$3)",
+     "value": 1.9500000000000002
+    },
+    {
+     "coord": "M6",
+     "row": 6,
+     "col": 13,
+     "formula": 579.2565356572093,
+     "value": 579.2565356572093
+    },
+    {
+     "coord": "U6",
+     "row": 6,
+     "col": 21,
+     "formula": "='Seccion Tipo I'!B41*(W!B16-U4/B48)/(1000*100)",
+     "value": 11.574477
+    },
+    {
+     "coord": "I7",
+     "row": 7,
+     "col": 9,
+     "formula": "Ala",
+     "value": "Ala"
+    },
+    {
+     "coord": "J7",
+     "row": 7,
+     "col": 10,
+     "formula": "=F37",
+     "value": "→ No Esbelta"
+    },
+    {
+     "coord": "K7",
+     "row": 7,
+     "col": 11,
+     "formula": 5,
+     "value": 5
+    },
+    {
+     "coord": "L7",
+     "row": 7,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K7-$K$3)",
+     "value": 2.6
+    },
+    {
+     "coord": "M7",
+     "row": 7,
+     "col": 13,
+     "formula": 558.2775690198122,
+     "value": 558.2775690198122
+    },
+    {
+     "coord": "I8",
+     "row": 8,
+     "col": 9,
+     "formula": "Alma",
+     "value": "Alma"
+    },
+    {
+     "coord": "J8",
+     "row": 8,
+     "col": 10,
+     "formula": "=F39",
+     "value": "→ No Esbelta"
+    },
+    {
+     "coord": "K8",
+     "row": 8,
+     "col": 11,
+     "formula": 6,
+     "value": 6
+    },
+    {
+     "coord": "L8",
+     "row": 8,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K8-$K$3)",
+     "value": 3.25
+    },
+    {
+     "coord": "M8",
+     "row": 8,
+     "col": 13,
+     "formula": 532.4171713910374,
+     "value": 532.4171713910374
+    },
+    {
+     "coord": "K9",
+     "row": 9,
+     "col": 11,
+     "formula": 7,
+     "value": 7
+    },
+    {
+     "coord": "L9",
+     "row": 9,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K9-$K$3)",
+     "value": 3.9000000000000004
+    },
+    {
+     "coord": "M9",
+     "row": 9,
+     "col": 13,
+     "formula": 502.4311622268051,
+     "value": 502.4311622268051
+    },
+    {
+     "coord": "I10",
+     "row": 10,
+     "col": 9,
+     "formula": "Rango",
+     "value": "Rango"
+    },
+    {
+     "coord": "J10",
+     "row": 10,
+     "col": 10,
+     "formula": 13,
+     "value": 13
+    },
+    {
+     "coord": "K10",
+     "row": 10,
+     "col": 11,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "L10",
+     "row": 10,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K10-$K$3)",
+     "value": 4.55
+    },
+    {
+     "coord": "M10",
+     "row": 10,
+     "col": 13,
+     "formula": 469.1629632381064,
+     "value": 469.1629632381064
+    },
+    {
+     "coord": "I11",
+     "row": 11,
+     "col": 9,
+     "formula": "Peso Lin.",
+     "value": "Peso Lin."
+    },
+    {
+     "coord": "J11",
+     "row": 11,
+     "col": 10,
+     "formula": "='Seccion Tipo I'!L24",
+     "value": 26.847
+    },
+    {
+     "coord": "K11",
+     "row": 11,
+     "col": 11,
+     "formula": 9,
+     "value": 9
+    },
+    {
+     "coord": "L11",
+     "row": 11,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K11-$K$3)",
+     "value": 5.2
+    },
+    {
+     "coord": "M11",
+     "row": 11,
+     "col": 13,
+     "formula": 433.5044025461645,
+     "value": 433.5044025461645
+    },
+    {
+     "coord": "J12",
+     "row": 12,
+     "col": 10,
+     "formula": "=J27/J3",
+     "value": 0.036769590533461696
+    },
+    {
+     "coord": "K12",
+     "row": 12,
+     "col": 11,
+     "formula": 10,
+     "value": 10
+    },
+    {
+     "coord": "L12",
+     "row": 12,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K12-$K$3)",
+     "value": 5.8500000000000005
+    },
+    {
+     "coord": "M12",
+     "row": 12,
+     "col": 13,
+     "formula": 396.3564619752305,
+     "value": 396.3564619752305
+    },
+    {
+     "coord": "K13",
+     "row": 13,
+     "col": 11,
+     "formula": 11,
+     "value": 11
+    },
+    {
+     "coord": "L13",
+     "row": 13,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K13-$K$3)",
+     "value": 6.5
+    },
+    {
+     "coord": "M13",
+     "row": 13,
+     "col": 13,
+     "formula": 358.59234366225814,
+     "value": 358.59234366225814
+    },
+    {
+     "coord": "B14",
+     "row": 14,
+     "col": 2,
+     "formula": "Datos",
+     "value": "Datos"
+    },
+    {
+     "coord": "K14",
+     "row": 14,
+     "col": 11,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "L14",
+     "row": 14,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K14-$K$3)",
+     "value": 7.15
+    },
+    {
+     "coord": "M14",
+     "row": 14,
+     "col": 13,
+     "formula": 321.02490132094994,
+     "value": 321.02490132094994
+    },
+    {
+     "coord": "T14",
+     "row": 14,
+     "col": 20,
+     "formula": "Braces",
+     "value": "Braces"
+    },
+    {
+     "coord": "K15",
+     "row": 15,
+     "col": 11,
+     "formula": 13,
+     "value": 13
+    },
+    {
+     "coord": "L15",
+     "row": 15,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K15-$K$3)",
+     "value": 7.800000000000001
+    },
+    {
+     "coord": "M15",
+     "row": 15,
+     "col": 13,
+     "formula": 284.3800122161065,
+     "value": 284.3800122161065
+    },
+    {
+     "coord": "T15",
+     "row": 15,
+     "col": 20,
+     "formula": "λhd",
+     "value": "λhd"
+    },
+    {
+     "coord": "U15",
+     "row": 15,
+     "col": 21,
+     "formula": "=0.3*(B17/(1.1*B16))^0.5",
+     "value": 6.888725967444594
+    },
+    {
+     "coord": "V15",
+     "row": 15,
+     "col": 22,
+     "formula": "Flange",
+     "value": "Flange"
+    },
+    {
+     "coord": "B16",
+     "row": 16,
+     "col": 2,
+     "formula": "=50*70.3",
+     "value": 3515
+    },
+    {
+     "coord": "K16",
+     "row": 16,
+     "col": 11,
+     "formula": 14,
+     "value": 14
+    },
+    {
+     "coord": "L16",
+     "row": 16,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K16-$K$3)",
+     "value": 8.450000000000001
+    },
+    {
+     "coord": "M16",
+     "row": 16,
+     "col": 13,
+     "formula": 249.27691129328022,
+     "value": 249.27691129328022
+    },
+    {
+     "coord": "T16",
+     "row": 16,
+     "col": 20,
+     "formula": "λmd",
+     "value": "λmd"
+    },
+    {
+     "coord": "U16",
+     "row": 16,
+     "col": 21,
+     "formula": "=0.38*(B17/(1.1*B16))^0.5",
+     "value": 8.725719558763151
+    },
+    {
+     "coord": "V16",
+     "row": 16,
+     "col": 22,
+     "formula": "Flange",
+     "value": "Flange"
+    },
+    {
+     "coord": "B17",
+     "row": 17,
+     "col": 2,
+     "formula": "=29000*70.3",
+     "value": 2038700
+    },
+    {
+     "coord": "K17",
+     "row": 17,
+     "col": 11,
+     "formula": 15,
+     "value": 15
+    },
+    {
+     "coord": "L17",
+     "row": 17,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K17-$K$3)",
+     "value": 9.1
+    },
+    {
+     "coord": "M17",
+     "row": 17,
+     "col": 13,
+     "formula": 215.85366614006952,
+     "value": 215.85366614006952
+    },
+    {
+     "coord": "T17",
+     "row": 17,
+     "col": 20,
+     "formula": "λhd",
+     "value": "λhd"
+    },
+    {
+     "coord": "U17",
+     "row": 17,
+     "col": 21,
+     "formula": "=1.49*(B17/(1.1*B16))^0.5",
+     "value": 34.21400563830815
+    },
+    {
+     "coord": "V17",
+     "row": 17,
+     "col": 22,
+     "formula": "Web",
+     "value": "Web"
+    },
+    {
+     "coord": "B18",
+     "row": 18,
+     "col": 2,
+     "formula": "=11200*70.3",
+     "value": 787360
+    },
+    {
+     "coord": "K18",
+     "row": 18,
+     "col": 11,
+     "formula": 16,
+     "value": 16
+    },
+    {
+     "coord": "L18",
+     "row": 18,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K18-$K$3)",
+     "value": 9.75
+    },
+    {
+     "coord": "M18",
+     "row": 18,
+     "col": 13,
+     "formula": 188.03252694868283,
+     "value": 188.03252694868283
+    },
+    {
+     "coord": "T18",
+     "row": 18,
+     "col": 20,
+     "formula": "λmd",
+     "value": "λmd"
+    },
+    {
+     "coord": "U18",
+     "row": 18,
+     "col": 21,
+     "formula": "=U17",
+     "value": 34.21400563830815
+    },
+    {
+     "coord": "V18",
+     "row": 18,
+     "col": 22,
+     "formula": "Web",
+     "value": "Web"
+    },
+    {
+     "coord": "K19",
+     "row": 19,
+     "col": 11,
+     "formula": 17,
+     "value": 17
+    },
+    {
+     "coord": "L19",
+     "row": 19,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K19-$K$3)",
+     "value": 10.4
+    },
+    {
+     "coord": "M19",
+     "row": 19,
+     "col": 13,
+     "formula": 165.2629631384908,
+     "value": 165.2629631384908
+    },
+    {
+     "coord": "B20",
+     "row": 20,
+     "col": 2,
+     "formula": 0.9,
+     "value": 0.9
+    },
+    {
+     "coord": "K20",
+     "row": 20,
+     "col": 11,
+     "formula": 18,
+     "value": 18
+    },
+    {
+     "coord": "L20",
+     "row": 20,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K20-$K$3)",
+     "value": 11.05
+    },
+    {
+     "coord": "M20",
+     "row": 20,
+     "col": 13,
+     "formula": 146.39210575589493,
+     "value": 146.39210575589493
+    },
+    {
+     "coord": "K21",
+     "row": 21,
+     "col": 11,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "L21",
+     "row": 21,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K21-$K$3)",
+     "value": 11.700000000000001
+    },
+    {
+     "coord": "M21",
+     "row": 21,
+     "col": 13,
+     "formula": 130.57814371436308,
+     "value": 130.57814371436308
+    },
+    {
+     "coord": "B22",
+     "row": 22,
+     "col": 2,
+     "formula": 3.6,
+     "value": 3.6
+    },
+    {
+     "coord": "K22",
+     "row": 22,
+     "col": 11,
+     "formula": 20,
+     "value": 20
+    },
+    {
+     "coord": "L22",
+     "row": 22,
+     "col": 12,
+     "formula": "=($L$23)/(21-1)*(K22-$K$3)",
+     "value": 12.35
+    },
+    {
+     "coord": "M22",
+     "row": 22,
+     "col": 13,
+     "formula": 117.19478826441448,
+     "value": 117.19478826441448
+    },
+    {
+     "coord": "B23",
+     "row": 23,
+     "col": 2,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "K23",
+     "row": 23,
+     "col": 11,
+     "formula": 21,
+     "value": 21
+    },
+    {
+     "coord": "L23",
+     "row": 23,
+     "col": 12,
+     "formula": "=J10",
+     "value": 13
+    },
+    {
+     "coord": "M23",
+     "row": 23,
+     "col": 13,
+     "formula": 105.76829640863413,
+     "value": 105.76829640863413
+    },
+    {
+     "coord": "B24",
+     "row": 24,
+     "col": 2,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "B25",
+     "row": 25,
+     "col": 2,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "I26",
+     "row": 26,
+     "col": 9,
+     "formula": "Capacidad Nominal",
+     "value": "Capacidad Nominal"
+    },
+    {
+     "coord": "B27",
+     "row": 27,
+     "col": 2,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "I27",
+     "row": 27,
+     "col": 9,
+     "formula": "Pu",
+     "value": "Pu"
+    },
+    {
+     "coord": "J27",
+     "row": 27,
+     "col": 10,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "B28",
+     "row": 28,
+     "col": 2,
+     "formula": 25,
+     "value": 25
+    },
+    {
+     "coord": "I28",
+     "row": 28,
+     "col": 9,
+     "formula": "Mu",
+     "value": "Mu"
+    },
+    {
+     "coord": "J28",
+     "row": 28,
+     "col": 10,
+     "formula": 42,
+     "value": 42
+    },
+    {
+     "coord": "M28",
+     "row": 28,
+     "col": 13,
+     "formula": "W14X61",
+     "value": "W14X61"
+    },
+    {
+     "coord": "B29",
+     "row": 29,
+     "col": 2,
+     "formula": 350,
+     "value": 350
+    },
+    {
+     "coord": "I29",
+     "row": 29,
+     "col": 9,
+     "formula": "Ratio",
+     "value": "Ratio"
+    },
+    {
+     "coord": "J29",
+     "row": 29,
+     "col": 10,
+     "formula": "=IF(J27/J3>=0.2,J27/J3+8/9*(J28/J4),J27/(2*J3)+J28/J4)",
+     "value": 8.909668184307952
+    },
+    {
+     "coord": "M29",
+     "row": 29,
+     "col": 13,
+     "formula": "bf",
+     "value": "bf"
+    },
+    {
+     "coord": "N29",
+     "row": 29,
+     "col": 14,
+     "formula": "tf",
+     "value": "tf"
+    },
+    {
+     "coord": "O29",
+     "row": 29,
+     "col": 15,
+     "formula": "d",
+     "value": "d"
+    },
+    {
+     "coord": "P29",
+     "row": 29,
+     "col": 16,
+     "formula": "tw",
+     "value": "tw"
+    },
+    {
+     "coord": "B30",
+     "row": 30,
+     "col": 2,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "M30",
+     "row": 30,
+     "col": 13,
+     "formula": "=VLOOKUP(M28,'Database v13.2'!$B$3:$CZ$1975,63,FALSE)",
+     "value": 254
+    },
+    {
+     "coord": "N30",
+     "row": 30,
+     "col": 14,
+     "formula": "=VLOOKUP(M28,'Database v13.2'!$B$3:$CZ$1975,67,FALSE)",
+     "value": 16.4
+    },
+    {
+     "coord": "O30",
+     "row": 30,
+     "col": 15,
+     "formula": "=VLOOKUP(M28,'Database v13.2'!$B$3:$CZ$1975,60,FALSE)",
+     "value": 353
+    },
+    {
+     "coord": "P30",
+     "row": 30,
+     "col": 16,
+     "formula": "=VLOOKUP(M28,'Database v13.2'!$B$3:$CZ$1975,66,FALSE)",
+     "value": 9.53
+    },
+    {
+     "coord": "U31",
+     "row": 31,
+     "col": 21,
+     "formula": "=50*70.3",
+     "value": 3515
+    },
+    {
+     "coord": "B32",
+     "row": 32,
+     "col": 2,
+     "formula": 4,
+     "value": 4
+    },
+    {
+     "coord": "P32",
+     "row": 32,
+     "col": 16,
+     "formula": 30,
+     "value": 30
+    },
+    {
+     "coord": "Q32",
+     "row": 32,
+     "col": 17,
+     "formula": "=P32*1000",
+     "value": 30000
+    },
+    {
+     "coord": "T32",
+     "row": 32,
+     "col": 20,
+     "formula": 0.8,
+     "value": 0.8
+    },
+    {
+     "coord": "U32",
+     "row": 32,
+     "col": 21,
+     "formula": "=$Q$32/(0.6*$U$31*T32)",
+     "value": 17.780938833570413
+    },
+    {
+     "coord": "T33",
+     "row": 33,
+     "col": 20,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "U33",
+     "row": 33,
+     "col": 21,
+     "formula": "=$Q$32/(0.6*$U$31*T33)",
+     "value": 14.22475106685633
+    },
+    {
+     "coord": "B34",
+     "row": 34,
+     "col": 2,
+     "formula": "Chequeo de Esbeltez",
+     "value": "Chequeo de Esbeltez"
+    },
+    {
+     "coord": "T34",
+     "row": 34,
+     "col": 20,
+     "formula": 0.6,
+     "value": 0.6
+    },
+    {
+     "coord": "U34",
+     "row": 34,
+     "col": 21,
+     "formula": "=$Q$32/(0.6*$U$31*T34)",
+     "value": 23.70791844476055
+    },
+    {
+     "coord": "B36",
+     "row": 36,
+     "col": 2,
+     "formula": "=MIN(MAX(4/(B29/B30)^0.5,0.35),0.76)",
+     "value": 0.7406560798180412
+    },
+    {
+     "coord": "M36",
+     "row": 36,
+     "col": 13,
+     "formula": "IPE600",
+     "value": "IPE600"
+    },
+    {
+     "coord": "N36",
+     "row": 36,
+     "col": 14,
+     "formula": "=VLOOKUP(M36,$M$38:$Q$100,2,FALSE)",
+     "value": 220
+    },
+    {
+     "coord": "O36",
+     "row": 36,
+     "col": 15,
+     "formula": "=VLOOKUP(M36,$M$38:$Q$96,3,FALSE)",
+     "value": 600
+    },
+    {
+     "coord": "P36",
+     "row": 36,
+     "col": 16,
+     "formula": "=VLOOKUP(M36,$M$38:$Q$95,4,FALSE)",
+     "value": 19
+    },
+    {
+     "coord": "Q36",
+     "row": 36,
+     "col": 17,
+     "formula": "=VLOOKUP(M36,$M$38:$Q$95,5,FALSE)",
+     "value": 12
+    },
+    {
+     "coord": "B37",
+     "row": 37,
+     "col": 2,
+     "formula": "=+(B27/2)/B28",
+     "value": 6
+    },
+    {
+     "coord": "F37",
+     "row": 37,
+     "col": 6,
+     "formula": "=IF(B37<=B38,\"→ No Esbelta\",\"→ Esbelta\")",
+     "value": "→ No Esbelta"
+    },
+    {
+     "coord": "N37",
+     "row": 37,
+     "col": 14,
+     "formula": "b",
+     "value": "b"
+    },
+    {
+     "coord": "O37",
+     "row": 37,
+     "col": 15,
+     "formula": "h",
+     "value": "h"
+    },
+    {
+     "coord": "P37",
+     "row": 37,
+     "col": 16,
+     "formula": "tf",
+     "value": "tf"
+    },
+    {
+     "coord": "Q37",
+     "row": 37,
+     "col": 17,
+     "formula": "tw",
+     "value": "tw"
+    },
+    {
+     "coord": "B38",
+     "row": 38,
+     "col": 2,
+     "formula": "=0.64*(B36*B17/B16)^0.5",
+     "value": 13.264847664794814
+    },
+    {
+     "coord": "M38",
+     "row": 38,
+     "col": 13,
+     "formula": "HEB100",
+     "value": "HEB100"
+    },
+    {
+     "coord": "N38",
+     "row": 38,
+     "col": 14,
+     "formula": 100,
+     "value": 100
+    },
+    {
+     "coord": "O38",
+     "row": 38,
+     "col": 15,
+     "formula": 100,
+     "value": 100
+    },
+    {
+     "coord": "P38",
+     "row": 38,
+     "col": 16,
+     "formula": 10,
+     "value": 10
+    },
+    {
+     "coord": "Q38",
+     "row": 38,
+     "col": 17,
+     "formula": 6,
+     "value": 6
+    },
+    {
+     "coord": "B39",
+     "row": 39,
+     "col": 2,
+     "formula": "=B29/B30",
+     "value": 29.166666666666668
+    },
+    {
+     "coord": "F39",
+     "row": 39,
+     "col": 6,
+     "formula": "=IF(B39<=B40,\"→ No Esbelta\",\"→ Esbelta\")",
+     "value": "→ No Esbelta"
+    },
+    {
+     "coord": "M39",
+     "row": 39,
+     "col": 13,
+     "formula": "HEB120",
+     "value": "HEB120"
+    },
+    {
+     "coord": "N39",
+     "row": 39,
+     "col": 14,
+     "formula": 120,
+     "value": 120
+    },
+    {
+     "coord": "O39",
+     "row": 39,
+     "col": 15,
+     "formula": 120,
+     "value": 120
+    },
+    {
+     "coord": "P39",
+     "row": 39,
+     "col": 16,
+     "formula": 11,
+     "value": 11
+    },
+    {
+     "coord": "Q39",
+     "row": 39,
+     "col": 17,
+     "formula": 6.5,
+     "value": 6.5
+    },
+    {
+     "coord": "B40",
+     "row": 40,
+     "col": 2,
+     "formula": "=1.49*(B17/B16)^0.5",
+     "value": 35.88395184480104
+    },
+    {
+     "coord": "M40",
+     "row": 40,
+     "col": 13,
+     "formula": "HEB140",
+     "value": "HEB140"
+    },
+    {
+     "coord": "N40",
+     "row": 40,
+     "col": 14,
+     "formula": 140,
+     "value": 140
+    },
+    {
+     "coord": "O40",
+     "row": 40,
+     "col": 15,
+     "formula": 140,
+     "value": 140
+    },
+    {
+     "coord": "P40",
+     "row": 40,
+     "col": 16,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "Q40",
+     "row": 40,
+     "col": 17,
+     "formula": 7,
+     "value": 7
+    },
+    {
+     "coord": "M41",
+     "row": 41,
+     "col": 13,
+     "formula": "HEB160",
+     "value": "HEB160"
+    },
+    {
+     "coord": "N41",
+     "row": 41,
+     "col": 14,
+     "formula": 160,
+     "value": 160
+    },
+    {
+     "coord": "O41",
+     "row": 41,
+     "col": 15,
+     "formula": 160,
+     "value": 160
+    },
+    {
+     "coord": "P41",
+     "row": 41,
+     "col": 16,
+     "formula": 13,
+     "value": 13
+    },
+    {
+     "coord": "Q41",
+     "row": 41,
+     "col": 17,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "B42",
+     "row": 42,
+     "col": 2,
+     "formula": "=Qs(B37,B38)",
+     "value": 1
+    },
+    {
+     "coord": "F42",
+     "row": 42,
+     "col": 6,
+     "formula": "→ Qs(Relacion,Limite)",
+     "value": "→ Qs(Relacion,Limite)"
+    },
+    {
+     "coord": "M42",
+     "row": 42,
+     "col": 13,
+     "formula": "HEB180",
+     "value": "HEB180"
+    },
+    {
+     "coord": "N42",
+     "row": 42,
+     "col": 14,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "O42",
+     "row": 42,
+     "col": 15,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "P42",
+     "row": 42,
+     "col": 16,
+     "formula": 14,
+     "value": 14
+    },
+    {
+     "coord": "Q42",
+     "row": 42,
+     "col": 17,
+     "formula": 8.5,
+     "value": 8.5
+    },
+    {
+     "coord": "B43",
+     "row": 43,
+     "col": 2,
+     "formula": "=Qa(B29/10,B30/10,B17,B48,B16)",
+     "value": 1
+    },
+    {
+     "coord": "F43",
+     "row": 43,
+     "col": 6,
+     "formula": "→ Qa(h,tw,E,Ag,Fy)",
+     "value": "→ Qa(h,tw,E,Ag,Fy)"
+    },
+    {
+     "coord": "M43",
+     "row": 43,
+     "col": 13,
+     "formula": "HEB200",
+     "value": "HEB200"
+    },
+    {
+     "coord": "N43",
+     "row": 43,
+     "col": 14,
+     "formula": 200,
+     "value": 200
+    },
+    {
+     "coord": "O43",
+     "row": 43,
+     "col": 15,
+     "formula": 200,
+     "value": 200
+    },
+    {
+     "coord": "P43",
+     "row": 43,
+     "col": 16,
+     "formula": 15,
+     "value": 15
+    },
+    {
+     "coord": "Q43",
+     "row": 43,
+     "col": 17,
+     "formula": 9,
+     "value": 9
+    },
+    {
+     "coord": "B44",
+     "row": 44,
+     "col": 2,
+     "formula": "=B42*B43",
+     "value": 1
+    },
+    {
+     "coord": "M44",
+     "row": 44,
+     "col": 13,
+     "formula": "HEB220",
+     "value": "HEB220"
+    },
+    {
+     "coord": "N44",
+     "row": 44,
+     "col": 14,
+     "formula": 220,
+     "value": 220
+    },
+    {
+     "coord": "O44",
+     "row": 44,
+     "col": 15,
+     "formula": 220,
+     "value": 220
+    },
+    {
+     "coord": "P44",
+     "row": 44,
+     "col": 16,
+     "formula": 16,
+     "value": 16
+    },
+    {
+     "coord": "Q44",
+     "row": 44,
+     "col": 17,
+     "formula": 9.5,
+     "value": 9.5
+    },
+    {
+     "coord": "M45",
+     "row": 45,
+     "col": 13,
+     "formula": "HEB240",
+     "value": "HEB240"
+    },
+    {
+     "coord": "N45",
+     "row": 45,
+     "col": 14,
+     "formula": 240,
+     "value": 240
+    },
+    {
+     "coord": "O45",
+     "row": 45,
+     "col": 15,
+     "formula": 240,
+     "value": 240
+    },
+    {
+     "coord": "P45",
+     "row": 45,
+     "col": 16,
+     "formula": 17,
+     "value": 17
+    },
+    {
+     "coord": "Q45",
+     "row": 45,
+     "col": 17,
+     "formula": 10,
+     "value": 10
+    },
+    {
+     "coord": "B46",
+     "row": 46,
+     "col": 2,
+     "formula": "Propiedades Geometricas",
+     "value": "Propiedades Geometricas"
+    },
+    {
+     "coord": "M46",
+     "row": 46,
+     "col": 13,
+     "formula": "HEB260",
+     "value": "HEB260"
+    },
+    {
+     "coord": "N46",
+     "row": 46,
+     "col": 14,
+     "formula": 260,
+     "value": 260
+    },
+    {
+     "coord": "O46",
+     "row": 46,
+     "col": 15,
+     "formula": 260,
+     "value": 260
+    },
+    {
+     "coord": "P46",
+     "row": 46,
+     "col": 16,
+     "formula": 17.5,
+     "value": 17.5
+    },
+    {
+     "coord": "Q46",
+     "row": 46,
+     "col": 17,
+     "formula": 10,
+     "value": 10
+    },
+    {
+     "coord": "M47",
+     "row": 47,
+     "col": 13,
+     "formula": "HEB280",
+     "value": "HEB280"
+    },
+    {
+     "coord": "N47",
+     "row": 47,
+     "col": 14,
+     "formula": 280,
+     "value": 280
+    },
+    {
+     "coord": "O47",
+     "row": 47,
+     "col": 15,
+     "formula": 280,
+     "value": 280
+    },
+    {
+     "coord": "P47",
+     "row": 47,
+     "col": 16,
+     "formula": 18,
+     "value": 18
+    },
+    {
+     "coord": "Q47",
+     "row": 47,
+     "col": 17,
+     "formula": 10.5,
+     "value": 10.5
+    },
+    {
+     "coord": "B48",
+     "row": 48,
+     "col": 2,
+     "formula": "=(B27*B28*2+B29*B30)/10^2",
+     "value": 192
+    },
+    {
+     "coord": "M48",
+     "row": 48,
+     "col": 13,
+     "formula": "HEB300",
+     "value": "HEB300"
+    },
+    {
+     "coord": "N48",
+     "row": 48,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O48",
+     "row": 48,
+     "col": 15,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "P48",
+     "row": 48,
+     "col": 16,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "Q48",
+     "row": 48,
+     "col": 17,
+     "formula": 11,
+     "value": 11
+    },
+    {
+     "coord": "B49",
+     "row": 49,
+     "col": 2,
+     "formula": "=((B27*B28^3/12+B27*B28*(B29/2+B28/2)^2)*2+B30*B29^3/12)/10^4",
+     "value": 57100
+    },
+    {
+     "coord": "M49",
+     "row": 49,
+     "col": 13,
+     "formula": "HEB320",
+     "value": "HEB320"
+    },
+    {
+     "coord": "N49",
+     "row": 49,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O49",
+     "row": 49,
+     "col": 15,
+     "formula": 320,
+     "value": 320
+    },
+    {
+     "coord": "P49",
+     "row": 49,
+     "col": 16,
+     "formula": 20.5,
+     "value": 20.5
+    },
+    {
+     "coord": "Q49",
+     "row": 49,
+     "col": 17,
+     "formula": 11.5,
+     "value": 11.5
+    },
+    {
+     "coord": "B50",
+     "row": 50,
+     "col": 2,
+     "formula": "=(B49/B48)^0.5",
+     "value": 17.245168405479063
+    },
+    {
+     "coord": "M50",
+     "row": 50,
+     "col": 13,
+     "formula": "HEB340",
+     "value": "HEB340"
+    },
+    {
+     "coord": "N50",
+     "row": 50,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O50",
+     "row": 50,
+     "col": 15,
+     "formula": 340,
+     "value": 340
+    },
+    {
+     "coord": "P50",
+     "row": 50,
+     "col": 16,
+     "formula": 21.5,
+     "value": 21.5
+    },
+    {
+     "coord": "Q50",
+     "row": 50,
+     "col": 17,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "B51",
+     "row": 51,
+     "col": 2,
+     "formula": "=(B29*B30^3/12+2*B28*B27^3/12)/10^4",
+     "value": 11255.04
+    },
+    {
+     "coord": "M51",
+     "row": 51,
+     "col": 13,
+     "formula": "HEB360",
+     "value": "HEB360"
+    },
+    {
+     "coord": "N51",
+     "row": 51,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O51",
+     "row": 51,
+     "col": 15,
+     "formula": 360,
+     "value": 360
+    },
+    {
+     "coord": "P51",
+     "row": 51,
+     "col": 16,
+     "formula": 22.5,
+     "value": 22.5
+    },
+    {
+     "coord": "Q51",
+     "row": 51,
+     "col": 17,
+     "formula": 12.5,
+     "value": 12.5
+    },
+    {
+     "coord": "B52",
+     "row": 52,
+     "col": 2,
+     "formula": "=(B51/B48)^0.5",
+     "value": 7.656369897020389
+    },
+    {
+     "coord": "M52",
+     "row": 52,
+     "col": 13,
+     "formula": "HEB400",
+     "value": "HEB400"
+    },
+    {
+     "coord": "N52",
+     "row": 52,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O52",
+     "row": 52,
+     "col": 15,
+     "formula": 400,
+     "value": 400
+    },
+    {
+     "coord": "P52",
+     "row": 52,
+     "col": 16,
+     "formula": 24,
+     "value": 24
+    },
+    {
+     "coord": "Q52",
+     "row": 52,
+     "col": 17,
+     "formula": 13.5,
+     "value": 13.5
+    },
+    {
+     "coord": "M53",
+     "row": 53,
+     "col": 13,
+     "formula": "HEB450",
+     "value": "HEB450"
+    },
+    {
+     "coord": "N53",
+     "row": 53,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O53",
+     "row": 53,
+     "col": 15,
+     "formula": 450,
+     "value": 450
+    },
+    {
+     "coord": "P53",
+     "row": 53,
+     "col": 16,
+     "formula": 26,
+     "value": 26
+    },
+    {
+     "coord": "Q53",
+     "row": 53,
+     "col": 17,
+     "formula": 14,
+     "value": 14
+    },
+    {
+     "coord": "B54",
+     "row": 54,
+     "col": 2,
+     "formula": "=(B29+B28)/10",
+     "value": 37.5
+    },
+    {
+     "coord": "F54",
+     "row": 54,
+     "col": 6,
+     "formula": "→ Distancia entre centoides de las almas",
+     "value": "→ Distancia entre centoides de las almas"
+    },
+    {
+     "coord": "M54",
+     "row": 54,
+     "col": 13,
+     "formula": "HEB500",
+     "value": "HEB500"
+    },
+    {
+     "coord": "N54",
+     "row": 54,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O54",
+     "row": 54,
+     "col": 15,
+     "formula": 500,
+     "value": 500
+    },
+    {
+     "coord": "P54",
+     "row": 54,
+     "col": 16,
+     "formula": 28,
+     "value": 28
+    },
+    {
+     "coord": "Q54",
+     "row": 54,
+     "col": 17,
+     "formula": 14.5,
+     "value": 14.5
+    },
+    {
+     "coord": "B55",
+     "row": 55,
+     "col": 2,
+     "formula": "=B54^2*(B27/10)^3*(B28/10)/24",
+     "value": 3955078.125
+    },
+    {
+     "coord": "M55",
+     "row": 55,
+     "col": 13,
+     "formula": "HEB550",
+     "value": "HEB550"
+    },
+    {
+     "coord": "N55",
+     "row": 55,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O55",
+     "row": 55,
+     "col": 15,
+     "formula": 550,
+     "value": 550
+    },
+    {
+     "coord": "P55",
+     "row": 55,
+     "col": 16,
+     "formula": 29,
+     "value": 29
+    },
+    {
+     "coord": "Q55",
+     "row": 55,
+     "col": 17,
+     "formula": 15,
+     "value": 15
+    },
+    {
+     "coord": "B56",
+     "row": 56,
+     "col": 2,
+     "formula": "=(2*(B27/10)*(B28/10)^3+B54*(B30/10)^3)/3",
+     "value": 334.09999999999997
+    },
+    {
+     "coord": "M56",
+     "row": 56,
+     "col": 13,
+     "formula": "HEB600",
+     "value": "HEB600"
+    },
+    {
+     "coord": "N56",
+     "row": 56,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O56",
+     "row": 56,
+     "col": 15,
+     "formula": 600,
+     "value": 600
+    },
+    {
+     "coord": "P56",
+     "row": 56,
+     "col": 16,
+     "formula": 30,
+     "value": 30
+    },
+    {
+     "coord": "Q56",
+     "row": 56,
+     "col": 17,
+     "formula": 15.5,
+     "value": 15.5
+    },
+    {
+     "coord": "M57",
+     "row": 57,
+     "col": 13,
+     "formula": "HEB650",
+     "value": "HEB650"
+    },
+    {
+     "coord": "N57",
+     "row": 57,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O57",
+     "row": 57,
+     "col": 15,
+     "formula": 650,
+     "value": 650
+    },
+    {
+     "coord": "P57",
+     "row": 57,
+     "col": 16,
+     "formula": 31,
+     "value": 31
+    },
+    {
+     "coord": "Q57",
+     "row": 57,
+     "col": 17,
+     "formula": 16,
+     "value": 16
+    },
+    {
+     "coord": "B58",
+     "row": 58,
+     "col": 2,
+     "formula": "E3. Flexural Buckling.",
+     "value": "E3. Flexural Buckling."
+    },
+    {
+     "coord": "M58",
+     "row": 58,
+     "col": 13,
+     "formula": "HEB700",
+     "value": "HEB700"
+    },
+    {
+     "coord": "N58",
+     "row": 58,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O58",
+     "row": 58,
+     "col": 15,
+     "formula": 700,
+     "value": 700
+    },
+    {
+     "coord": "P58",
+     "row": 58,
+     "col": 16,
+     "formula": 32,
+     "value": 32
+    },
+    {
+     "coord": "Q58",
+     "row": 58,
+     "col": 17,
+     "formula": 17,
+     "value": 17
+    },
+    {
+     "coord": "M59",
+     "row": 59,
+     "col": 13,
+     "formula": "HEB800",
+     "value": "HEB800"
+    },
+    {
+     "coord": "N59",
+     "row": 59,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O59",
+     "row": 59,
+     "col": 15,
+     "formula": 800,
+     "value": 800
+    },
+    {
+     "coord": "P59",
+     "row": 59,
+     "col": 16,
+     "formula": 33,
+     "value": 33
+    },
+    {
+     "coord": "Q59",
+     "row": 59,
+     "col": 17,
+     "formula": 17.5,
+     "value": 17.5
+    },
+    {
+     "coord": "C60",
+     "row": 60,
+     "col": 3,
+     "formula": "Sentido X-X",
+     "value": "Sentido X-X"
+    },
+    {
+     "coord": "M60",
+     "row": 60,
+     "col": 13,
+     "formula": "HEB900",
+     "value": "HEB900"
+    },
+    {
+     "coord": "N60",
+     "row": 60,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O60",
+     "row": 60,
+     "col": 15,
+     "formula": 900,
+     "value": 900
+    },
+    {
+     "coord": "P60",
+     "row": 60,
+     "col": 16,
+     "formula": 35,
+     "value": 35
+    },
+    {
+     "coord": "Q60",
+     "row": 60,
+     "col": 17,
+     "formula": 18.5,
+     "value": 18.5
+    },
+    {
+     "coord": "M61",
+     "row": 61,
+     "col": 13,
+     "formula": "HEB1000",
+     "value": "HEB1000"
+    },
+    {
+     "coord": "N61",
+     "row": 61,
+     "col": 14,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "O61",
+     "row": 61,
+     "col": 15,
+     "formula": 1000,
+     "value": 1000
+    },
+    {
+     "coord": "P61",
+     "row": 61,
+     "col": 16,
+     "formula": 36,
+     "value": 36
+    },
+    {
+     "coord": "Q61",
+     "row": 61,
+     "col": 17,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "C62",
+     "row": 62,
+     "col": 3,
+     "formula": "=B23*B22*100/B50",
+     "value": 20.875412262464327
+    },
+    {
+     "coord": "M62",
+     "row": 62,
+     "col": 13,
+     "formula": "IPE80",
+     "value": "IPE80"
+    },
+    {
+     "coord": "N62",
+     "row": 62,
+     "col": 14,
+     "formula": 46,
+     "value": 46
+    },
+    {
+     "coord": "O62",
+     "row": 62,
+     "col": 15,
+     "formula": 80,
+     "value": 80
+    },
+    {
+     "coord": "P62",
+     "row": 62,
+     "col": 16,
+     "formula": 5.2,
+     "value": 5.2
+    },
+    {
+     "coord": "Q62",
+     "row": 62,
+     "col": 17,
+     "formula": 3.8,
+     "value": 3.8
+    },
+    {
+     "coord": "C63",
+     "row": 63,
+     "col": 3,
+     "formula": "=PI()^2*$B$17/C62^2",
+     "value": 46172.452832505456
+    },
+    {
+     "coord": "M63",
+     "row": 63,
+     "col": 13,
+     "formula": "IPE100",
+     "value": "IPE100"
+    },
+    {
+     "coord": "N63",
+     "row": 63,
+     "col": 14,
+     "formula": 55,
+     "value": 55
+    },
+    {
+     "coord": "O63",
+     "row": 63,
+     "col": 15,
+     "formula": 100,
+     "value": 100
+    },
+    {
+     "coord": "P63",
+     "row": 63,
+     "col": 16,
+     "formula": 5.7,
+     "value": 5.7
+    },
+    {
+     "coord": "Q63",
+     "row": 63,
+     "col": 17,
+     "formula": 4.1,
+     "value": 4.1
+    },
+    {
+     "coord": "C64",
+     "row": 64,
+     "col": 3,
+     "formula": "=4.71*($B$17/($B$44*$B$16))^0.5",
+     "value": 113.43182093222343
+    },
+    {
+     "coord": "M64",
+     "row": 64,
+     "col": 13,
+     "formula": "IPE120",
+     "value": "IPE120"
+    },
+    {
+     "coord": "N64",
+     "row": 64,
+     "col": 14,
+     "formula": 64,
+     "value": 64
+    },
+    {
+     "coord": "O64",
+     "row": 64,
+     "col": 15,
+     "formula": 120,
+     "value": 120
+    },
+    {
+     "coord": "P64",
+     "row": 64,
+     "col": 16,
+     "formula": 6.3,
+     "value": 6.3
+    },
+    {
+     "coord": "Q64",
+     "row": 64,
+     "col": 17,
+     "formula": 4.4,
+     "value": 4.4
+    },
+    {
+     "coord": "C65",
+     "row": 65,
+     "col": 3,
+     "formula": "AISC_E3(E,Fy,KL/r,Q)",
+     "value": "AISC_E3(E,Fy,KL/r,Q)"
+    },
+    {
+     "coord": "M65",
+     "row": 65,
+     "col": 13,
+     "formula": "IPE140",
+     "value": "IPE140"
+    },
+    {
+     "coord": "N65",
+     "row": 65,
+     "col": 14,
+     "formula": 73,
+     "value": 73
+    },
+    {
+     "coord": "O65",
+     "row": 65,
+     "col": 15,
+     "formula": 140,
+     "value": 140
+    },
+    {
+     "coord": "P65",
+     "row": 65,
+     "col": 16,
+     "formula": 6.9,
+     "value": 6.9
+    },
+    {
+     "coord": "Q65",
+     "row": 65,
+     "col": 17,
+     "formula": 4.7,
+     "value": 4.7
+    },
+    {
+     "coord": "C66",
+     "row": 66,
+     "col": 3,
+     "formula": "=AISC_E3($B$17,$B$16,C62,B44)",
+     "value": 3404.766201211596
+    },
+    {
+     "coord": "M66",
+     "row": 66,
+     "col": 13,
+     "formula": "IPE160",
+     "value": "IPE160"
+    },
+    {
+     "coord": "N66",
+     "row": 66,
+     "col": 14,
+     "formula": 82,
+     "value": 82
+    },
+    {
+     "coord": "O66",
+     "row": 66,
+     "col": 15,
+     "formula": 160,
+     "value": 160
+    },
+    {
+     "coord": "P66",
+     "row": 66,
+     "col": 16,
+     "formula": 7.4,
+     "value": 7.4
+    },
+    {
+     "coord": "Q66",
+     "row": 66,
+     "col": 17,
+     "formula": 5,
+     "value": 5
+    },
+    {
+     "coord": "M67",
+     "row": 67,
+     "col": 13,
+     "formula": "IPE180",
+     "value": "IPE180"
+    },
+    {
+     "coord": "N67",
+     "row": 67,
+     "col": 14,
+     "formula": 91,
+     "value": 91
+    },
+    {
+     "coord": "O67",
+     "row": 67,
+     "col": 15,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "P67",
+     "row": 67,
+     "col": 16,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "Q67",
+     "row": 67,
+     "col": 17,
+     "formula": 5.3,
+     "value": 5.3
+    },
+    {
+     "coord": "C68",
+     "row": 68,
+     "col": 3,
+     "formula": "=+C66*B48*B20/1000",
+     "value": 588.3435995693638
+    },
+    {
+     "coord": "M68",
+     "row": 68,
+     "col": 13,
+     "formula": "IPE200",
+     "value": "IPE200"
+    },
+    {
+     "coord": "N68",
+     "row": 68,
+     "col": 14,
+     "formula": 100,
+     "value": 100
+    },
+    {
+     "coord": "O68",
+     "row": 68,
+     "col": 15,
+     "formula": 200,
+     "value": 200
+    },
+    {
+     "coord": "P68",
+     "row": 68,
+     "col": 16,
+     "formula": 8.5,
+     "value": 8.5
+    },
+    {
+     "coord": "Q68",
+     "row": 68,
+     "col": 17,
+     "formula": 5.6,
+     "value": 5.6
+    },
+    {
+     "coord": "M69",
+     "row": 69,
+     "col": 13,
+     "formula": "IPE220",
+     "value": "IPE220"
+    },
+    {
+     "coord": "N69",
+     "row": 69,
+     "col": 14,
+     "formula": 110,
+     "value": 110
+    },
+    {
+     "coord": "O69",
+     "row": 69,
+     "col": 15,
+     "formula": 220,
+     "value": 220
+    },
+    {
+     "coord": "P69",
+     "row": 69,
+     "col": 16,
+     "formula": 9.2,
+     "value": 9.2
+    },
+    {
+     "coord": "Q69",
+     "row": 69,
+     "col": 17,
+     "formula": 5.9,
+     "value": 5.9
+    },
+    {
+     "coord": "C70",
+     "row": 70,
+     "col": 3,
+     "formula": "Sentido Y-Y",
+     "value": "Sentido Y-Y"
+    },
+    {
+     "coord": "M70",
+     "row": 70,
+     "col": 13,
+     "formula": "IPE240",
+     "value": "IPE240"
+    },
+    {
+     "coord": "N70",
+     "row": 70,
+     "col": 14,
+     "formula": 120,
+     "value": 120
+    },
+    {
+     "coord": "O70",
+     "row": 70,
+     "col": 15,
+     "formula": 240,
+     "value": 240
+    },
+    {
+     "coord": "P70",
+     "row": 70,
+     "col": 16,
+     "formula": 9.8,
+     "value": 9.8
+    },
+    {
+     "coord": "Q70",
+     "row": 70,
+     "col": 17,
+     "formula": 6.2,
+     "value": 6.2
+    },
+    {
+     "coord": "M71",
+     "row": 71,
+     "col": 13,
+     "formula": "IPE270",
+     "value": "IPE270"
+    },
+    {
+     "coord": "N71",
+     "row": 71,
+     "col": 14,
+     "formula": 135,
+     "value": 135
+    },
+    {
+     "coord": "O71",
+     "row": 71,
+     "col": 15,
+     "formula": 270,
+     "value": 270
+    },
+    {
+     "coord": "P71",
+     "row": 71,
+     "col": 16,
+     "formula": 10.2,
+     "value": 10.2
+    },
+    {
+     "coord": "Q71",
+     "row": 71,
+     "col": 17,
+     "formula": 6.6,
+     "value": 6.6
+    },
+    {
+     "coord": "C72",
+     "row": 72,
+     "col": 3,
+     "formula": "=B24*B22*100/B52",
+     "value": 47.019671834311495
+    },
+    {
+     "coord": "M72",
+     "row": 72,
+     "col": 13,
+     "formula": "IPE300",
+     "value": "IPE300"
+    },
+    {
+     "coord": "N72",
+     "row": 72,
+     "col": 14,
+     "formula": 150,
+     "value": 150
+    },
+    {
+     "coord": "O72",
+     "row": 72,
+     "col": 15,
+     "formula": 300,
+     "value": 300
+    },
+    {
+     "coord": "P72",
+     "row": 72,
+     "col": 16,
+     "formula": 10.7,
+     "value": 10.7
+    },
+    {
+     "coord": "Q72",
+     "row": 72,
+     "col": 17,
+     "formula": 7.1,
+     "value": 7.1
+    },
+    {
+     "coord": "C73",
+     "row": 73,
+     "col": 3,
+     "formula": "=PI()^2*B17/C72^2",
+     "value": 9101.099886654332
+    },
+    {
+     "coord": "M73",
+     "row": 73,
+     "col": 13,
+     "formula": "IPE330",
+     "value": "IPE330"
+    },
+    {
+     "coord": "N73",
+     "row": 73,
+     "col": 14,
+     "formula": 160,
+     "value": 160
+    },
+    {
+     "coord": "O73",
+     "row": 73,
+     "col": 15,
+     "formula": 330,
+     "value": 330
+    },
+    {
+     "coord": "P73",
+     "row": 73,
+     "col": 16,
+     "formula": 11.5,
+     "value": 11.5
+    },
+    {
+     "coord": "Q73",
+     "row": 73,
+     "col": 17,
+     "formula": 7.5,
+     "value": 7.5
+    },
+    {
+     "coord": "C74",
+     "row": 74,
+     "col": 3,
+     "formula": "=4.71*($B$17/($B$44*$B$16))^0.5",
+     "value": 113.43182093222343
+    },
+    {
+     "coord": "M74",
+     "row": 74,
+     "col": 13,
+     "formula": "IPE360",
+     "value": "IPE360"
+    },
+    {
+     "coord": "N74",
+     "row": 74,
+     "col": 14,
+     "formula": 170,
+     "value": 170
+    },
+    {
+     "coord": "O74",
+     "row": 74,
+     "col": 15,
+     "formula": 360,
+     "value": 360
+    },
+    {
+     "coord": "P74",
+     "row": 74,
+     "col": 16,
+     "formula": 12.7,
+     "value": 12.7
+    },
+    {
+     "coord": "Q74",
+     "row": 74,
+     "col": 17,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "C75",
+     "row": 75,
+     "col": 3,
+     "formula": "AISC_E3(E,Fy,KL/r,Q)",
+     "value": "AISC_E3(E,Fy,KL/r,Q)"
+    },
+    {
+     "coord": "M75",
+     "row": 75,
+     "col": 13,
+     "formula": "IPE400",
+     "value": "IPE400"
+    },
+    {
+     "coord": "N75",
+     "row": 75,
+     "col": 14,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "O75",
+     "row": 75,
+     "col": 15,
+     "formula": 400,
+     "value": 400
+    },
+    {
+     "coord": "P75",
+     "row": 75,
+     "col": 16,
+     "formula": 13.5,
+     "value": 13.5
+    },
+    {
+     "coord": "Q75",
+     "row": 75,
+     "col": 17,
+     "formula": 8.6,
+     "value": 8.6
+    },
+    {
+     "coord": "C76",
+     "row": 76,
+     "col": 3,
+     "formula": "=AISC_E3($B$17,$B$16,C72,B44)",
+     "value": 2990.3434362055714
+    },
+    {
+     "coord": "M76",
+     "row": 76,
+     "col": 13,
+     "formula": "IPE450",
+     "value": "IPE450"
+    },
+    {
+     "coord": "N76",
+     "row": 76,
+     "col": 14,
+     "formula": 190,
+     "value": 190
+    },
+    {
+     "coord": "O76",
+     "row": 76,
+     "col": 15,
+     "formula": 450,
+     "value": 450
+    },
+    {
+     "coord": "P76",
+     "row": 76,
+     "col": 16,
+     "formula": 14.6,
+     "value": 14.6
+    },
+    {
+     "coord": "Q76",
+     "row": 76,
+     "col": 17,
+     "formula": 9.4,
+     "value": 9.4
+    },
+    {
+     "coord": "M77",
+     "row": 77,
+     "col": 13,
+     "formula": "IPE500",
+     "value": "IPE500"
+    },
+    {
+     "coord": "N77",
+     "row": 77,
+     "col": 14,
+     "formula": 200,
+     "value": 200
+    },
+    {
+     "coord": "O77",
+     "row": 77,
+     "col": 15,
+     "formula": 500,
+     "value": 500
+    },
+    {
+     "coord": "P77",
+     "row": 77,
+     "col": 16,
+     "formula": 16,
+     "value": 16
+    },
+    {
+     "coord": "Q77",
+     "row": 77,
+     "col": 17,
+     "formula": 10.2,
+     "value": 10.2
+    },
+    {
+     "coord": "C78",
+     "row": 78,
+     "col": 3,
+     "formula": "=+C76*B48*B20/1000",
+     "value": 516.7313457763228
+    },
+    {
+     "coord": "M78",
+     "row": 78,
+     "col": 13,
+     "formula": "IPE550",
+     "value": "IPE550"
+    },
+    {
+     "coord": "N78",
+     "row": 78,
+     "col": 14,
+     "formula": 210,
+     "value": 210
+    },
+    {
+     "coord": "O78",
+     "row": 78,
+     "col": 15,
+     "formula": 550,
+     "value": 550
+    },
+    {
+     "coord": "P78",
+     "row": 78,
+     "col": 16,
+     "formula": 17.2,
+     "value": 17.2
+    },
+    {
+     "coord": "Q78",
+     "row": 78,
+     "col": 17,
+     "formula": 11.1,
+     "value": 11.1
+    },
+    {
+     "coord": "M79",
+     "row": 79,
+     "col": 13,
+     "formula": "IPE600",
+     "value": "IPE600"
+    },
+    {
+     "coord": "N79",
+     "row": 79,
+     "col": 14,
+     "formula": 220,
+     "value": 220
+    },
+    {
+     "coord": "O79",
+     "row": 79,
+     "col": 15,
+     "formula": 600,
+     "value": 600
+    },
+    {
+     "coord": "P79",
+     "row": 79,
+     "col": 16,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "Q79",
+     "row": 79,
+     "col": 17,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "B80",
+     "row": 80,
+     "col": 2,
+     "formula": "E4. Torsional & Flexural-Torsional Buckling.",
+     "value": "E4. Torsional & Flexural-Torsional Buckling."
+    },
+    {
+     "coord": "M80",
+     "row": 80,
+     "col": 13,
+     "formula": "W24x131",
+     "value": "W24x131"
+    },
+    {
+     "coord": "N80",
+     "row": 80,
+     "col": 14,
+     "formula": 328,
+     "value": 328
+    },
+    {
+     "coord": "O80",
+     "row": 80,
+     "col": 15,
+     "formula": 622,
+     "value": 622
+    },
+    {
+     "coord": "P80",
+     "row": 80,
+     "col": 16,
+     "formula": 24.4,
+     "value": 24.4
+    },
+    {
+     "coord": "Q80",
+     "row": 80,
+     "col": 17,
+     "formula": 15.4,
+     "value": 15.4
+    },
+    {
+     "coord": "M81",
+     "row": 81,
+     "col": 13,
+     "formula": "W24x146",
+     "value": "W24x146"
+    },
+    {
+     "coord": "N81",
+     "row": 81,
+     "col": 14,
+     "formula": 328,
+     "value": 328
+    },
+    {
+     "coord": "O81",
+     "row": 81,
+     "col": 15,
+     "formula": 627,
+     "value": 627
+    },
+    {
+     "coord": "P81",
+     "row": 81,
+     "col": 16,
+     "formula": 27.7,
+     "value": 27.7
+    },
+    {
+     "coord": "Q81",
+     "row": 81,
+     "col": 17,
+     "formula": 16.5,
+     "value": 16.5
+    },
+    {
+     "coord": "C82",
+     "row": 82,
+     "col": 3,
+     "formula": "Para miembros doblemente simetricos",
+     "value": "Para miembros doblemente simetricos"
+    },
+    {
+     "coord": "M82",
+     "row": 82,
+     "col": 13,
+     "formula": "W27x161",
+     "value": "W27x161"
+    },
+    {
+     "coord": "N82",
+     "row": 82,
+     "col": 14,
+     "formula": 356,
+     "value": 356
+    },
+    {
+     "coord": "O82",
+     "row": 82,
+     "col": 15,
+     "formula": 701,
+     "value": 701
+    },
+    {
+     "coord": "P82",
+     "row": 82,
+     "col": 16,
+     "formula": 27.4,
+     "value": 27.4
+    },
+    {
+     "coord": "Q82",
+     "row": 82,
+     "col": 17,
+     "formula": 16.8,
+     "value": 16.8
+    },
+    {
+     "coord": "C84",
+     "row": 84,
+     "col": 3,
+     "formula": "=B25*B22*100",
+     "value": 360
+    },
+    {
+     "coord": "C85",
+     "row": 85,
+     "col": 3,
+     "formula": "=((PI()^2*B17*B55)/C84^2+B18*B56)*(1/(B49+B51))",
+     "value": 12831.623305768164
+    },
+    {
+     "coord": "C86",
+     "row": 86,
+     "col": 3,
+     "formula": "=IF(B16/C85<=2.25,B16*B44*(0.658^((B44*B16)/C85)),0.877*C85)",
+     "value": 3134.234413862707
+    },
+    {
+     "coord": "C88",
+     "row": 88,
+     "col": 3,
+     "formula": "=C86*B48*B20/1000",
+     "value": 541.5957067154758
+    },
+    {
+     "coord": "B90",
+     "row": 90,
+     "col": 2,
+     "formula": "F6. Minor axis bending.",
+     "value": "F6. Minor axis bending."
+    },
+    {
+     "coord": "C92",
+     "row": 92,
+     "col": 3,
+     "formula": "=(2*(B28*B27^3/12)+(B29*B30^3/12))/10^4",
+     "value": 11255.04
+    },
+    {
+     "coord": "C93",
+     "row": 93,
+     "col": 3,
+     "formula": "=C92/(B27/20)",
+     "value": 750.336
+    },
+    {
+     "coord": "C94",
+     "row": 94,
+     "col": 3,
+     "formula": "=B48",
+     "value": 192
+    },
+    {
+     "coord": "C95",
+     "row": 95,
+     "col": 3,
+     "formula": "=((2*((B28*B27/2)*(B27/4))+((B29*B30/2)*(B30/4)))/(C94*10^2/2))/10",
+     "value": 5.925
+    },
+    {
+     "coord": "C96",
+     "row": 96,
+     "col": 3,
+     "formula": "=C95*C94",
+     "value": 1137.6
+    },
+    {
+     "coord": "C98",
+     "row": 98,
+     "col": 3,
+     "formula": "=B16*C96/10^5",
+     "value": 39.986639999999994
+    },
+    {
+     "coord": "C99",
+     "row": 99,
+     "col": 3,
+     "formula": "=1.6*C93*B16/10^5",
+     "value": 42.19889664000001
+    },
+    {
+     "coord": "C101",
+     "row": 101,
+     "col": 3,
+     "formula": "=MIN(C98:E99)",
+     "value": 39.986639999999994
+    },
+    {
+     "coord": "C102",
+     "row": 102,
+     "col": 3,
+     "formula": "=0.9*C101",
+     "value": 35.987975999999996
+    }
+   ]
+  },
+  "Seccion Tipo I": {
+   "max_row": 115,
+   "max_col": 31,
+   "cells": [
+    {
+     "coord": "A1",
+     "row": 1,
+     "col": 1,
+     "formula": "Propiedades Geometricas de La Seccion",
+     "value": "Propiedades Geometricas de La Seccion"
+    },
+    {
+     "coord": "L1",
+     "row": 1,
+     "col": 12,
+     "formula": "Resumen",
+     "value": "Resumen"
+    },
+    {
+     "coord": "R1",
+     "row": 1,
+     "col": 18,
+     "formula": "Cargas Mayordas",
+     "value": "Cargas Mayordas"
+    },
+    {
+     "coord": "L2",
+     "row": 2,
+     "col": 12,
+     "formula": "Estabilidad Local de la Seccion",
+     "value": "Estabilidad Local de la Seccion"
+    },
+    {
+     "coord": "F3",
+     "row": 3,
+     "col": 6,
+     "formula": 120,
+     "value": 120
+    },
+    {
+     "coord": "L3",
+     "row": 3,
+     "col": 12,
+     "formula": "=B68",
+     "value": "No es Compacta Sismicamente"
+    },
+    {
+     "coord": "P3",
+     "row": 3,
+     "col": 16,
+     "formula": "=IF(L3=\"Compacta Sismicamente\",\"OK\",\"X\")",
+     "value": "X"
+    },
+    {
+     "coord": "R3",
+     "row": 3,
+     "col": 18,
+     "formula": 0,
+     "value": 0
+    },
+    {
+     "coord": "L4",
+     "row": 4,
+     "col": 12,
+     "formula": "=IF(OR(B66=\"Seccion Esbelta\",B67=\"Seccion Esbelta\"),\"Seccion Esbelta\",IF(OR(B66=\"Seccion No Compacta\",B67=\"Seccion No Compacta\"),\"Seccion No Compacta\",\"Seccion Compacta\"))",
+     "value": "Seccion Compacta"
+    },
+    {
+     "coord": "R4",
+     "row": 4,
+     "col": 18,
+     "formula": 0.27,
+     "value": 0.27
+    },
+    {
+     "coord": "X4",
+     "row": 4,
+     "col": 24,
+     "formula": "Lb",
+     "value": "Lb"
+    },
+    {
+     "coord": "Y4",
+     "row": 4,
+     "col": 25,
+     "formula": "Mn",
+     "value": "Mn"
+    },
+    {
+     "coord": "B5",
+     "row": 5,
+     "col": 2,
+     "formula": "=D6+J5*2",
+     "value": 266
+    },
+    {
+     "coord": "J5",
+     "row": 5,
+     "col": 10,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "L5",
+     "row": 5,
+     "col": 12,
+     "formula": "=\"Ala es \"&B66&\" / \"&\"Alma es \"&B67",
+     "value": "Ala es Seccion Compacta / Alma es Seccion Compacta"
+    },
+    {
+     "coord": "R5",
+     "row": 5,
+     "col": 18,
+     "formula": 30,
+     "value": 30
+    },
+    {
+     "coord": "Y5",
+     "row": 5,
+     "col": 25,
+     "formula": "=L18",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "D6",
+     "row": 6,
+     "col": 4,
+     "formula": 250,
+     "value": 250
+    },
+    {
+     "coord": "L6",
+     "row": 6,
+     "col": 12,
+     "formula": "Estabilidad Lateral Torsional Ala Superior y Resistencia",
+     "value": "Estabilidad Lateral Torsional Ala Superior y Resistencia"
+    },
+    {
+     "coord": "R6",
+     "row": 6,
+     "col": 18,
+     "formula": -30,
+     "value": -30
+    },
+    {
+     "coord": "X6",
+     "row": 6,
+     "col": 24,
+     "formula": 0.1,
+     "value": 0.1
+    },
+    {
+     "coord": "Y6",
+     "row": 6,
+     "col": 25,
+     "formula": "<openpyxl.worksheet.formula.DataTableFormula object at 0x0000020833D04250>",
+     "value": 10.80113805
+    },
+    {
+     "coord": "L7",
+     "row": 7,
+     "col": 12,
+     "formula": "=IF(B70<=B71,\"Cumple requisito simico de LTB\",\"No cumple requisito simico de LTB\")",
+     "value": "No cumple requisito simico de LTB"
+    },
+    {
+     "coord": "P7",
+     "row": 7,
+     "col": 16,
+     "formula": "=IF(L7=\"Cumple requisito simico de LTB\",\"OK\",\"X\")",
+     "value": "X"
+    },
+    {
+     "coord": "X7",
+     "row": 7,
+     "col": 24,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "Y7",
+     "row": 7,
+     "col": 25,
+     "formula": 10.80113805,
+     "value": 10.80113805
+    },
+    {
+     "coord": "L8",
+     "row": 8,
+     "col": 12,
+     "formula": "=IF(B70<=B72,\"Lb < Lp → No hay inestabilidad\",IF(B70<=B73,\"Lp < Lb < Lr → LTB Inelastico\",\"Lb > Lr → LTB Elastico\"))",
+     "value": "Lb > Lr → LTB Elastico"
+    },
+    {
+     "coord": "X8",
+     "row": 8,
+     "col": 24,
+     "formula": 2,
+     "value": 2
+    },
+    {
+     "coord": "Y8",
+     "row": 8,
+     "col": 25,
+     "formula": 9.032097437028428,
+     "value": 9.032097437028428
+    },
+    {
+     "coord": "L9",
+     "row": 9,
+     "col": 12,
+     "formula": "=B72",
+     "value": 1.10123131085163
+    },
+    {
+     "coord": "R9",
+     "row": 9,
+     "col": 18,
+     "formula": "Δ Vigas Secundarias",
+     "value": "Δ Vigas Secundarias"
+    },
+    {
+     "coord": "X9",
+     "row": 9,
+     "col": 24,
+     "formula": 3,
+     "value": 3
+    },
+    {
+     "coord": "Y9",
+     "row": 9,
+     "col": 25,
+     "formula": 7.063803887942032,
+     "value": 7.063803887942032
+    },
+    {
+     "coord": "L10",
+     "row": 10,
+     "col": 12,
+     "formula": "=B73",
+     "value": 3.22431755575634
+    },
+    {
+     "coord": "R10",
+     "row": 10,
+     "col": 18,
+     "formula": 20,
+     "value": 20
+    },
+    {
+     "coord": "X10",
+     "row": 10,
+     "col": 24,
+     "formula": 4,
+     "value": 4
+    },
+    {
+     "coord": "Y10",
+     "row": 10,
+     "col": 25,
+     "formula": 4.723727516296048,
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "L11",
+     "row": 11,
+     "col": 12,
+     "formula": "=IF(OR(L4=\"Seccion Esbelta\",B67=\"Seccion No Compacta\"),\"NA\",MIN(B82,B99))",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "R11",
+     "row": 11,
+     "col": 18,
+     "formula": 5.9,
+     "value": 5.9
+    },
+    {
+     "coord": "X11",
+     "row": 11,
+     "col": 24,
+     "formula": 5,
+     "value": 5
+    },
+    {
+     "coord": "Y11",
+     "row": 11,
+     "col": 25,
+     "formula": 3.4159026166448014,
+     "value": 3.4159026166448014
+    },
+    {
+     "coord": "L12",
+     "row": 12,
+     "col": 12,
+     "formula": "Estabilidad Lateral Torsional Ala Inferior y Resistencia",
+     "value": "Estabilidad Lateral Torsional Ala Inferior y Resistencia"
+    },
+    {
+     "coord": "R12",
+     "row": 12,
+     "col": 18,
+     "formula": 240,
+     "value": 240
+    },
+    {
+     "coord": "X12",
+     "row": 12,
+     "col": 24,
+     "formula": 6,
+     "value": 6
+    },
+    {
+     "coord": "Y12",
+     "row": 12,
+     "col": 25,
+     "formula": 2.6678845813600134,
+     "value": 2.6678845813600134
+    },
+    {
+     "coord": "F13",
+     "row": 13,
+     "col": 6,
+     "formula": 6,
+     "value": 6
+    },
+    {
+     "coord": "L13",
+     "row": 13,
+     "col": 12,
+     "formula": "=IF(B84<=B85,\"Cumple requisito simico de LTB\",\"No cumple requisito simico de LTB\")",
+     "value": "No cumple requisito simico de LTB"
+    },
+    {
+     "coord": "P13",
+     "row": 13,
+     "col": 16,
+     "formula": "=IF(L13=\"Cumple requisito simico de LTB\",\"OK\",\"X\")",
+     "value": "X"
+    },
+    {
+     "coord": "R13",
+     "row": 13,
+     "col": 18,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "X13",
+     "row": 13,
+     "col": 24,
+     "formula": 7,
+     "value": 7
+    },
+    {
+     "coord": "Y13",
+     "row": 13,
+     "col": 25,
+     "formula": 2.1892271482238668,
+     "value": 2.1892271482238668
+    },
+    {
+     "coord": "L14",
+     "row": 14,
+     "col": 12,
+     "formula": "=B71",
+     "value": 1.2959204142230336
+    },
+    {
+     "coord": "R14",
+     "row": 14,
+     "col": 18,
+     "formula": 0.07,
+     "value": 0.07
+    },
+    {
+     "coord": "X14",
+     "row": 14,
+     "col": 24,
+     "formula": 8,
+     "value": 8
+    },
+    {
+     "coord": "Y14",
+     "row": 14,
+     "col": 25,
+     "formula": 1.8580886783689048,
+     "value": 1.8580886783689048
+    },
+    {
+     "coord": "L15",
+     "row": 15,
+     "col": 12,
+     "formula": "=B86",
+     "value": 1.10123131085163
+    },
+    {
+     "coord": "R15",
+     "row": 15,
+     "col": 18,
+     "formula": 0.05,
+     "value": 0.05
+    },
+    {
+     "coord": "X15",
+     "row": 15,
+     "col": 24,
+     "formula": 9,
+     "value": 9
+    },
+    {
+     "coord": "Y15",
+     "row": 15,
+     "col": 25,
+     "formula": 1.6156683540108823,
+     "value": 1.6156683540108823
+    },
+    {
+     "coord": "L16",
+     "row": 16,
+     "col": 12,
+     "formula": "=B87",
+     "value": 3.22431755575634
+    },
+    {
+     "coord": "R16",
+     "row": 16,
+     "col": 18,
+     "formula": "=((($R$14)*$R$11*$R$10^4)/(($B$24*$B$42/10^4)/(1000*100*100)))*5/384*100",
+     "value": 106.11141802553622
+    },
+    {
+     "coord": "X16",
+     "row": 16,
+     "col": 24,
+     "formula": 10,
+     "value": 10
+    },
+    {
+     "coord": "Y16",
+     "row": 16,
+     "col": 25,
+     "formula": 1.4304985898100295,
+     "value": 1.4304985898100295
+    },
+    {
+     "coord": "L17",
+     "row": 17,
+     "col": 12,
+     "formula": "=IF(B84<=B86,\"Lb < Lp → No hay inestabilidad\",IF(B84<=B87,\"Lp < Lb < Lr → LTB Inelastico\",\"Lb > Lr → LTB Elastico\"))",
+     "value": "Lb > Lr → LTB Elastico"
+    },
+    {
+     "coord": "R17",
+     "row": 17,
+     "col": 18,
+     "formula": "=((($R$14+$R$15)*$R$11*$R$10^4)/(($B$24*$B$42/10^4)/(1000*100*100)))*5/384*100",
+     "value": 181.90528804377635
+    },
+    {
+     "coord": "X17",
+     "row": 17,
+     "col": 24,
+     "formula": 11,
+     "value": 11
+    },
+    {
+     "coord": "Y17",
+     "row": 17,
+     "col": 25,
+     "formula": 1.284346638169124,
+     "value": 1.284346638169124
+    },
+    {
+     "coord": "L18",
+     "row": 18,
+     "col": 12,
+     "formula": "=IF(OR(L4=\"Seccion Esbelta\",B67=\"Seccion No Compacta\"),\"NA\",MIN(B96,B99))",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "R18",
+     "row": 18,
+     "col": 18,
+     "formula": "=R10*100/R12",
+     "value": 8.333333333333334
+    },
+    {
+     "coord": "X18",
+     "row": 18,
+     "col": 24,
+     "formula": 12,
+     "value": 12
+    },
+    {
+     "coord": "Y18",
+     "row": 18,
+     "col": 25,
+     "formula": 1.1659630408247228,
+     "value": 1.1659630408247228
+    },
+    {
+     "coord": "L19",
+     "row": 19,
+     "col": 12,
+     "formula": "Resistencia al Corte",
+     "value": "Resistencia al Corte"
+    },
+    {
+     "coord": "R19",
+     "row": 19,
+     "col": 18,
+     "formula": "=R10*100/R13",
+     "value": 11.11111111111111
+    },
+    {
+     "coord": "X19",
+     "row": 19,
+     "col": 24,
+     "formula": 13,
+     "value": 13
+    },
+    {
+     "coord": "Y19",
+     "row": 19,
+     "col": 25,
+     "formula": 1.0680455128232778,
+     "value": 1.0680455128232778
+    },
+    {
+     "coord": "B20",
+     "row": 20,
+     "col": 2,
+     "formula": "Soporte Lateral",
+     "value": "Soporte Lateral"
+    },
+    {
+     "coord": "L20",
+     "row": 20,
+     "col": 12,
+     "formula": "=B105&\" (corte)\"",
+     "value": "No hay inestabilidad en el alma por corte (corte)"
+    },
+    {
+     "coord": "R20",
+     "row": 20,
+     "col": 18,
+     "formula": "=IF(R18>=R16,\"OK\",\"No Cumple\")",
+     "value": "No Cumple"
+    },
+    {
+     "coord": "X20",
+     "row": 20,
+     "col": 24,
+     "formula": 14,
+     "value": 14
+    },
+    {
+     "coord": "Y20",
+     "row": 20,
+     "col": 25,
+     "formula": 0.9856520288562076,
+     "value": 0.9856520288562076
+    },
+    {
+     "coord": "B21",
+     "row": 21,
+     "col": 2,
+     "formula": "=W!B32",
+     "value": 4
+    },
+    {
+     "coord": "L21",
+     "row": 21,
+     "col": 12,
+     "formula": "h/tw < 260",
+     "value": "h/tw < 260"
+    },
+    {
+     "coord": "P21",
+     "row": 21,
+     "col": 16,
+     "formula": "=IF(B102<=260,\"OK\",\"X\")",
+     "value": "OK"
+    },
+    {
+     "coord": "R21",
+     "row": 21,
+     "col": 18,
+     "formula": "=IF(R19>=R17,\"OK\",\"No Cumple\")",
+     "value": "No Cumple"
+    },
+    {
+     "coord": "X21",
+     "row": 21,
+     "col": 24,
+     "formula": 15,
+     "value": 15
+    },
+    {
+     "coord": "Y21",
+     "row": 21,
+     "col": 25,
+     "formula": 0.915319553692602,
+     "value": 0.915319553692602
+    },
+    {
+     "coord": "B22",
+     "row": 22,
+     "col": 2,
+     "formula": "=B21",
+     "value": 4
+    },
+    {
+     "coord": "L22",
+     "row": 22,
+     "col": 12,
+     "formula": "=B107*B28",
+     "value": 30.293676000000005
+    },
+    {
+     "coord": "R22",
+     "row": 22,
+     "col": 18,
+     "formula": "=(1.2*R15*R11+1.6*R14*R11+1.2*L24/1000)*R10^2/8",
+     "value": 52.350820000000006
+    },
+    {
+     "coord": "X22",
+     "row": 22,
+     "col": 24,
+     "formula": 16,
+     "value": 16
+    },
+    {
+     "coord": "Y22",
+     "row": 22,
+     "col": 25,
+     "formula": 0.8545491234914617,
+     "value": 0.8545491234914617
+    },
+    {
+     "coord": "B23",
+     "row": 23,
+     "col": 2,
+     "formula": "Materiales",
+     "value": "Materiales"
+    },
+    {
+     "coord": "L23",
+     "row": 23,
+     "col": 12,
+     "formula": "Peso de la seccion",
+     "value": "Peso de la seccion"
+    },
+    {
+     "coord": "R23",
+     "row": 23,
+     "col": 18,
+     "formula": "=(1.2*R15*R11+1.6*R14*R11+1.2*L24/1000)*R10/2",
+     "value": 10.470164000000002
+    },
+    {
+     "coord": "X23",
+     "row": 23,
+     "col": 24,
+     "formula": 17,
+     "value": 17
+    },
+    {
+     "coord": "Y23",
+     "row": 23,
+     "col": 25,
+     "formula": 0.801491702713228,
+     "value": 0.801491702713228
+    },
+    {
+     "coord": "B24",
+     "row": 24,
+     "col": 2,
+     "formula": "=W!B17",
+     "value": 2038700
+    },
+    {
+     "coord": "L24",
+     "row": 24,
+     "col": 12,
+     "formula": "=B56",
+     "value": 26.847
+    },
+    {
+     "coord": "X24",
+     "row": 24,
+     "col": 24,
+     "formula": 18,
+     "value": 18
+    },
+    {
+     "coord": "Y24",
+     "row": 24,
+     "col": 25,
+     "formula": 0.7547492847056304,
+     "value": 0.7547492847056304
+    },
+    {
+     "coord": "B25",
+     "row": 25,
+     "col": 2,
+     "formula": "=W!B16",
+     "value": 3515
+    },
+    {
+     "coord": "X25",
+     "row": 25,
+     "col": 24,
+     "formula": 19,
+     "value": 19
+    },
+    {
+     "coord": "Y25",
+     "row": 25,
+     "col": 25,
+     "formula": 0.7132448396457022,
+     "value": 0.7132448396457022
+    },
+    {
+     "coord": "B26",
+     "row": 26,
+     "col": 2,
+     "formula": "Factores de Reduccion de Capacidad",
+     "value": "Factores de Reduccion de Capacidad"
+    },
+    {
+     "coord": "L26",
+     "row": 26,
+     "col": 12,
+     "formula": "Cargas Mayordas",
+     "value": "Cargas Mayordas"
+    },
+    {
+     "coord": "R26",
+     "row": 26,
+     "col": 18,
+     "formula": "Δ Vigas Cantilever",
+     "value": "Δ Vigas Cantilever"
+    },
+    {
+     "coord": "X26",
+     "row": 26,
+     "col": 24,
+     "formula": 20,
+     "value": 20
+    },
+    {
+     "coord": "Y26",
+     "row": 26,
+     "col": 25,
+     "formula": 0.6761348518251655,
+     "value": 0.6761348518251655
+    },
+    {
+     "coord": "B27",
+     "row": 27,
+     "col": 2,
+     "formula": 0.9,
+     "value": 0.9
+    },
+    {
+     "coord": "R27",
+     "row": 27,
+     "col": 18,
+     "formula": 18,
+     "value": 18
+    },
+    {
+     "coord": "V27",
+     "row": 27,
+     "col": 22,
+     "formula": "=R27*100",
+     "value": 1800
+    },
+    {
+     "coord": "B28",
+     "row": 28,
+     "col": 2,
+     "formula": 0.9,
+     "value": 0.9
+    },
+    {
+     "coord": "R28",
+     "row": 28,
+     "col": 18,
+     "formula": 5,
+     "value": 5
+    },
+    {
+     "coord": "B29",
+     "row": 29,
+     "col": 2,
+     "formula": "Datos",
+     "value": "Datos"
+    },
+    {
+     "coord": "R29",
+     "row": 29,
+     "col": 18,
+     "formula": 240,
+     "value": 240
+    },
+    {
+     "coord": "B30",
+     "row": 30,
+     "col": 2,
+     "formula": 1,
+     "value": 1
+    },
+    {
+     "coord": "R30",
+     "row": 30,
+     "col": 18,
+     "formula": 180,
+     "value": 180
+    },
+    {
+     "coord": "U30",
+     "row": 30,
+     "col": 21,
+     "formula": "=L24",
+     "value": 26.847
+    },
+    {
+     "coord": "B31",
+     "row": 31,
+     "col": 2,
+     "formula": 5,
+     "value": 5
+    },
+    {
+     "coord": "R31",
+     "row": 31,
+     "col": 18,
+     "formula": 0.06,
+     "value": 0.06
+    },
+    {
+     "coord": "U31",
+     "row": 31,
+     "col": 21,
+     "formula": "=R31*$R$28*1000",
+     "value": 300
+    },
+    {
+     "coord": "V31",
+     "row": 31,
+     "col": 22,
+     "formula": "=U31/100",
+     "value": 3
+    },
+    {
+     "coord": "B32",
+     "row": 32,
+     "col": 2,
+     "formula": "Geometria",
+     "value": "Geometria"
+    },
+    {
+     "coord": "R32",
+     "row": 32,
+     "col": 18,
+     "formula": 0.1,
+     "value": 0.1
+    },
+    {
+     "coord": "U32",
+     "row": 32,
+     "col": 21,
+     "formula": "=R32*$R$28*1000",
+     "value": 500
+    },
+    {
+     "coord": "V32",
+     "row": 32,
+     "col": 22,
+     "formula": "=U32/100+L24/100",
+     "value": 5.26847
+    },
+    {
+     "coord": "B33",
+     "row": 33,
+     "col": 2,
+     "formula": "=\"W\"&B34&\"x\"&B35&\"x\"&B36&\"x\"&B37",
+     "value": "W120x8x250x6"
+    },
+    {
+     "coord": "R33",
+     "row": 33,
+     "col": 18,
+     "formula": "=V31*V27^4/(8*B24*V35)",
+     "value": 485.48363180551183
+    },
+    {
+     "coord": "U33",
+     "row": 33,
+     "col": 21,
+     "formula": "=SUM(U30:U32)",
+     "value": 826.847
+    },
+    {
+     "coord": "V33",
+     "row": 33,
+     "col": 22,
+     "formula": "=U33/100",
+     "value": 8.26847
+    },
+    {
+     "coord": "B34",
+     "row": 34,
+     "col": 2,
+     "formula": "=F3",
+     "value": 120
+    },
+    {
+     "coord": "R34",
+     "row": 34,
+     "col": 18,
+     "formula": "=V33*V27^4/(8*B24*V35)",
+     "value": 1338.0689483583067
+    },
+    {
+     "coord": "B35",
+     "row": 35,
+     "col": 2,
+     "formula": "=J5",
+     "value": 8
+    },
+    {
+     "coord": "L35",
+     "row": 35,
+     "col": 12,
+     "formula": "* NOTAS: El valor de Cb entra en consideracion cuando existe algun tipo de inestabilidad por LTB, se lo puede considerar igual a 1 de manera conservadora\n* El programa no calcula la resistencia nominal cuando existe problemas de esbeltez en la seccion\n*Kb es usado para deteminar la resistencia al corte, y es igual a 5 para almas sin atiezadores\n*El programa no funciona cuando el alma es no compacta",
+     "value": "* NOTAS: El valor de Cb entra en consideracion cuando existe algun tipo de inestabilidad por LTB, se lo puede considerar igual a 1 de manera conservadora\n* El programa no calcula la resistencia nominal cuando existe problemas de esbeltez en la seccion\n*Kb es usado para deteminar la resistencia al corte, y es igual a 5 para almas sin atiezadores\n*El programa no funciona cuando el alma es no compacta"
+    },
+    {
+     "coord": "R35",
+     "row": 35,
+     "col": 18,
+     "formula": "=R27*100/R29*2",
+     "value": 15
+    },
+    {
+     "coord": "V35",
+     "row": 35,
+     "col": 22,
+     "formula": "=B42/10^4",
+     "value": 3977.346
+    },
+    {
+     "coord": "B36",
+     "row": 36,
+     "col": 2,
+     "formula": "=D6",
+     "value": 250
+    },
+    {
+     "coord": "R36",
+     "row": 36,
+     "col": 18,
+     "formula": "=R27*100/R30*2",
+     "value": 20
+    },
+    {
+     "coord": "B37",
+     "row": 37,
+     "col": 2,
+     "formula": "=F13",
+     "value": 6
+    },
+    {
+     "coord": "R37",
+     "row": 37,
+     "col": 18,
+     "formula": "=IF(R35>=R33,\"OK\",\"No Cumple\")",
+     "value": "No Cumple"
+    },
+    {
+     "coord": "U37",
+     "row": 37,
+     "col": 21,
+     "formula": "=V32*V27^4/(8*B24*V35)",
+     "value": 852.5853165527949
+    },
+    {
+     "coord": "W37",
+     "row": 37,
+     "col": 23,
+     "formula": "→ Camber",
+     "value": "→ Camber"
+    },
+    {
+     "coord": "AE37",
+     "row": 37,
+     "col": 31,
+     "formula": "=0.53*SQRT(350)",
+     "value": 9.915392074950946
+    },
+    {
+     "coord": "B38",
+     "row": 38,
+     "col": 2,
+     "formula": "Propiedades",
+     "value": "Propiedades"
+    },
+    {
+     "coord": "R38",
+     "row": 38,
+     "col": 18,
+     "formula": "=IF(R36>=R34,\"OK\",\"No Cumple\")",
+     "value": "No Cumple"
+    },
+    {
+     "coord": "B39",
+     "row": 39,
+     "col": 2,
+     "formula": "=(F3*J5*2+D6*F13)/100",
+     "value": 34.2
+    },
+    {
+     "coord": "R39",
+     "row": 39,
+     "col": 18,
+     "formula": "=(1.2*R32*R28+1.6*R31*R28+1.2*L41/1000)*R27^2/8",
+     "value": 43.74
+    },
+    {
+     "coord": "B40",
+     "row": 40,
+     "col": 2,
+     "formula": "=(F3*J5*(D6/2+J5/2)+(D6/2*F13*D6/4))/(B39*1000/2)",
+     "value": 9.983333333333333
+    },
+    {
+     "coord": "R40",
+     "row": 40,
+     "col": 18,
+     "formula": "=(1.2*R32*R28+1.6*R31*R28+1.2*L41/1000)*R27/2",
+     "value": 9.72
+    },
+    {
+     "coord": "B41",
+     "row": 41,
+     "col": 2,
+     "formula": "=B39*B40",
+     "value": 341.43
+    },
+    {
+     "coord": "B42",
+     "row": 42,
+     "col": 2,
+     "formula": "=2*(F3*J5^3/12+F3*J5*(D6/2+J5/2)^2)+(D6^3*F13/12)",
+     "value": 39773460
+    },
+    {
+     "coord": "V42",
+     "row": 42,
+     "col": 22,
+     "formula": 98911833.33333333,
+     "value": 98911833.33333333
+    },
+    {
+     "coord": "B43",
+     "row": 43,
+     "col": 2,
+     "formula": "=B5/2",
+     "value": 133
+    },
+    {
+     "coord": "B44",
+     "row": 44,
+     "col": 2,
+     "formula": "=B42/B43",
+     "value": 299048.5714285714
+    },
+    {
+     "coord": "B45",
+     "row": 45,
+     "col": 2,
+     "formula": "=B25*(B44/10^3)/100000",
+     "value": 10.511557285714284
+    },
+    {
+     "coord": "N45",
+     "row": 45,
+     "col": 14,
+     "formula": "=+B42/V42",
+     "value": 0.40211022948046327
+    },
+    {
+     "coord": "B46",
+     "row": 46,
+     "col": 2,
+     "formula": "=B25*B41/100000",
+     "value": 12.0012645
+    },
+    {
+     "coord": "B47",
+     "row": 47,
+     "col": 2,
+     "formula": "=(B42/(B39*10^2))^0.5",
+     "value": 107.84093224127221
+    },
+    {
+     "coord": "B48",
+     "row": 48,
+     "col": 2,
+     "formula": "=D6*F13^3/12+2*(J5*F3^3/12)",
+     "value": 2308500
+    },
+    {
+     "coord": "B49",
+     "row": 49,
+     "col": 2,
+     "formula": "=F3/2",
+     "value": 60
+    },
+    {
+     "coord": "B50",
+     "row": 50,
+     "col": 2,
+     "formula": "=B48/B49",
+     "value": 38475
+    },
+    {
+     "coord": "B51",
+     "row": 51,
+     "col": 2,
+     "formula": "=(B48/(B39*10^2))^0.5",
+     "value": 25.980762113533157
+    },
+    {
+     "coord": "B52",
+     "row": 52,
+     "col": 2,
+     "formula": "=(B54)^2*F3^3*J5/24",
+     "value": 38340864000
+    },
+    {
+     "coord": "B53",
+     "row": 53,
+     "col": 2,
+     "formula": "=((B48*B52)^0.5/B44)^0.5",
+     "value": 31.5411175880716
+    },
+    {
+     "coord": "B54",
+     "row": 54,
+     "col": 2,
+     "formula": "=D6+J5",
+     "value": 258
+    },
+    {
+     "coord": "B55",
+     "row": 55,
+     "col": 2,
+     "formula": "=(2*F3*J5^3+(B54)*F13^3)/3",
+     "value": 59536
+    },
+    {
+     "coord": "B56",
+     "row": 56,
+     "col": 2,
+     "formula": "=7.85*B39/100^2*1000",
+     "value": 26.847
+    },
+    {
+     "coord": "B57",
+     "row": 57,
+     "col": 2,
+     "formula": "Estabilidad Local (Compacidad)",
+     "value": "Estabilidad Local (Compacidad)"
+    },
+    {
+     "coord": "B58",
+     "row": 58,
+     "col": 2,
+     "formula": "=B34/(2*B35)",
+     "value": 7.5
+    },
+    {
+     "coord": "B59",
+     "row": 59,
+     "col": 2,
+     "formula": "=0.3*(B24/B25)^0.5",
+     "value": 7.224956747275377
+    },
+    {
+     "coord": "B60",
+     "row": 60,
+     "col": 2,
+     "formula": "=0.38*(B24/B25)^0.5",
+     "value": 9.151611879882145
+    },
+    {
+     "coord": "B61",
+     "row": 61,
+     "col": 2,
+     "formula": "=1*(B24/B25)^0.5",
+     "value": 24.08318915758459
+    },
+    {
+     "coord": "B62",
+     "row": 62,
+     "col": 2,
+     "formula": "=B36/B37",
+     "value": 41.666666666666664
+    },
+    {
+     "coord": "B63",
+     "row": 63,
+     "col": 2,
+     "formula": "=2.45*(B24/B25)^0.5",
+     "value": 59.003813436082254
+    },
+    {
+     "coord": "B64",
+     "row": 64,
+     "col": 2,
+     "formula": "=3.78*(B24/B25)^0.5",
+     "value": 91.03445501566975
+    },
+    {
+     "coord": "B65",
+     "row": 65,
+     "col": 2,
+     "formula": "=5.7*(B24/B25)^0.5",
+     "value": 137.27417819823216
+    },
+    {
+     "coord": "B66",
+     "row": 66,
+     "col": 2,
+     "formula": "=IF(B58<=B60,\"Seccion Compacta\",IF(B58<=B61,\"Seccion No Compacta\",\"Seccion Esbelta\"))",
+     "value": "Seccion Compacta"
+    },
+    {
+     "coord": "B67",
+     "row": 67,
+     "col": 2,
+     "formula": "=IF(B62<=B64,\"Seccion Compacta\",IF(B59<=B65,\"Seccion No Compacta\",\"Seccion Esbelta\"))",
+     "value": "Seccion Compacta"
+    },
+    {
+     "coord": "B68",
+     "row": 68,
+     "col": 2,
+     "formula": "=IF(AND(B62<=B63,B59>=B58),\"Compacta Sismicamente\",\"No es Compacta Sismicamente\")",
+     "value": "No es Compacta Sismicamente"
+    },
+    {
+     "coord": "B69",
+     "row": 69,
+     "col": 2,
+     "formula": "Estabilidad Lateral (LTB) - Ala Superior",
+     "value": "Estabilidad Lateral (LTB) - Ala Superior"
+    },
+    {
+     "coord": "B70",
+     "row": 70,
+     "col": 2,
+     "formula": "=B21",
+     "value": 4
+    },
+    {
+     "coord": "B71",
+     "row": 71,
+     "col": 2,
+     "formula": "=0.086*$B$51/1000*($B$24/$B$25)",
+     "value": 1.2959204142230336
+    },
+    {
+     "coord": "B72",
+     "row": 72,
+     "col": 2,
+     "formula": "=1.76*$B$51/1000*($B$24/$B$25)^0.5",
+     "value": 1.10123131085163
+    },
+    {
+     "coord": "B73",
+     "row": 73,
+     "col": 2,
+     "formula": "=1.95*$B$53/1000*$B$24/(0.7*$B$25)*($B$55/($B$54*$B$44))^0.5*(1+(1+6.76*(0.7*$B$25*$B$44*$B$54/($B$24*$B$55))^2)^0.5)^0.5",
+     "value": 3.22431755575634
+    },
+    {
+     "coord": "B74",
+     "row": 74,
+     "col": 2,
+     "formula": "Resistencia a la flexion Nominal → M(-) LTB",
+     "value": "Resistencia a la flexion Nominal → M(-) LTB"
+    },
+    {
+     "coord": "B75",
+     "row": 75,
+     "col": 2,
+     "formula": "Lb < Lp",
+     "value": "Lb < Lp"
+    },
+    {
+     "coord": "B76",
+     "row": 76,
+     "col": 2,
+     "formula": "=B46",
+     "value": 12.0012645
+    },
+    {
+     "coord": "B77",
+     "row": 77,
+     "col": 2,
+     "formula": "Lp < Lb < Lr",
+     "value": "Lp < Lb < Lr"
+    },
+    {
+     "coord": "B78",
+     "row": 78,
+     "col": 2,
+     "formula": "=IF($B$30*($B$46-($B$46-0.7*($B$25*100^2/1000)*B44/1000^3)*((B70-B72)/(B73-B72)))>$B$46,$B$46,$B$30*($B$46-($B$46-0.7*($B$25*100^2/1000)*$B$44/1000^3)*((B70-B72)/(B73-B72))))",
+     "value": 5.661678154284041
+    },
+    {
+     "coord": "B79",
+     "row": 79,
+     "col": 2,
+     "formula": "Lb > Lr",
+     "value": "Lb > Lr"
+    },
+    {
+     "coord": "B80",
+     "row": 80,
+     "col": 2,
+     "formula": "=$B$30*PI()^2*($B$24)/(B70*100/($B$53/10))^2*(1+0.078*$B$55/($B$54*$B$44)*(B70*100/($B$53/10))^2)^0.5",
+     "value": 1755.0948677484218
+    },
+    {
+     "coord": "B81",
+     "row": 81,
+     "col": 2,
+     "formula": "=IF(B80*100^2/1000*$B$44/1000^3>$B$46,$B$46,B80*100^2/1000*B44/1000^3)",
+     "value": 5.248586129217831
+    },
+    {
+     "coord": "B82",
+     "row": 82,
+     "col": 2,
+     "formula": "=IF(B70<=B72,B76*$B$27,IF(B70<=B73,B78*$B$27,B81*$B$27))",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "B83",
+     "row": 83,
+     "col": 2,
+     "formula": "Estabilidad Lateral (LTB) - Inferior",
+     "value": "Estabilidad Lateral (LTB) - Inferior"
+    },
+    {
+     "coord": "B84",
+     "row": 84,
+     "col": 2,
+     "formula": "=B22",
+     "value": 4
+    },
+    {
+     "coord": "B85",
+     "row": 85,
+     "col": 2,
+     "formula": "=0.086*$B$51/1000*($B$24/$B$25)",
+     "value": 1.2959204142230336
+    },
+    {
+     "coord": "B86",
+     "row": 86,
+     "col": 2,
+     "formula": "=1.76*$B$51/1000*($B$24/$B$25)^0.5",
+     "value": 1.10123131085163
+    },
+    {
+     "coord": "B87",
+     "row": 87,
+     "col": 2,
+     "formula": "=1.95*$B$53/1000*$B$24/(0.7*$B$25)*($B$55/($B$54*$B$44))^0.5*(1+(1+6.76*(0.7*$B$25*$B$44*$B$54/($B$24*$B$55))^2)^0.5)^0.5",
+     "value": 3.22431755575634
+    },
+    {
+     "coord": "B88",
+     "row": 88,
+     "col": 2,
+     "formula": "Resistencia a la flexion Nominal → M(+) LTB",
+     "value": "Resistencia a la flexion Nominal → M(+) LTB"
+    },
+    {
+     "coord": "B89",
+     "row": 89,
+     "col": 2,
+     "formula": "Lb < Lp",
+     "value": "Lb < Lp"
+    },
+    {
+     "coord": "B90",
+     "row": 90,
+     "col": 2,
+     "formula": "=B46",
+     "value": 12.0012645
+    },
+    {
+     "coord": "B91",
+     "row": 91,
+     "col": 2,
+     "formula": "Lp < Lb < Lr",
+     "value": "Lp < Lb < Lr"
+    },
+    {
+     "coord": "B92",
+     "row": 92,
+     "col": 2,
+     "formula": "=IF($B$30*($B$46-($B$46-0.7*($B$25*100^2/1000)*B59/1000^3)*((B84-B86)/(B87-B86)))>$B$46,$B$46,$B$30*($B$46-($B$46-0.7*($B$25*100^2/1000)*$B$44/1000^3)*((B84-B86)/(B87-B86))))",
+     "value": 5.661678154284041
+    },
+    {
+     "coord": "B93",
+     "row": 93,
+     "col": 2,
+     "formula": "Lb > Lr",
+     "value": "Lb > Lr"
+    },
+    {
+     "coord": "B94",
+     "row": 94,
+     "col": 2,
+     "formula": "=$B$30*PI()^2*($B$24)/(B84*100/($B$53/10))^2*(1+0.078*$B$55/($B$54*$B$44)*(B84*100/($B$53/10))^2)^0.5",
+     "value": 1755.0948677484218
+    },
+    {
+     "coord": "B95",
+     "row": 95,
+     "col": 2,
+     "formula": "=IF(B94*100^2/1000*$B$44/1000^3>$B$46,$B$46,B94*100^2/1000*$B$44/1000^3)",
+     "value": 5.248586129217831
+    },
+    {
+     "coord": "B96",
+     "row": 96,
+     "col": 2,
+     "formula": "=IF(B84<=B86,B90*$B$27,IF(B84<=B87,B92*$B$27,B95*$B$27))",
+     "value": 4.723727516296048
+    },
+    {
+     "coord": "B97",
+     "row": 97,
+     "col": 2,
+     "formula": "Resistencia a la flexion Nominal → Secciones No Compactas",
+     "value": "Resistencia a la flexion Nominal → Secciones No Compactas"
+    },
+    {
+     "coord": "B98",
+     "row": 98,
+     "col": 2,
+     "formula": "=IF(L4=\"Seccion No Compacta\",B46-(B46-0.7*B25*100^2/1000*B44/1000^3)*(B58-B60)/(B61-B60),10000000000000)",
+     "value": 10000000000000
+    },
+    {
+     "coord": "B99",
+     "row": 99,
+     "col": 2,
+     "formula": "=B27*B98",
+     "value": 9000000000000
+    },
+    {
+     "coord": "B100",
+     "row": 100,
+     "col": 2,
+     "formula": "Resistencia al Corte Nominal → Vn",
+     "value": "Resistencia al Corte Nominal → Vn"
+    },
+    {
+     "coord": "B101",
+     "row": 101,
+     "col": 2,
+     "formula": "=B5*F13",
+     "value": 1596
+    },
+    {
+     "coord": "B102",
+     "row": 102,
+     "col": 2,
+     "formula": "=B62",
+     "value": 41.666666666666664
+    },
+    {
+     "coord": "B103",
+     "row": 103,
+     "col": 2,
+     "formula": "=1.1*(B31*B24/B25)^0.5",
+     "value": 59.23681287847955
+    },
+    {
+     "coord": "B104",
+     "row": 104,
+     "col": 2,
+     "formula": "=1.37*(B31*B24/B25)^0.5",
+     "value": 73.77675785774271
+    },
+    {
+     "coord": "B105",
+     "row": 105,
+     "col": 2,
+     "formula": "=IF(B102<=B103,\"No hay inestabilidad en el alma por corte\",IF(B102<=B104,\"Puede haber pandeo inelastico en el alma\",\"Puede ocurrir pandeo elastico en el alma\"))",
+     "value": "No hay inestabilidad en el alma por corte"
+    },
+    {
+     "coord": "B106",
+     "row": 106,
+     "col": 2,
+     "formula": "=IF(B102<=B103,1,IF(B102<=B104,B103/B102,1.51*B24*B31/(B104^2*B25)))",
+     "value": 1
+    },
+    {
+     "coord": "B107",
+     "row": 107,
+     "col": 2,
+     "formula": "=0.6*B25*100^2/1000*B101/1000^2*B106",
+     "value": 33.65964
+    }
+   ]
+  }
+ }
+}
