@@ -229,13 +229,11 @@ class SinglySymmetricISection:
             # For top compression: inside top face is at d - tft = tfb + hw.
             # centroid is at y_c; distance = (tfb + hw) - y_c = hw + tfb - y_c.
             hc = 2.0 * (hw + tfb - y_c)
-            # hp = 2 * (centroid-to-plastic-NA) on the compression side.
-            # Plastic NA at dPNA (from bottom). For top compression, the
-            # compression zone extends from PNA upward, so hp = 2*(centroid
-            # distance from PNA, taken positive on the compression side).
-            # When PNA is below the elastic NA (typical for top compression
-            # when bot flange is larger), hp = 2*(y_c - dPNA).
-            hp = 2.0 * abs(y_c - dPNA)
+            # AISC 360-22 Table B4.1b Case 16: hp = 2 * (distance from the
+            # PLASTIC NA to the inside face of the COMPRESSION flange) -
+            # the plastic analogue of hc.  Top compression: inside top
+            # face is at (tfb + hw) from the bottom fibre; PNA at dPNA.
+            hp = 2.0 * abs((hw + tfb) - dPNA)
         else:  # bot compression
             bfc = bfb
             tfc = tfb
@@ -247,7 +245,9 @@ class SinglySymmetricISection:
             # For bot compression: inside bot face is at tfb.
             # distance from centroid = y_c - tfb.
             hc = 2.0 * (y_c - tfb)
-            hp = 2.0 * abs(y_c - dPNA)
+            # hp = 2 * (PLASTIC NA -> inside face of the COMPRESSION
+            # (bottom) flange), inside bot face at tfb (Case 16).
+            hp = 2.0 * abs(dPNA - tfb)
         # Suppress unused-variable warnings for tension-side flange dims
         # (reserved for a future singly-symmetric F4 hc/hp Case 16 refinement).
         del bft_tens, tft_tens

@@ -57,6 +57,7 @@ class OracleProps:
     iyc_over_iy: float
     hc: float
     Ag: float
+    hp: float = 0.0  # >0 => singly-symmetric (Table B4.1b Case 16)
 
 
 @dataclass(frozen=True)
@@ -167,6 +168,17 @@ def mn_F4(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResu
     aw = p.hc * p.tw / (p.bfc * p.tfc)  # Eq. F4-12
     rt = p.bfc / math.sqrt(12.0 * (1.0 + aw / 6.0))  # Eq. F4-11
     lpw, lrw, _ = _classify_web(p.lam_w, Fy, E)
+    if p.hp > 0.0:
+        # Table B4.1b Case 16 (singly-symmetric web): re-derived here
+        # independently of the library, capped at lrw.
+        _den = 0.54 * (Mp / Myc) - 0.09
+        if _den > 0.0:
+            lpw = min(
+                (p.hc / p.hp) * math.sqrt(E / Fy) / _den**2,
+                lrw,
+            )
+        else:
+            lpw = lrw
     lpf, lrf, fcls = _classify_flange(p.lam_f, Fy, E, p.lam_w, construction)
 
     def _Rp(My: float) -> float:
@@ -221,10 +233,8 @@ def mn_F4(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResu
 # ---------------------------------------------------------------------------
 def mn_F5(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResult:
     Fy, E, Sx = p.Fy, p.E, p.Sx
-    hw = p.lam_w * p.tw
-    Af = (p.Ag - hw * p.tw) / 2.0
-    tf = math.sqrt(Af / (2.0 * p.lam_f))
-    bf = 2.0 * p.lam_f * tf
+    hw = p.lam_w * p.tw  # web clear height (= hc for the F5 aw numerator)
+    bf, tf = p.bfc, p.tfc  # AISC §F5: actual compression-flange dims
     aw = min(hw * p.tw / (bf * tf), 10.0)  # Eq. F5-12 (aw capped at 10 per F4-12)
     thr = 5.7 * math.sqrt(E / Fy)
     # Eq. F5-6
