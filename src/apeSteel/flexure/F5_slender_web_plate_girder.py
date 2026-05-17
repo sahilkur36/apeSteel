@@ -173,20 +173,21 @@ def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
     tw: float = section_properties.web_thickness_tw
     lambda_w: float = section_properties.web_height_to_thickness_ratio_h_tw
     hw: float = lambda_w * tw  # web clear height
-    bf_2tf: float = section_properties.flange_width_to_thickness_ratio_bf_2tf
     Cb: float = lateral_torsional_buckling_modification_factor_Cb
 
-    # Recover bf, tf from the slenderness + the inertia.  We don't store
-    # them directly on SectionProperties; AISC §F5 needs them for aw / Rpg / rt.
-    # The flange has area = (Ag - hw*tw)/2.  Each flange thus has area
-    # A_f = bf * tf, and bf/(2*tf) is known.  Solve: tf = sqrt(A_f / (2*bf_2tf))
-    # and bf = 2 * bf_2tf * tf.
-    Ag: float = section_properties.gross_area_Ag
-    web_area: float = hw * tw
-    flange_pair_area: float = Ag - web_area
-    A_f: float = flange_pair_area / 2.0
-    tf: float = math.sqrt(A_f / (2.0 * bf_2tf))
-    bf: float = 2.0 * bf_2tf * tf
+    # AISC §F5 needs the *actual* compression-flange width/thickness for
+    # aw (Eq. F4-12), rt (Eq. F4-11) and hence Rpg / Lp / Lr / Fcr.  Use
+    # the explicit (resolved) flange dimensions carried on
+    # SectionProperties - NOT a back-solve from Ag, which would fold a
+    # rolled section's fillet / k area into the flange and corrupt aw.
+    bf: float = section_properties.resolved_compression_flange_width_bfc()
+    tf: float = section_properties.resolved_compression_flange_thickness_tfc()
+    if bf <= 0.0 or tf <= 0.0:
+        raise ValueError(
+            "F5 requires the compression-flange dimensions on "
+            "SectionProperties (flange_width_bf / flange_thickness_tf); "
+            f"got bf={bf!r}, tf={tf!r}."
+        )
 
     # --- Mp ---
     Mp: float = compute_plastic_moment_Mp(Fy, Zx)

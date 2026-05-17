@@ -173,20 +173,32 @@ class TestF4OnSinglySymmetric:
         assert math.isclose(r.nominal_TFY_moment_Mn_TFY, Rpt * Myt, rel_tol=TOL)
 
     def test_DS_equivalence(self) -> None:
-        """SS with equal flanges should give the same F4 result as DS."""
+        """SS with equal flanges == DS through F4, for a COMPACT web.
+
+        AISC 360-22 Table B4.1b deliberately uses different web
+        provisions: Case 15 (lambda_pw = 3.76 sqrt(E/Fy)) for
+        doubly-symmetric webs, Case 16 (the hc/hp, Mp/My formula) for
+        singly-symmetric webs.  They do NOT coincide for an arbitrary
+        shape factor, so a DS-equivalent SS section only matches the DS
+        result exactly when the web is **compact** - then Rpc = Rpt =
+        Mp/Myc via Eq. F4-9a / F4-16a, independent of lambda_pw.  (A
+        noncompact web would legitimately differ by the Case-15-vs-16
+        lambda_pw in the Eq. F4-9b interpolation.)  hw/tw = 500/12 ~ 42
+        is well below both Case-15 and Case-16 lambda_pw for A992.
+        """
         ds = DoublySymmetricISection(
             flange_width_bf=300.0,
             flange_thickness_tf=20.0,
-            web_clear_height_hw=1200.0,
-            web_thickness_tw=10.0,
+            web_clear_height_hw=500.0,
+            web_thickness_tw=12.0,
         )
         ss = SinglySymmetricISection(
             top_flange_width_bf_top=300.0,
             top_flange_thickness_tf_top=20.0,
             bot_flange_width_bf_bot=300.0,
             bot_flange_thickness_tf_bot=20.0,
-            web_clear_height_hw=1200.0,
-            web_thickness_tw=10.0,
+            web_clear_height_hw=500.0,
+            web_thickness_tw=12.0,
         )
         r_ds = compute_flexural_strength_F4(
             ds.compute_section_properties(), A992, 2000.0, 1.0, "welded"
@@ -194,9 +206,8 @@ class TestF4OnSinglySymmetric:
         r_ss = compute_flexural_strength_F4(
             ss.compute_section_properties("top"), A992, 2000.0, 1.0, "welded"
         )
-        # Mn should agree to high precision (small differences from web's
-        # Iy contribution are still well below the 0.23 threshold so the
-        # Rpc/Rpt path is identical).
+        assert r_ds.web_classification == "compact"
+        assert r_ss.web_classification == "compact"
         assert math.isclose(
             r_ss.nominal_flexural_strength_Mn,
             r_ds.nominal_flexural_strength_Mn,

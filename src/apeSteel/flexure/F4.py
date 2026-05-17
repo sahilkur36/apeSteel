@@ -57,6 +57,7 @@ from typing import TYPE_CHECKING
 from apeSteel.classification._common import compute_kc_for_built_up_flange
 from apeSteel.classification.flexural_compactness_B4_1b import (
     classify_flexural_compactness_B4_1b,
+    compute_singly_symmetric_web_lambda_pw_case16,
 )
 from apeSteel.core.result_types import AISCClauseReference, Report
 from apeSteel.flexure._common import (
@@ -442,6 +443,30 @@ def compute_flexural_strength_F4(  # noqa: PLR0912, PLR0915
     lambda_pw: float = lambda_pw_opt
     lambda_rw: float = flex_class_report.web.noncompact_limit_lambda_r
     web_class = flex_class_report.web.classification
+
+    # AISC 360-22 Table B4.1b: doubly-symmetric webs use Case 15
+    # (lambda_pw = 3.76 sqrt(E/Fy), what the classifier returned);
+    # singly-symmetric webs must use Case 16, which depends on hc/hp
+    # and Mp/My.  A singly-symmetric section is the one whose geometry
+    # populated the plastic-zone depth hp (DS leaves it at the 0.0
+    # sentinel).  lambda_rw is identical for Cases 15 and 16
+    # (5.70 sqrt(E/Fy)), so the F4-vs-F5 slender boundary is unchanged;
+    # only lambda_pw (the Rpc/Rpt interpolation anchor) differs.
+    if section_properties.plastic_neutral_axis_depth_hp > 0.0:
+        lambda_pw = compute_singly_symmetric_web_lambda_pw_case16(
+            web_compression_depth_hc=hc,
+            web_plastic_depth_hp=section_properties.resolved_hp(),
+            plastic_moment_Mp=Mp,
+            yield_moment_My=Myc,
+            elastic_modulus_E=E,
+            yield_stress_Fy=Fy,
+        )
+        if lambda_w <= lambda_pw:
+            web_class = "compact"
+        elif lambda_w <= lambda_rw:
+            web_class = "non_compact"
+        else:
+            web_class = "slender"
 
     flange_class = flex_class_report.flange.classification
     lambda_pf_opt = flex_class_report.flange.compact_limit_lambda_p

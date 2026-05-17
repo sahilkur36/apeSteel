@@ -67,6 +67,7 @@ def _props(sp: SectionProperties, material: SteelMaterial) -> OracleProps:
         iyc_over_iy=sp.resolved_iyc_over_iy(),
         hc=sp.resolved_hc(),
         Ag=sp.gross_area_Ag,
+        hp=sp.plastic_neutral_axis_depth_hp,
     )
 
 

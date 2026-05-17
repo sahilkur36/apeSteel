@@ -62,6 +62,76 @@ B4_1B_WELDED_FLANGE_FL_FRACTION_OF_FY: float = 0.7  # FL = 0.7 Fy (Eq. F3-1 back
 B4_1B_WEB_COMPACT_LIMIT_COEFF: float = 3.76
 B4_1B_WEB_NONCOMPACT_LIMIT_COEFF: float = 5.70
 
+# Case 16 (singly-symmetric I web, flexure) numerical constants:
+# lambda_pw = (hc/hp) sqrt(E/Fy) / (0.54 Mp/My - 0.09)^2  <=  lambda_rw,
+# lambda_rw = 5.70 sqrt(E/Fy).
+B4_1B_CASE16_MP_MY_COEFF: float = 0.54
+B4_1B_CASE16_MP_MY_OFFSET: float = 0.09
+
+
+def compute_singly_symmetric_web_lambda_pw_case16(
+    web_compression_depth_hc: float,
+    web_plastic_depth_hp: float,
+    plastic_moment_Mp: float,
+    yield_moment_My: float,
+    elastic_modulus_E: float,
+    yield_stress_Fy: float,
+) -> float:
+    """Return the §B4.1b **Case 16** web compact limit ``lambda_pw``.
+
+    Singly-symmetric I-shaped members in flexure (AISC 360-22
+    Table B4.1b, Case 16, p. 16.1-17)::
+
+        lambda_pw = ( (hc/hp) * sqrt(E/Fy) )
+                    / (0.54 * Mp/My - 0.09)^2     <=  lambda_rw
+
+    with ``lambda_rw = 5.70 sqrt(E/Fy)`` (same as Case 15).  For a
+    doubly-symmetric I this reduces to the Case 15 ``3.76 sqrt(E/Fy)``;
+    the doubly-symmetric path keeps using Case 15 directly.
+
+    Parameters
+    ----------
+    web_compression_depth_hc : float
+        ``hc`` - 2 x (elastic NA -> inside face of compression flange) (mm).
+    web_plastic_depth_hp : float
+        ``hp`` - 2 x (plastic NA -> inside face of compression flange) (mm).
+        Must be > 0.
+    plastic_moment_Mp : float
+        ``Mp = Fy * Zx`` (N*mm).
+    yield_moment_My : float
+        Yield moment ``My = Fy * Sxc`` to the compression flange (N*mm).
+        Must be > 0.
+    elastic_modulus_E, yield_stress_Fy : float
+        ``E``, ``Fy`` (MPa).
+
+    Returns
+    -------
+    float
+        ``lambda_pw`` per Case 16, capped at ``lambda_rw``.
+
+    Raises
+    ------
+    ValueError
+        If ``hp <= 0`` or ``My <= 0`` (degenerate geometry).
+    """
+    if web_plastic_depth_hp <= 0.0:
+        raise ValueError(f"web_plastic_depth_hp must be positive, got {web_plastic_depth_hp!r}")
+    if yield_moment_My <= 0.0:
+        raise ValueError(f"yield_moment_My must be positive, got {yield_moment_My!r}")
+    sqrt_E_over_Fy = math.sqrt(elastic_modulus_E / yield_stress_Fy)
+    lambda_rw = B4_1B_WEB_NONCOMPACT_LIMIT_COEFF * sqrt_E_over_Fy
+    denominator = (
+        B4_1B_CASE16_MP_MY_COEFF * (plastic_moment_Mp / yield_moment_My) - B4_1B_CASE16_MP_MY_OFFSET
+    )
+    # For any real I-shape Mp/My >= ~1 so the denominator is > 0; guard
+    # the pathological case by falling back to the slender limit.
+    if denominator <= 0.0:
+        return lambda_rw
+    lambda_pw = (
+        (web_compression_depth_hc / web_plastic_depth_hp) * sqrt_E_over_Fy
+    ) / denominator**2
+    return min(lambda_pw, lambda_rw)
+
 
 # ---------------------------------------------------------------------------
 # Report
@@ -241,6 +311,8 @@ def classify_flexural_compactness_B4_1b(
 
 
 __all__ = [
+    "B4_1B_CASE16_MP_MY_COEFF",
+    "B4_1B_CASE16_MP_MY_OFFSET",
     "B4_1B_ROLLED_FLANGE_COMPACT_LIMIT_COEFF",
     "B4_1B_ROLLED_FLANGE_NONCOMPACT_LIMIT_COEFF",
     "B4_1B_WEB_COMPACT_LIMIT_COEFF",
@@ -250,4 +322,5 @@ __all__ = [
     "B4_1B_WELDED_FLANGE_NONCOMPACT_LIMIT_COEFF",
     "FlexuralCompactnessReport",
     "classify_flexural_compactness_B4_1b",
+    "compute_singly_symmetric_web_lambda_pw_case16",
 ]
