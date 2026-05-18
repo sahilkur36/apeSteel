@@ -57,7 +57,12 @@ class OracleProps:
     iyc_over_iy: float
     hc: float
     Ag: float
-    hp: float = 0.0  # >0 => singly-symmetric (Table B4.1b Case 16)
+    hp: float = 0.0  # >0 => singly-symmetric (Table B4.1b Case 16 / §F5 SS)
+    #: AISC 360-22 §F2.2 section constant c: Eq. F2-8a c = 1 (DS I,
+    #: default) or Eq. F2-8b c = (ho/2)*sqrt(Iy/Cw) (channel).  The
+    #: caller (the golden test) derives the channel value independently
+    #: from the spec; the oracle only multiplies by it.
+    section_c: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -110,7 +115,16 @@ def _ltb_F2(p: OracleProps, Lb: float, Cb: float) -> tuple[float, str]:
     Fy, E, Sx, Zx = p.Fy, p.E, p.Sx, p.Zx
     Mp = Fy * Zx
     Lp = 1.76 * p.ry * math.sqrt(E / Fy)  # Eq. F2-5
-    Jc = p.J * 1.0  # c = 1.0 for doubly-symmetric I
+    # AISC 360-22 §F2.2 section constant ``c`` (Eq. F2-8a: c = 1 for a
+    # doubly-symmetric I, the ``p.section_c`` default 1.0; Eq. F2-8b:
+    # c = (ho/2)*sqrt(Iy/Cw) for a channel).  ``Jc`` is the effective
+    # torsional constant the spec writes as the product ``J*c`` -- this
+    # is the *natural spec grouping*, derived independently of the
+    # library's IEEE-754 operation order (the contract tolerance is
+    # rel_tol=1e-9, so a channel need not be bit-equal).  Every shipped
+    # DS case has p.section_c == 1.0, so ``p.J * 1.0`` is exact and this
+    # remains bit-identical to the pre-F1 oracle on the DS goldens.
+    Jc = p.J * p.section_c
     a = Jc / (Sx * p.ho)
     b = (0.7 * Fy * Sx * p.ho) / (E * Jc)
     # Eq. F2-6
@@ -223,9 +237,18 @@ def mn_F4(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResu
 
 
 # ---------------------------------------------------------------------------
-# Section F5 -- slender-web plate girder (doubly-symmetric path)
+# Section F5 -- slender-web plate girder (doubly- AND singly-symmetric)
 # ---------------------------------------------------------------------------
-def mn_F5(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResult:
+def _mn_F5_ds(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResult:
+    """AISC 360-22 §F5 doubly-symmetric slender-web I (DS path).
+
+    This body is the **pre-F1 oracle verbatim** (the original
+    doubly-symmetric-only ``mn_F5``): same statement order, same
+    operation grouping, same literals.  Extracting it unchanged into a
+    helper keeps every shipped DS §F5 golden / external anchor
+    bit-identical -- nothing here is reverse-engineered from the
+    library, it is AISC §F5 as written.
+    """
     Fy, E, Sx = p.Fy, p.E, p.Sx
     hw = p.lam_w * p.tw  # web clear height (= hc for the F5 aw numerator)
     bf, tf = p.bfc, p.tfc  # AISC §F5: actual compression-flange dims
@@ -253,3 +276,61 @@ def mn_F5(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResu
         Mn_flb = Rpg * (0.9 * E * _kc(p.lam_w) / p.lam_f**2) * Sx
     Mn = min(Mn_cfy, Mn_ltb, Mn_flb)
     return OracleResult(Mn, "F5")
+
+
+def _mn_F5_ss(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResult:
+    """AISC 360-22 §F5 singly-symmetric slender-web I (SS path).
+
+    Re-derived directly from AISC §F5 as printed (16.1-60/61): Sxc/Sxt,
+    ``aw`` from Eq. F4-12 with ``hc`` in the numerator, ``Rpg`` from
+    Eq. F5-6 with ``hc/tw``, ``rt`` from Eq. F5-11, the F5-3/F5-4 LTB
+    ``Fcr``, the F5-8/F5-9 flange-local-buckling ``Fcr``, and the
+    Eq. F5-10 tension-flange-yielding cap when ``Sxt < Sxc``.  The
+    flange-local-buckling moment is written in the **same single
+    spec-natural ``Rpg * Fcr * Sxc`` form as the DS path** (Eq. F5-2,
+    no library-mimicking factoring); the contract tolerance is
+    rel_tol=1e-9, so this need not be bit-equal to apeSteel.
+    """
+    Fy, E = p.Fy, p.E
+    bf, tf = p.bfc, p.tfc  # AISC §F5: actual compression-flange dims
+    Sxc, Sxt = p.Sxc, p.Sxt
+    aw = min(p.hc * p.tw / (bf * tf), 10.0)  # Eq. F4-12, capped at 10
+    thr = 5.7 * math.sqrt(E / Fy)
+    lam_web = p.hc / p.tw  # Eq. F5-6 uses hc/tw
+    # Eq. F5-6
+    Rpg = 1.0 if lam_web <= thr else min(1.0, 1.0 - aw / (1200.0 + 300.0 * aw) * (lam_web - thr))
+    rt = bf / math.sqrt(12.0 * (1.0 + aw / 6.0))  # Eq. F5-11
+    Lp = 1.1 * rt * math.sqrt(E / Fy)  # Eq. F4-7 (referenced by F5.2)
+    Lr = math.pi * rt * math.sqrt(E / (0.7 * Fy))  # Eq. F5-5
+    if Lb <= Lp:
+        Fcr = Fy
+    elif Lb <= Lr:  # Eq. F5-3
+        Fcr = min(Cb * (Fy - 0.3 * Fy * (Lb - Lp) / (Lr - Lp)), Fy)
+    else:  # Eq. F5-4
+        Fcr = min(Cb * math.pi**2 * E / (Lb / rt) ** 2, Fy)
+    Mn_ltb = Rpg * Fcr * Sxc  # Eq. F5-2
+    Mn_cfy = Rpg * Fy * Sxc  # Eq. F5-1
+    lpf, lrf, fcls = _classify_flange(p.lam_f, Fy, E, p.lam_w, construction)
+    if fcls == "compact":
+        Mn_flb = Mn_cfy
+    elif fcls == "non_compact":  # Eq. F5-8
+        Mn_flb = Rpg * (Fy - 0.3 * Fy * (p.lam_f - lpf) / (lrf - lpf)) * Sxc
+    else:  # Eq. F5-9
+        Mn_flb = Rpg * (0.9 * E * _kc(p.lam_w) / p.lam_f**2) * Sxc
+    cands = [Mn_cfy, Mn_ltb, Mn_flb]
+    if Sxt < Sxc:  # Eq. F5-10 tension-flange yielding
+        cands.append(Fy * Sxt)
+    return OracleResult(min(cands), "F5")
+
+
+def mn_F5(p: OracleProps, Lb: float, Cb: float, construction: str) -> OracleResult:
+    """AISC 360-22 §F5 (printed 16.1-60/61), DS and SS slender-web I.
+
+    Thin dispatcher: ``p.hp == 0`` (doubly-symmetric) -> :func:`_mn_F5_ds`
+    (the pre-F1 oracle verbatim, so the shipped DS §F5 anchors stay
+    bit-exact); ``p.hp > 0`` (singly-symmetric) -> :func:`_mn_F5_ss`
+    (§F5 SS, re-derived from the spec, contract tolerance rel_tol=1e-9).
+    """
+    if p.hp > 0.0:
+        return _mn_F5_ss(p, Lb, Cb, construction)
+    return _mn_F5_ds(p, Lb, Cb, construction)

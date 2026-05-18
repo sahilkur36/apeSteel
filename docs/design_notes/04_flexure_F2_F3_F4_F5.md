@@ -1,7 +1,17 @@
 # Design note 04 — Flexure per AISC 360 §F2–F5
 
-> **Status:** design, not yet implemented.
-> **Drives:** `apeSteel.flexure.*`.
+> **Status: SHIPPED, then SUPERSEDED by design note
+> [`10_flexure_full_F.md`](10_flexure_full_F.md).**  §F2–§F5 (the
+> I-shape major-axis suite this note describes) shipped in
+> Phases 3/4/8/9; Phase **F-1** then refactored §F2–§F5 onto the
+> generalized `FlexuralSectionProperties` data model (signatures
+> unchanged, bit-exact) and Phase **F-8** completed the *full*
+> Chapter F (§F6–§F12 + the non-I facade/catalog).  This note is kept
+> for the §F2–§F5 derivation/spreadsheet provenance it records; the
+> authoritative, current contract for the whole chapter is design
+> note 10.
+> **Drives:** `apeSteel.flexure.*` (the §F2–§F5 modules; see design
+> note 10 for §F6–§F12 and the section-kind facade).
 > **Spreadsheet rows ported:** cells `B69` – `B99` of `Seccion Tipo I`,
 > plus the entire `Plate Girders` sheet (F5).
 

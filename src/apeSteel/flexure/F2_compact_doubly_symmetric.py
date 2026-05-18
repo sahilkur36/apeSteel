@@ -48,9 +48,12 @@ from apeSteel.flexure.lateral_torsional_buckling import (
     compute_limiting_length_plastic_Lp,
     compute_plastic_moment_Mp,
 )
+from apeSteel.sections.flexural_properties import FlexuralSectionProperties
 
 if TYPE_CHECKING:
     from apeSteel.core.materials import SteelMaterial
+    from apeSteel.sections.compression_properties import SectionSymmetry
+    from apeSteel.sections.flexural_properties import FlexuralSectionKind
     from apeSteel.sections.properties import SectionProperties
 
 
@@ -117,8 +120,20 @@ def compute_flexural_strength_F2_compact_doubly_symmetric(
     material: SteelMaterial,
     unbraced_length_Lb: float,
     lateral_torsional_buckling_modification_factor_Cb: float,
+    *,
+    section_kind: FlexuralSectionKind = "doubly_symmetric_I",
 ) -> FlexureF2Report:
-    """Return Mn per AISC §F2 for a compact doubly-symmetric I.
+    """Return Mn per AISC §F2 for a compact doubly-symmetric I or channel.
+
+    Internally the shipped I-only :class:`SectionProperties` is lifted
+    into the generalized :class:`FlexuralSectionProperties` via
+    :meth:`FlexuralSectionProperties.from_legacy` (zero numerical change
+    - the same ``Sx``/``Zx``/``ry``/``rts``/``ho``/``J`` floats flow
+    through), so §F2 now reads its geometry from the universal Chapter-F
+    currency.  The §F2.2 section constant ``c`` (Eq. F2-8a / F2-8b) is
+    taken from :attr:`FlexuralSectionProperties.section_constant_c`:
+    ``1.0`` for a doubly-symmetric I (Eq. F2-8a, default) and
+    ``(ho/2)*sqrt(Iy/Cw)`` for a channel (Eq. F2-8b).
 
     Parameters
     ----------
@@ -134,6 +149,12 @@ def compute_flexural_strength_F2_compact_doubly_symmetric(
     lateral_torsional_buckling_modification_factor_Cb : float
         Cb per AISC Eq. F1-1.  The caller must compute this explicitly;
         no silent default to 1.0.
+    section_kind : FlexuralSectionKind, keyword-only, optional
+        ``"doubly_symmetric_I"`` (default) or ``"channel"``.  Selects
+        Eq. F2-8a (``c=1``) vs Eq. F2-8b (channel ``c``).  Defaulting to
+        the doubly-symmetric I keeps every shipped caller / test
+        bit-identical (``c`` stays exactly ``1.0``); the channel path is
+        purely additive.
 
     Returns
     -------
@@ -150,12 +171,29 @@ def compute_flexural_strength_F2_compact_doubly_symmetric(
 
     Fy: float = material.yield_stress_Fy
     E: float = material.elastic_modulus_E
-    Zx: float = section_properties.plastic_section_modulus_strong_axis_Zx
-    Sx: float = section_properties.elastic_section_modulus_strong_axis_Sx
-    ry: float = section_properties.radius_of_gyration_weak_axis_ry
-    rts: float = section_properties.effective_radius_of_gyration_for_LTB_rts
-    ho: float = section_properties.distance_between_flange_centroids_ho
-    J: float = section_properties.torsional_constant_J
+    # Lift the shipped I-only currency into the generalized Chapter-F
+    # model.  ``from_legacy`` copies Sx/Zx/ry/rts/ho/J verbatim and sets
+    # ``section_constant_c`` per Eq. F2-8a (I -> 1.0) or Eq. F2-8b
+    # (channel).  ``symmetry``/``construction`` do not influence any
+    # quantity §F2 reads from ``fsp`` (only ``c`` does, and only for a
+    # channel); they are passed for call-site parity with the classifier
+    # (a channel is monosymmetric, an I-shape doubly-symmetric).
+    fsp_symmetry: SectionSymmetry = (
+        "doubly_symmetric" if section_kind == "doubly_symmetric_I" else "singly_symmetric"
+    )
+    fsp: FlexuralSectionProperties = FlexuralSectionProperties.from_legacy(
+        section_properties,
+        kind=section_kind,
+        symmetry=fsp_symmetry,
+        construction="rolled",
+    )
+    Zx: float = fsp.plastic_modulus_Zx
+    Sx: float = fsp.elastic_modulus_Sx
+    ry: float = fsp.radius_of_gyration_ry
+    rts: float = fsp.effective_radius_of_gyration_for_LTB_rts
+    ho: float = fsp.distance_between_flange_centroids_ho
+    J: float = fsp.torsional_constant_J
+    c: float = fsp.section_constant_c
     Cb: float = lateral_torsional_buckling_modification_factor_Cb
 
     # --- regime-defining lengths ---
@@ -171,6 +209,7 @@ def compute_flexural_strength_F2_compact_doubly_symmetric(
         elastic_section_modulus_strong_axis_Sx=Sx,
         elastic_modulus_E=E,
         yield_stress_Fy=Fy,
+        section_constant_c=c,
     )
 
     # --- plastic-moment plateau ---
@@ -208,6 +247,7 @@ def compute_flexural_strength_F2_compact_doubly_symmetric(
             distance_between_flange_centroids_ho=ho,
             torsional_constant_J=J,
             elastic_modulus_E=E,
+            section_constant_c=c,
         )
         # AISC F2-3 caps Mn at Mp.
         Mn = min(Mcr, Mp)

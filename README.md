@@ -25,18 +25,31 @@ written in modern Python with an emphasis on:
 | European catalog (IPE, IPEA, HE-A/B/M) | EN 10365 | ✅ shipped |
 | Flexural classification | 360 §B4.1b | ✅ shipped |
 | Seismic compactness | 341 §D1.1 | ✅ shipped |
-| Flexure — compact doubly-symmetric I | 360 §F2 | ✅ shipped |
-| Flexure — non-compact / slender flange | 360 §F3 | ✅ shipped |
-| Flexure — singly-symmetric I | 360 §F4 | ✅ shipped |
-| Flexure — slender web plate girder | 360 §F5 | ✅ shipped |
+| Flexure — **full Chapter F (all section families)** | 360 §F2–§F12 | ✅ shipped |
+| &nbsp;&nbsp;• compact doubly-symmetric I **& channels (major)** | 360 §F2 | ✅ shipped |
+| &nbsp;&nbsp;• non-compact / slender flange | 360 §F3 | ✅ shipped |
+| &nbsp;&nbsp;• singly-symmetric I (other I-shapes) | 360 §F4 | ✅ shipped |
+| &nbsp;&nbsp;• slender-web plate girder (DS & SS) | 360 §F5 | ✅ shipped |
+| &nbsp;&nbsp;• I-shapes **& channels, minor axis** | 360 §F6 | ✅ shipped |
+| &nbsp;&nbsp;• square / rectangular HSS & box | 360 §F7 | ✅ shipped |
+| &nbsp;&nbsp;• round HSS / Pipe | 360 §F8 | ✅ shipped |
+| &nbsp;&nbsp;• tees & double angles | 360 §F9 | ✅ shipped |
+| &nbsp;&nbsp;• single angles | 360 §F10 | ✅ shipped |
+| &nbsp;&nbsp;• rectangular bars & rounds | 360 §F11 | ✅ shipped |
+| &nbsp;&nbsp;• unsymmetrical shapes (elastic) | 360 §F12 | ✅ shipped |
+| Compression — full Chapter E (all families) | 360 §E2–§E7 | ✅ shipped |
+| Combined forces + torsion — full Chapter H | 360 §H1–§H3 | ✅ shipped |
+| Tension — gross-section yielding (the §H1.2 slice) | 360 §D2-1 | ✅ shipped |
 | Shear (incl. tension-field action) | 360 §G2 | ✅ shipped |
 | Serviceability deflections | — | ✅ shipped |
 | Panel-zone column-flange tension check | 341 §E3.6e | ✅ shipped |
 
-Out of scope (for now): compression (E), tension (D), combined loading (H),
-composite members (I), connections (J/K) — these will be added in later
-phases. The design accommodates them; the chapters above are just what the
-port from the original Excel sheets covers first.
+Out of scope (for now): full tension (D2-2 rupture / §J4 block shear),
+composite members (I), connections (J/K), AISC 358 prequalified moment
+connections, AISC 341 system-level checks — these will be added in
+later phases. The design accommodates them; the chapters above are
+what the port covers so far (the original Excel sheets, plus the
+section-by-section Chapter E/F/H ports).
 
 ---
 

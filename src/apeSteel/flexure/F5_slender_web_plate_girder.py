@@ -55,10 +55,13 @@ from apeSteel.flexure._common import (
     FlexuralLimitState,
 )
 from apeSteel.flexure.lateral_torsional_buckling import compute_plastic_moment_Mp
+from apeSteel.sections.flexural_properties import FlexuralSectionProperties
 
 if TYPE_CHECKING:
     from apeSteel.classification import SectionConstruction
     from apeSteel.core.materials import SteelMaterial
+    from apeSteel.sections.compression_properties import SectionSymmetry
+    from apeSteel.sections.flexural_properties import FlexuralSectionKind
     from apeSteel.sections.properties import SectionProperties
 
 # AISC §F5 coefficients
@@ -150,14 +153,34 @@ def compute_rt_for_F5(
     return compression_flange_width_bfc / math.sqrt(inside_sqrt)
 
 
-def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
+def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0912, PLR0915
     section_properties: SectionProperties,
     material: SteelMaterial,
     unbraced_length_Lb: float,
     lateral_torsional_buckling_modification_factor_Cb: float,
     construction: SectionConstruction = "welded",
 ) -> FlexureF5Report:
-    """Return Mn per AISC §F5 for a doubly-symmetric slender-web I.
+    """Return Mn per AISC §F5 for a doubly- or singly-symmetric slender-web I.
+
+    AISC 360-22 §F5 (spec_chapterF.txt printed 16.1-60/61) covers
+    **doubly-symmetric and singly-symmetric** I-shaped members with
+    slender webs.  Four limit states, ``Mn`` is the lowest:
+
+    * §F5.1 compression-flange yielding   ``Mp = Rpg*Fy*Sxc``      (F5-1)
+    * §F5.2 lateral-torsional buckling     ``Mn = Rpg*Fcr*Sxc``    (F5-2)
+    * §F5.3 compression-flange local buckling ``Mn = Rpg*Fcr*Sxc`` (F5-7)
+    * §F5.4 tension-flange yielding ``Mn = Fy*Sxt`` (only ``Sxt < Sxc``)
+      (F5-10)
+
+    The shipped doubly-symmetric path is preserved **byte-for-byte**:
+    for a DS section ``Sxc = Sxt = Sx`` and ``hc = hw`` so the four
+    equations collapse to the exact prior expressions (F5-10 is inactive
+    because ``Sxt == Sxc``).  Section geometry is now lifted through
+    :meth:`FlexuralSectionProperties.from_legacy` (which copies
+    ``Zx``/``Sx`` verbatim and ``Sxc``/``Sxt`` via the *same*
+    ``resolved_*`` accessors), so no DS number moves.  The
+    singly-symmetric path (``hp > 0`` - the same discriminator §F4 uses)
+    is **purely additive**: no shipped test exercises an SS slender web.
 
     Caller should verify the section's web is slender (use
     classify_flexural_compactness_B4_1b).  F5 is a valid choice for
@@ -168,11 +191,40 @@ def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
 
     Fy: float = material.yield_stress_Fy
     E: float = material.elastic_modulus_E
-    Zx: float = section_properties.plastic_section_modulus_strong_axis_Zx
-    Sx: float = section_properties.elastic_section_modulus_strong_axis_Sx
+    # Singly-symmetric iff the geometry populated the plastic-zone depth
+    # hp (DS leaves it at the 0.0 sentinel) - identical discriminator to
+    # the shipped F4.py.  The DS branch reproduces the prior code
+    # exactly; the SS branch is new (§F5 SS, design note 10 §F-1).
+    is_singly_symmetric: bool = section_properties.plastic_neutral_axis_depth_hp > 0.0
+
+    # Lift the shipped I-only currency into the generalized Chapter-F
+    # model.  ``from_legacy`` copies Zx/Sx verbatim and Sxc/Sxt through
+    # the identical ``resolved_*`` accessors, so for a DS section
+    # Sxc == Sxt == Sx bit-for-bit and every shipped F5 number is
+    # unchanged.  Classification keeps reading ``section_properties``
+    # (conservative path).  ``c`` (Eq. F2-8a/8b) is not used by §F5.
+    fsp_kind: FlexuralSectionKind = (
+        "singly_symmetric_I" if is_singly_symmetric else "doubly_symmetric_I"
+    )
+    fsp_symmetry: SectionSymmetry = (
+        "singly_symmetric" if is_singly_symmetric else "doubly_symmetric"
+    )
+    fsp: FlexuralSectionProperties = FlexuralSectionProperties.from_legacy(
+        section_properties,
+        kind=fsp_kind,
+        symmetry=fsp_symmetry,
+        construction=construction,
+    )
+    Zx: float = fsp.plastic_modulus_Zx
+    # §F5 references everything to the compression flange (Eq. F5-1/2/7);
+    # for a DS section ``Sxc == Sxt == Sx`` (resolved), so using ``Sxc``
+    # is byte-identical to the shipped ``Sx`` path.  ``Sx`` itself is no
+    # longer read - the four limit states are all in terms of Sxc/Sxt.
+    Sxc: float = fsp.elastic_modulus_compression_flange_Sxc
+    Sxt: float = fsp.elastic_modulus_tension_flange_Sxt
     tw: float = section_properties.web_thickness_tw
     lambda_w: float = section_properties.web_height_to_thickness_ratio_h_tw
-    hw: float = lambda_w * tw  # web clear height
+    hw: float = lambda_w * tw  # web clear height (DS aw numerator)
     Cb: float = lateral_torsional_buckling_modification_factor_Cb
 
     # AISC §F5 needs the *actual* compression-flange width/thickness for
@@ -193,24 +245,44 @@ def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
     Mp: float = compute_plastic_moment_Mp(Fy, Zx)
 
     # --- aw, Rpg, rt ---
-    aw = compute_aw_for_F5(
-        web_clear_height_hc=hw,
-        web_thickness_tw=tw,
-        compression_flange_width_bfc=bf,
-        compression_flange_thickness_tfc=tf,
-    )
-    Rpg = compute_Rpg(
-        web_to_flange_area_ratio_aw=aw,
-        web_slenderness_ratio_h_over_tw=lambda_w,
-        elastic_modulus_E=E,
-        yield_stress_Fy=Fy,
-    )
+    # Eq. F4-12 aw uses the web compression depth hc; Eq. F5-6 Rpg uses
+    # hc/tw.  For a DS section hc == hw and hc/tw == lambda_w *exactly*
+    # (the shipped values), so the DS branch passes the prior arguments
+    # (hw, lambda_w) verbatim - byte-identical.  The SS branch uses the
+    # resolved hc.
+    if is_singly_symmetric:
+        hc: float = section_properties.resolved_hc()
+        aw = compute_aw_for_F5(
+            web_clear_height_hc=hc,
+            web_thickness_tw=tw,
+            compression_flange_width_bfc=bf,
+            compression_flange_thickness_tfc=tf,
+        )
+        Rpg = compute_Rpg(
+            web_to_flange_area_ratio_aw=aw,
+            web_slenderness_ratio_h_over_tw=hc / tw,
+            elastic_modulus_E=E,
+            yield_stress_Fy=Fy,
+        )
+    else:
+        aw = compute_aw_for_F5(
+            web_clear_height_hc=hw,
+            web_thickness_tw=tw,
+            compression_flange_width_bfc=bf,
+            compression_flange_thickness_tfc=tf,
+        )
+        Rpg = compute_Rpg(
+            web_to_flange_area_ratio_aw=aw,
+            web_slenderness_ratio_h_over_tw=lambda_w,
+            elastic_modulus_E=E,
+            yield_stress_Fy=Fy,
+        )
     rt = compute_rt_for_F5(
         compression_flange_width_bfc=bf,
         web_to_flange_area_ratio_aw=aw,
     )
 
-    # --- LTB regime ---
+    # --- LTB regime --- (Eq. F5-2..F5-5; Lp = Eq. F4-7, Lr = Eq. F5-5)
     Lp = F5_LP_COEFFICIENT_1p1 * rt * math.sqrt(E / Fy)
     Lr = math.pi * rt * math.sqrt(E / (0.7 * Fy))
     Lb = unbraced_length_Lb
@@ -223,12 +295,13 @@ def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
     else:
         Fcr_LTB = Cb * math.pi**2 * E / ((Lb / rt) ** 2)
         Fcr_LTB = min(Fcr_LTB, Fy)
-    Mn_LTB: float = Rpg * Fcr_LTB * Sx
+    # Eq. F5-2  Mn = Rpg*Fcr*Sxc.  DS: Sxc == Sx -> identical to prior.
+    Mn_LTB: float = Rpg * Fcr_LTB * Sxc
 
-    # --- CFY ---
-    Mn_CFY: float = Rpg * Fy * Sx
+    # --- CFY --- Eq. F5-1  Mp = Rpg*Fy*Sxc.  DS: Sxc == Sx.
+    Mn_CFY: float = Rpg * Fy * Sxc
 
-    # --- FLB ---
+    # --- FLB --- Eq. F5-7..F5-9.  DS: Sxc == Sx -> identical to prior.
     flex_class_report = classify_flexural_compactness_B4_1b(
         section_properties,
         material,
@@ -247,18 +320,23 @@ def compute_flexural_strength_F5_slender_web_plate_girder(  # noqa: PLR0915
         Fcr_FLB = Fy - F5_LTB_REDUCED_STRESS_FACTOR_0p3 * Fy * (
             (lam_f - lam_pf) / (lam_rf - lam_pf)
         )
-        Mn_FLB = Rpg * Fcr_FLB * Sx
+        Mn_FLB = Rpg * Fcr_FLB * Sxc
     else:  # slender flange
         kc = compute_kc_for_built_up_flange(lambda_w)
         Fcr_FLB = F5_ELASTIC_FLB_COEFFICIENT_0p9 * E * kc / (lam_f**2)
-        Mn_FLB = Rpg * Fcr_FLB * Sx
+        Mn_FLB = Rpg * Fcr_FLB * Sxc
 
-    # --- Final Mn = min(CFY, LTB, FLB), capped at Mp ---
+    # --- Final Mn = min over active limit states, capped at Mp ---
     Mn_candidates: dict[str, float] = {
         "compression_flange_yielding": Mn_CFY,
         "lateral_torsional_buckling": Mn_LTB,
         "flange_local_buckling": Mn_FLB,
     }
+    # §F5.4 Eq. F5-10  Mn = Fy*Sxt: tension-flange yielding applies only
+    # when Sxt < Sxc (so inactive for a DS section, where Sxt == Sxc -
+    # the shipped DS result is therefore unchanged).
+    if Sxt < Sxc:
+        Mn_candidates["tension_flange_yielding"] = Fy * Sxt
     governing = min(Mn_candidates, key=lambda k: Mn_candidates[k])
     Mn: float = min(Mn_candidates[governing], Mp)
     if Mn == Mp and Mn_candidates[governing] >= Mp:

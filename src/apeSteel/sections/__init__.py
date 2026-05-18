@@ -18,25 +18,51 @@ from apeSteel.sections.catalog import (
     SectionNotFoundError,
     SectionTypeNotAdaptableError,
 )
+from apeSteel.sections.flexural_properties import (
+    BendingAxis,
+    FlexuralPlateElement,
+    FlexuralSectionKind,
+    FlexuralSectionProperties,
+)
 from apeSteel.sections.geometry import (
+    ChannelSection,
     CompressionFlangeSide,
+    DoubleAngleSection,
     DoublySymmetricISection,
     ISection,
+    RectangularBar,
+    RectangularHSS,
+    RoundBar,
+    RoundHSS,
+    SingleAngleSection,
     SinglySymmetricISection,
+    TeeSection,
 )
 from apeSteel.sections.properties import SectionProperties
 
 __all__ = [
     "AISCv16Catalog",
+    "BendingAxis",
     "CatalogError",
     "CatalogRowAISCv16",
     "CatalogRowEuropeanIPE",
+    "ChannelSection",
     "CompressionFlangeSide",
+    "DoubleAngleSection",
     "DoublySymmetricISection",
     "EuropeanIPECatalog",
+    "FlexuralPlateElement",
+    "FlexuralSectionKind",
+    "FlexuralSectionProperties",
     "ISection",
+    "RectangularBar",
+    "RectangularHSS",
+    "RoundBar",
+    "RoundHSS",
     "SectionNotFoundError",
     "SectionProperties",
     "SectionTypeNotAdaptableError",
+    "SingleAngleSection",
     "SinglySymmetricISection",
+    "TeeSection",
 ]
