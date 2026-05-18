@@ -5,9 +5,10 @@ orchestrates the full member-level check sequence:
 
     1. Classify per AISC 360 Table B4.1b (flexural compactness).
     2. Route to:
-         * F4  if the section is singly-symmetric (compact or non-compact
-                  web, Phase 9b).  Slender-web SS raises NotImplementedError
-                  (F5 SS not yet shipped).
+         * F4  if the section is singly-symmetric with a compact or
+                  non-compact web (Phase 9b)
+         * F5  if the section is singly-symmetric with a slender web
+                  (AISC §F5 covers DS *and* SS - Phase F-1)
          * F2  if doubly-symmetric, web compact + flange compact
          * F3  if doubly-symmetric, web compact + flange non-compact / slender
          * F4  if doubly-symmetric, web non-compact (Phase 9a)
@@ -118,11 +119,11 @@ def run_full_beam_check(
     -------
     BeamCheckReport
 
-    Raises
-    ------
-    NotImplementedError
-        If the section is singly-symmetric with a slender web (F5 SS
-        not yet shipped).
+    Notes
+    -----
+    Singly-symmetric I-sections route to F4 (compact / non-compact web)
+    or F5 (slender web - AISC §F5 covers DS *and* SS).  G2 shear is
+    still doubly-symmetric-only, so ``shear`` is ``None`` for SS.
     """
     # Local import to avoid circular import at module load
     from apeSteel.sections.geometry import SinglySymmetricISection  # noqa: PLC0415
@@ -144,15 +145,14 @@ def run_full_beam_check(
         | BothFlangesFlexureF5Report
     )
     if is_singly_symmetric:
-        # Singly-symmetric: F4 covers compact AND non-compact web.
-        # Slender web -> F5 (not yet supported for SS).
+        # Singly-symmetric: F4 covers compact AND non-compact web;
+        # slender web -> F5 (AISC §F5 covers DS *and* SS - Phase F-1).
         if web_class == "slender":
-            raise NotImplementedError(
-                "Singly-symmetric I with slender web requires AISC §F5 SS, "
-                "which is not yet shipped in apeSteel.  See docs/ROADMAP.md."
-            )
-        routed = "F4"
-        flexure_both = element.flexural_strength_F4_both_flanges()
+            routed = "F5"
+            flexure_both = element.flexural_strength_F5_both_flanges()
+        else:
+            routed = "F4"
+            flexure_both = element.flexural_strength_F4_both_flanges()
     elif web_class == "slender":
         # Doubly-symmetric, slender web -> F5 (plate girder).
         routed = "F5"

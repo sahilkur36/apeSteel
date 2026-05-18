@@ -15,6 +15,7 @@ Currently supported geometries:
 The :data:`ISection` union is exported for downstream typing.
 """
 
+from apeSteel.sections.geometry.bar_section import RectangularBar, RoundBar
 from apeSteel.sections.geometry.channel_section import ChannelSection
 from apeSteel.sections.geometry.double_angle_section import DoubleAngleSection
 from apeSteel.sections.geometry.doubly_symmetric_i_section import (
@@ -40,7 +41,9 @@ __all__ = [
     "DoubleAngleSection",
     "DoublySymmetricISection",
     "ISection",
+    "RectangularBar",
     "RectangularHSS",
+    "RoundBar",
     "RoundHSS",
     "SingleAngleSection",
     "SinglySymmetricISection",

@@ -395,8 +395,121 @@ I.xlsm` → `W!J29` §H1.1 bit-match) landed in the H-6 follow-up PR.
 
 ---
 
+## Phase F — Full AISC 360-22 Chapter F (all section families) 🟧
+
+**Goal:** complete the **entire** Chapter F. Today only the major-axis
+I-shape suite ships (§F2–§F5, DS; §F4 also SS). This phase adds §F6–§F12
+**and refactors §F2–§F5 onto a generalized section-kind data model**
+(the engineer's locked architecture decision — mirrors Phase E's
+`CompressionSectionProperties`). Two-tier anchor: an independent stdlib
+oracle (bit-exact `rel_tol=1e-9`, primary) **plus** an AISC Manual v15.1
+Vol.1 worked-example cross-check for §F6–§F12 (catalog properties,
+Manual sig-figs). Senior-engineer-orchestrated: one Opus-4.7 agent per
+sub-item against the contract, gated before the next starts.
+
+Design note: `docs/design_notes/10_flexure_full_F.md`.
+Citation source-of-truth: `docs/design_notes/_chapterF_citation_reference.md`
+(an F-0 deliverable).
+
+Critical path is **serial through F-1**; F-2…F-7 parallelise in
+isolated worktrees once F-1 is bit-exact; F-8 integrates.
+
+Sub-items:
+
+- ✅ **F-0 — Generalized model + full classifier + oracle scaffold.**
+  `sections/flexural_properties.py` (`FlexuralSectionProperties` +
+  `FlexuralPlateElement` + `from_legacy`); `classify_flexural_compactness`
+  covering every Table B4.1b case F2–F12 needs;
+  `tests/golden/_chapterF_full_aisc_oracle.py` skeleton;
+  `_chapterF_citation_reference.md`. **No behaviour change** (model +
+  classifier + oracle skeleton only; gated-accepted, frozen).
+
+- ✅ **F-1 — Refactor §F2–§F5 onto the model; close I-shape gaps.**
+  F2–F5 consume `FlexuralSectionProperties` via `from_legacy`
+  (signatures unchanged); added channel `c` (Eq. F2-8b); added SS
+  slender-web §F5 (deleted the `NotImplementedError`). Gate met:
+  every shipped golden + `test_chapterF_independent` + the §F2 Excel
+  anchor passed **unchanged** at `rel_tol=1e-9` (orchestrator
+  line-by-line diff review); gated-accepted, frozen.
+
+- ✅ **F-2 — §F8 round HSS / Pipe.** `RoundHSS.compute_section_properties`;
+  Eq. F8-1/F8-2/F8-3/F8-4; no LTB. Independent §F8 oracle (bit-exact)
+  + AISC Manual v15.1 Ex. F.9A/B (Pipe). Gated-accepted, frozen.
+
+- ✅ **F-3 — §F7 square/rectangular HSS & box.**
+  `RectangularHSS.compute_section_properties` (both axes); Eq. F7-1
+  yield, F7-2..F7-5 FLB, F7-6..F7-9 WLB, F7-10/F7-11 LTB. Independent
+  §F7 oracle + Manual Ex. F.6/F.7A-B/F.8A-B. Gated-accepted, frozen.
+
+- ✅ **F-4 — §F6 minor-axis I.** `Zy/Sy` + minor-axis FLB
+  (Eq. F6-1..F6-4); I-shapes (DS & SS), rolled + welded. Independent
+  §F6 oracle + Manual Ex. F.5. (Channel §F6 and the
+  `Element.combined_strength_H1` `Mcy` wiring were the F-4-deferred,
+  F-8-owned items - delivered in F-8 below.) Gated-accepted, frozen.
+
+- ✅ **F-5 — §F9 tees & double angles (plane of symmetry).**
+  `TeeSection`/`DoubleAngleSection.compute_section_properties`; yield
+  (stem tension/compression caps), LTB (B factor), FLB, stem/leg LB;
+  stem-in-compression ductility flag. Independent §F9 oracle + Manual
+  Ex. F.10 (WT) + 2L first-principles hand-calc.  (The §F9.2(b)(2)
+  2L-web-leg-compression LTB was conservatively bounded pending §F10 -
+  ENGINEER-CONFIRM F9-EC-1, now **resolved in F-8**.) Gated-accepted,
+  frozen.
+
+- ✅ **F-6 — §F10 single angles.** `SingleAngleSection.compute_section_properties`
+  (principal axes; geometric-axis option); Eq. F10-1..F10-8.
+  Independent §F10 oracle + Manual Ex. F.11A/B/C. Gated-accepted,
+  frozen.
+
+- ✅ **F-7 — §F11 bars/rounds + §F12 unsymmetrical.** New
+  `RectangularBar`/`RoundBar` geometry; Eq. F11-1..F11-5; §F12 elastic
+  `Fn·S` catch-all. Closes the Chapter-F equation set. Independent
+  §F11/§F12 oracle + Manual Ex. F.12/F.13 (F7tail-EC-1 resolved -
+  `manual_F13_roundbar.txt`). Gated-accepted, frozen.
+
+- ✅ **F-8 — Facade + catalog + element integration (this PR).**
+  `section_kind` non-I flexural dispatch
+  (`apeSteel.checks.flexure_dispatch`: channel→§F2(major)/§F6(minor),
+  HSS→§F7/§F8, tee/2L→§F9, single angle→§F10, bar→§F11,
+  unsymmetric→§F12) - an **additive** sibling of the byte-unchanged
+  I-shape `run_full_beam_check`/`Element` path (mirrors the
+  compression-facade precedent).  `ChannelSection.compute_section_
+  properties() → FlexuralSectionProperties` + channel §F6
+  (full-flange-width `b`).  `AISCv16Catalog.get_flexural_section_
+  properties` → `FlexuralSectionProperties` for W/M/S/HP (bit-
+  identical legacy lift), C/MC, HSS, PIPE, WT/MT/ST, L (2L documented
+  as a catalog-data gap - the AISC v16 2L row publishes no J/ry §F9
+  needs).  `Element.combined_strength_H1` auto-resolves `Mcy` from §F6
+  when biaxial (closes the design-note-09 H-7 gap; explicit-`Mcy` /
+  uniaxial paths byte-unchanged).  **F9-EC-1 resolved**: §F9.2(b)(2)
+  2L-web-leg-compression LTB now uses the exact §F10 Eq. F10-2/F10-3
+  reduction (intra-`flexure` import of §F10's `_mn_ltb_from_me`); the
+  §F9 oracle + that one golden sub-case updated, all other §F9 numbers
+  bit-identical.  §F10.3 leg-LB DRY: duplication **deliberately kept**
+  (bit-exactness > DRY) with cross-citing comments in §F9/§F10.  Full
+  `apeSteel.*` re-exports of every §F6–§F12 calculator +
+  `FlexuralSectionProperties` + the new geometries.  New
+  catalog-anchored golden (`test_catalog_flexure_full_F_golden.py`:
+  HSS12X8X1/2→§F7 + WT5X6→§F9, bit-exact vs the §F7/§F9 oracles on
+  catalog-published properties + the Manual Ex. F.10 WT5X6 sig-fig
+  anchor).  ENGINEER-CONFIRM ledger consolidated in
+  `_chapterF_citation_reference.md`.  Test impact: +catalog-F golden
+  + H1 auto-`Mcy` element tests (exact count confirmed at the gate).
+
+**Done when:** all sub-items green; oracle + Manual-anchor + golden
+suites pass; pyright strict 0; ruff + ruff-format clean; coverage
+≥ 90 %. A sub-item cannot merge if it imports from a later sub-item's
+module (the `ARCHITECTURE.md §1` layer rule).  **DONE (F-0..F-8)** —
+the I-shape `Element`/`run_full_beam_check`/§F2–§F5 golden/oracle/
+Manual/catalog/Chapter-H paths are bit-unchanged (`rel_tol=1e-9`);
+the non-I §F dispatch + catalog-F path are additive.
+
+---
+
 ## After v1 — explicit non-goals (for later phases)
 
+- AISC §F (flexure) — full Chapter F (§F6–§F12 + §F2–§F5 refactor) is
+  **Phase F above**; §F2–§F5 I-shapes shipped in Phases 3/4/8/9.
 - AISC §E (compression) — **done (Phase E above)**.
 - AISC §H (combined loading) — **done (Phase H above)**.
 - AISC §D (tension) — full chapter (D2-2 net-section rupture, §J4 block

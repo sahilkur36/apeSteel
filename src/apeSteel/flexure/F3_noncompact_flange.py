@@ -49,6 +49,7 @@ from apeSteel.flexure.lateral_torsional_buckling import (
     compute_limiting_length_plastic_Lp,
     compute_plastic_moment_Mp,
 )
+from apeSteel.sections.flexural_properties import FlexuralSectionProperties
 
 if TYPE_CHECKING:
     from apeSteel.classification import SectionConstruction
@@ -217,12 +218,27 @@ def compute_flexural_strength_F3_noncompact_or_slender_flange(
 
     Fy: float = material.yield_stress_Fy
     E: float = material.elastic_modulus_E
-    Zx: float = section_properties.plastic_section_modulus_strong_axis_Zx
-    Sx: float = section_properties.elastic_section_modulus_strong_axis_Sx
-    ry: float = section_properties.radius_of_gyration_weak_axis_ry
-    rts: float = section_properties.effective_radius_of_gyration_for_LTB_rts
-    ho: float = section_properties.distance_between_flange_centroids_ho
-    J: float = section_properties.torsional_constant_J
+    # Lift the shipped I-only currency into the generalized Chapter-F
+    # model.  ``from_legacy`` copies Zx/Sx/ry/rts/ho/J verbatim, so §F3
+    # reads its LTB geometry from the universal currency with zero
+    # numerical change.  §F3 governs doubly-symmetric I-shapes (compact
+    # web, NC/slender flange) so ``c`` is Eq. F2-8a = 1.0 throughout -
+    # the F2-2/F2-6 machinery keeps its default ``c=1.0``.  The B4.1b
+    # *classification* deliberately keeps reading ``section_properties``
+    # (conservative path, design note 10 §F-1): zero classification-
+    # number movement on the externally-anchored path.
+    fsp: FlexuralSectionProperties = FlexuralSectionProperties.from_legacy(
+        section_properties,
+        kind="doubly_symmetric_I",
+        symmetry="doubly_symmetric",
+        construction=construction,
+    )
+    Zx: float = fsp.plastic_modulus_Zx
+    Sx: float = fsp.elastic_modulus_Sx
+    ry: float = fsp.radius_of_gyration_ry
+    rts: float = fsp.effective_radius_of_gyration_for_LTB_rts
+    ho: float = fsp.distance_between_flange_centroids_ho
+    J: float = fsp.torsional_constant_J
     Cb: float = lateral_torsional_buckling_modification_factor_Cb
 
     # --- Mp ---

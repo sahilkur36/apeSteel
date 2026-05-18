@@ -53,5 +53,9 @@ Thumbs.db
 # CSV dumps the catalog ingestion script produces.
 *.pkl.tmp
 
+# Copyrighted AISC PDF excerpts staged locally for the Phase F citation
+# work — never commit (source PDFs live in the engineer's library).
+docs/design_notes/_aisc_src_extract/
+
 # Local-only experiments — anything under to_review/ stays out of the wheel
 # but is tracked in git for reference.

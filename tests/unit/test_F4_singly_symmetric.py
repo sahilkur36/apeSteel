@@ -7,13 +7,16 @@ the new behaviours that activate for singly-symmetric geometry:
 * Rpc, Rpt collapse to 1.0 when Iyc/Iy <= 0.23 (Eq. F4-10 / F4-17)
 * TFY (F4-15) is active when Sxt < Sxc
 * The two compression-flange-side variants give different Mn values
-* beam_check dispatch routes SS sections to F4 regardless of web class
-* Element guards F2/F3/F5/G2 with NotImplementedError for SS sections
+* beam_check dispatch routes SS sections to F4 (compact / non-compact
+  web) or F5 (slender web - AISC §F5 covers DS *and* SS, Phase F-1)
+* Element guards F2/F3/G2 with NotImplementedError for SS sections
+  (F5 is now SS-capable; only F2/F3/G2 remain DS-only)
 """
 
 from __future__ import annotations
 
 import math
+from typing import TYPE_CHECKING, cast
 
 import pytest
 
@@ -28,6 +31,18 @@ from apeSteel.flexure.F4 import (
     compute_FL_for_F4,
     compute_tension_flange_plastification_factor_Rpt,
 )
+
+if TYPE_CHECKING:
+    # Concrete report types for the F5-SS element-wiring assertions.
+    # ``_ss_element()`` is annotated ``-> object`` (the established
+    # idiom in this file, so the element methods need an attr-defined
+    # ignore directive).  ``cast`` re-types the returned report without
+    # a second directive, so this file adds **zero** pyright
+    # ``reportUnknownMemberType`` warnings over the pre-F-1 baseline
+    # (README: warnings stay stub-noise only).  Import-cycle-safe: only
+    # referenced inside ``cast(...)`` / annotations, never at runtime.
+    from apeSteel.element import BothFlangesFlexureF5Report
+    from apeSteel.flexure.F5_slender_web_plate_girder import FlexureF5Report
 
 TOL = 1e-9
 
@@ -250,10 +265,29 @@ class TestElementSSWiring:
         with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
             el.flexural_strength_F3_bot_flange()  # type: ignore[attr-defined]
 
-    def test_F5_raises_NotImplementedError_for_SS(self) -> None:
+    def test_F5_is_SS_capable(self) -> None:
+        # AISC §F5 covers DS *and* SS (Phase F-1): the F5 element
+        # methods no longer raise for a singly-symmetric section - they
+        # return a coherent FlexureF5Report.
         el = self._ss_element()
-        with pytest.raises(NotImplementedError, match="DoublySymmetricISection"):
-            el.flexural_strength_F5_top_flange()  # type: ignore[attr-defined]
+        r = cast(
+            "FlexureF5Report",
+            el.flexural_strength_F5_top_flange(),  # type: ignore[attr-defined]
+        )
+        assert r.nominal_flexural_strength_Mn > 0.0
+        assert r.bend_buckling_reduction_factor_Rpg <= 1.0
+        assert r.governing_F5_limit_state in {
+            "compression_flange_yielding",
+            "lateral_torsional_buckling",
+            "flange_local_buckling",
+            "tension_flange_yielding",
+        }
+        # Both-flange wrapper must also work for SS.
+        both = cast(
+            "BothFlangesFlexureF5Report",
+            el.flexural_strength_F5_both_flanges(),  # type: ignore[attr-defined]
+        )
+        assert both.governing_flange in {"top", "bot"}
 
     def test_G2_raises_NotImplementedError_for_SS(self) -> None:
         el = self._ss_element()
@@ -278,8 +312,11 @@ class TestBeamCheckDispatchSS:
         # SS sections: shear is None (G2 SS not shipped)
         assert full.shear is None
 
-    def test_SS_with_slender_web_raises(self) -> None:
-        # Make hc/tw very large so web classifies as slender (>5.70*sqrt(E/Fy)~137)
+    def test_SS_with_slender_web_routes_to_F5(self) -> None:
+        # Make hc/tw very large so the web classifies as slender
+        # (>5.70*sqrt(E/Fy)~137).  AISC §F5 covers DS *and* SS
+        # (Phase F-1): the facade now routes SS-slender to F5 instead
+        # of raising NotImplementedError.
         sec = SinglySymmetricISection(
             top_flange_width_bf_top=200.0,
             top_flange_thickness_tf_top=15.0,
@@ -294,5 +331,8 @@ class TestBeamCheckDispatchSS:
             lateral_torsional_buckling_modification_factor_Cb=1.0,
         )
         el = sec.element(material=A992, construction="welded", bracing=br)
-        with pytest.raises(NotImplementedError, match=r"F5 SS"):
-            el.run_full_check()
+        full = el.run_full_check()
+        assert full.routed_flexure_chapter == "F5"
+        assert full.governing_flexural_phi_Mn > 0.0
+        # G2 shear is still doubly-symmetric-only -> None for SS.
+        assert full.shear is None

@@ -28,6 +28,7 @@ from apeSteel.sections.compression_properties import (
     CompressionPlateElement,
     CompressionSectionProperties,
 )
+from apeSteel.sections.flexural_properties import FlexuralSectionProperties
 
 if TYPE_CHECKING:
     from apeSteel.classification import SectionConstruction
@@ -140,6 +141,137 @@ class DoubleAngleSection:
             plate_elements=(leg_element,),
             min_principal_radius_of_gyration_rz=rx,
             component_min_radius_of_gyration_ri=math.sqrt(ri_I / Ag1),
+        )
+
+    def compute_section_properties(self) -> FlexuralSectionProperties:
+        """Return the AISC 360-22 §F9 flexural input snapshot for 2L.
+
+        Two equal-leg angles loaded in the plane of symmetry (the
+        vertical plane through the gap), bent about the strong
+        horizontal ``x`` axis - the §F9 "tee or double angle" case
+        (flange legs horizontal at the bottom, web legs standing).
+
+        The gross-section closed forms (``Ag``, ``Ix``, ``Iy``, ``J``,
+        the per-component area ``Ag1`` and centroid ``ybar``) are
+        written **byte-identically** to
+        :meth:`compute_compression_properties` (the same workbook
+        ``Doble Angulo`` expressions), so the flexure path provably
+        cannot perturb the verified §E numbers; this method only *adds*
+        the §F9 section moduli:
+
+        * ``Sxc = Ix / ybar`` - elastic modulus to the **flange-leg
+          (bottom) fibre** (``ybar`` is the component centroid measured
+          from the flange-leg outer face, doubled-section x-centroid by
+          symmetry of the back-to-back pair);
+        * ``Sxt = Ix / (leg - ybar)`` - elastic modulus to the
+          **web-leg tip**;
+        * ``Sx = Ix / max(ybar, leg - ybar)`` - the governing
+          strong-axis modulus (Eq. F9-3 ``My = Fy*Sx`` uses the modulus
+          to the extreme fibre);
+        * ``Zx`` - the plastic section modulus about ``x`` for the
+          idealized sharp-corner two-angle profile (the PNA splits
+          ``Ag`` in half; the half-area is reached in the bottom
+          flange-leg block or in the standing web-leg block, and
+          ``Zx = sum |A_i| |d_i|``).  This is the hand-traceable
+          composite-rectangle plastic modulus (the §F9 double-angle
+          golden anchors on a labelled first-principles hand-calc /
+          ENGINEER-CONFIRM, **not** an AISC fillet-inclusive catalog
+          value - documented in the golden).
+
+        ``Iy`` / ``J`` feed the §F9 LTB ``B`` factor (Eq. F9-9 ..
+        F9-11); ``d = leg`` is the section depth (the standing web-leg
+        height).  The §F10.3-style leg element (which §F9.3(b)/F9.4(b)
+        defer the double-angle leg-LB checks to) is attached later by
+        the ``classification`` layer; ``plate_elements`` is empty here.
+
+        Returns
+        -------
+        FlexuralSectionProperties
+            ``section_kind="double_angle"``, singly-symmetric, base
+            units.
+        """
+        leg: float = self.leg_length
+        t: float = self.thickness
+        s: float = self.back_separation
+
+        # --- Byte-identical with compute_compression_properties ---
+        # (workbook Doble Angulo, transcribed verbatim - the geometry
+        # tests assert these coincide exactly with the frozen §E
+        # snapshot).
+        Ag1: float = leg * t + (leg - t) * t
+        ybar: float = (leg * t**2 / 2.0 + (leg - t) * t * ((leg - t) / 2.0 + t)) / Ag1
+        Ixg: float = (
+            leg * t**3 / 12.0
+            + leg * t * (ybar - t / 2.0) ** 2
+            + t * (leg - t) ** 3 / 12.0
+            + (leg - t) * t * (ybar - ((leg - t) / 2.0 + t)) ** 2
+        )
+        Ag: float = 2.0 * Ag1
+        Ix: float = 2.0 * Ixg
+        rx: float = math.sqrt(Ix / Ag)
+        Iy: float = 2.0 * (
+            t * leg**3 / 12.0
+            + t * leg * (leg / 2.0 + t) ** 2
+            + (leg - t) * t**3 / 12.0
+            + (leg - t) * t * (t / 2.0 + s / 2.0) ** 2
+        )
+        ry: float = math.sqrt(Iy / Ag)
+        J: float = 2.0 * (2.0 * (leg - t / 2.0) * t**3 / 3.0)
+
+        # --- Flexure-only additions (not needed by compression) ---
+        # x-centroid of the back-to-back pair == each component's ybar
+        # (both angles share the same height distribution).  Extreme
+        # fibres: flange-leg outer face at ybar; web-leg tip at
+        # leg - ybar.
+        depth_to_flange_fibre: float = ybar
+        depth_to_web_tip: float = leg - ybar
+        Sxc: float = Ix / depth_to_flange_fibre  # flange-leg side
+        Sxt: float = Ix / depth_to_web_tip  # web-leg tip
+        Sx: float = Ix / max(depth_to_flange_fibre, depth_to_web_tip)
+
+        # Plastic modulus about x for the idealized two-angle profile:
+        # bottom flange-leg block (2 * leg x t, [0, t]) + standing
+        # web-leg block (2 * (leg - t) x t, [t, leg]).  PNA splits
+        # Ag in half; yp = its height from the flange-leg outer face.
+        half_area: float = Ag / 2.0
+        flange_block_area: float = 2.0 * leg * t
+        web_block_width: float = 2.0 * t  # two web legs, thickness t
+        if half_area <= flange_block_area:
+            yp: float = half_area / (2.0 * leg)
+            a_top: float = 2.0 * leg * yp
+            q_top: float = a_top * (yp / 2.0)
+            a_flange_rem: float = 2.0 * leg * (t - yp)
+            a_web: float = web_block_width * (leg - t)
+            q_bot: float = a_flange_rem * ((t - yp) / 2.0) + a_web * ((t - yp) + (leg - t) / 2.0)
+            Zx: float = q_top + q_bot
+        else:
+            yp = t + (half_area - flange_block_area) / web_block_width
+            a_flange: float = 2.0 * leg * t
+            a_web_top: float = web_block_width * (yp - t)
+            q_top = a_flange * (yp - t / 2.0) + a_web_top * ((yp - t) / 2.0)
+            a_web_bot: float = web_block_width * (leg - yp)
+            q_bot = a_web_bot * ((leg - yp) / 2.0)
+            Zx = q_top + q_bot
+
+        return FlexuralSectionProperties(
+            section_kind="double_angle",
+            symmetry="singly_symmetric",
+            overall_depth_d=leg,
+            gross_area_Ag=Ag,
+            moment_of_inertia_Ix=Ix,
+            elastic_modulus_Sx=Sx,
+            plastic_modulus_Zx=Zx,
+            radius_of_gyration_rx=rx,
+            moment_of_inertia_Iy=Iy,
+            # No §F9 minor-axis design path (2L is loaded in the plane
+            # of symmetry); carry consistent weak-axis values for trace.
+            elastic_modulus_Sy=Iy / (leg + s / 2.0),
+            plastic_modulus_Zy=2.0 * (leg * t**2 / 4.0 + (leg - t) * t**2 / 4.0),
+            radius_of_gyration_ry=ry,
+            torsional_constant_J=J,
+            elastic_modulus_compression_flange_Sxc=Sxc,
+            elastic_modulus_tension_flange_Sxt=Sxt,
+            plate_elements=(),
         )
 
 

@@ -56,6 +56,7 @@ from apeSteel.flexure import (
     compute_flexural_strength_F3_noncompact_or_slender_flange,
     compute_flexural_strength_F4,
     compute_flexural_strength_F5_slender_web_plate_girder,
+    compute_flexural_strength_F6_minor_axis,
 )
 from apeSteel.serviceability import (
     DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR,
@@ -79,7 +80,7 @@ if TYPE_CHECKING:
 
     from apeSteel.beam_column_connection import BeamColumnConnection
     from apeSteel.bracing import Bracing
-    from apeSteel.checks import BeamCheckReport
+    from apeSteel.checks.beam_check import BeamCheckReport
     from apeSteel.core.materials import SteelMaterial
     from apeSteel.sections.geometry import (
         CompressionFlangeSide,
@@ -143,9 +144,10 @@ class Element:
 
     The ``section`` field accepts either :class:`DoublySymmetricISection`
     or :class:`SinglySymmetricISection` (the :data:`ISection` union).
-    For singly-symmetric sections the F4 methods are the canonical
-    flexural-strength interface; F2 / F3 / F5 (which assume doubly-
-    symmetric geometry) raise :class:`NotImplementedError`.
+    For singly-symmetric sections the F4 methods (compact / non-compact
+    web) and the F5 methods (slender web - AISC §F5 covers DS *and* SS)
+    are the canonical flexural-strength interface; F2 / F3 (which assume
+    doubly-symmetric geometry) raise :class:`NotImplementedError`.
     """
 
     section: ISection
@@ -563,19 +565,29 @@ class Element:
 
         ``Pr``/``Mrx``/``Mry`` are the *required second-order* strengths
         (Direct Analysis Method - already amplified; no Appendix-8
-        machinery, per design note 09).  ``Mry``/``Mcy`` default to 0:
-        apeSteel does not yet implement §F6 minor-axis flexure, so for a
-        biaxial check the caller must pass ``available_moment_y_Mcy``
-        explicitly (its own ``phi_b*Mny``).
+        machinery, per design note 09).
+
+        **Biaxial ``Mcy`` (Phase F-8 - closes the design-note-09 H-7
+        gap).**  ``Mcy`` is the available **minor-axis** flexural
+        strength ``phi_b*Mny``:
+
+        * If ``available_moment_y_Mcy`` is supplied (``> 0``) it is used
+          **verbatim** - the prior explicit-``Mcy`` behaviour is
+          byte-unchanged.
+        * If ``required_moment_y_Mry != 0`` and no ``Mcy`` is given,
+          ``Mcy`` is now **auto-resolved** from this element's AISC
+          360-22 **§F6** minor-axis strength
+          (:func:`~apeSteel.flexure.compute_flexural_strength_F6_minor_axis`,
+          ``section_kind="doubly_symmetric_I"``) - shipped in Phase
+          F-4; before F-8 apeSteel had no §F6, so this used to raise.
+        * If the check is uniaxial (``Mry == 0`` and no ``Mcy``),
+          ``Mcy`` stays ``0.0`` and §F6 is **not** evaluated - the
+          uniaxial path (and every shipped Chapter-H number) is
+          byte-unchanged.
 
         Requires :attr:`bracing` to be set (for the Chapter-F ``Mcx``).
         """
         self._require_doubly_symmetric_section("combined_strength_H1")
-        if required_moment_y_Mry != 0.0 and available_moment_y_Mcy <= 0.0:
-            raise ValueError(
-                "available_moment_y_Mcy must be supplied (apeSteel has no §F6 "
-                "minor-axis flexure) when required_moment_y_Mry is non-zero"
-            )
         compression = self.compression_strength(
             effective_length_factor_Kx,
             unbraced_length_Lx,
@@ -587,23 +599,46 @@ class Element:
         beam_check = self.run_full_check(
             transverse_stiffener_spacing_a=transverse_stiffener_spacing_a,
         )
+        # Resolve Mcy.  An explicitly-supplied Mcy (> 0) is used
+        # verbatim (the prior behaviour - bit-identical).  Only when the
+        # check is biaxial *and* no Mcy was given is §F6 invoked to
+        # auto-resolve it (the F-8 gap closure); the uniaxial path never
+        # touches §F6, so it is byte-unchanged.
+        resolved_Mcy: float = available_moment_y_Mcy
+        if required_moment_y_Mry != 0.0 and available_moment_y_Mcy <= 0.0:
+            f6 = compute_flexural_strength_F6_minor_axis(
+                self.section_properties,
+                self.material,
+                section_kind="doubly_symmetric_I",
+                construction=self.construction,
+            )
+            resolved_Mcy = f6.phi_strength_LRFD
         return compute_combined_strength_H1_1(
             required_axial_Pr=required_axial_Pr,
             available_axial_Pc=compression.phi_strength_LRFD,
             required_moment_x_Mrx=required_moment_x_Mrx,
             available_moment_x_Mcx=beam_check.governing_flexural_phi_Mn,
             required_moment_y_Mry=required_moment_y_Mry,
-            available_moment_y_Mcy=available_moment_y_Mcy,
+            available_moment_y_Mcy=resolved_Mcy,
         )
 
     # ------------------------------------------------------------------ #
     # F5 LTB + CFY + FLB - plate girder (slender web)
     # ------------------------------------------------------------------ #
     def flexural_strength_F5_top_flange(self) -> FlexureF5Report:
-        self._require_doubly_symmetric_section("flexural_strength_F5_top_flange")
+        """§F5 strength assuming the **top** flange is in compression.
+
+        AISC 360-22 §F5 covers doubly- *and* singly-symmetric slender-web
+        I-shapes.  For a singly-symmetric section this passes the
+        top-compression :class:`SectionProperties` (top-flange geometry,
+        ``Sxc``/``Sxt``/``hc``/``hp`` for that direction).  For a
+        doubly-symmetric section ``section_properties_for("top")``
+        returns the same cached :attr:`section_properties`, so the result
+        is byte-identical to the prior DS-only behaviour.
+        """
         br = self._require_bracing()
         return compute_flexural_strength_F5_slender_web_plate_girder(
-            section_properties=self.section_properties,
+            section_properties=self.section_properties_for("top"),
             material=self.material,
             unbraced_length_Lb=br.unbraced_length_top_flange_Lb_top,
             lateral_torsional_buckling_modification_factor_Cb=(
@@ -613,10 +648,15 @@ class Element:
         )
 
     def flexural_strength_F5_bot_flange(self) -> FlexureF5Report:
-        self._require_doubly_symmetric_section("flexural_strength_F5_bot_flange")
+        """§F5 strength assuming the **bottom** flange is in compression.
+
+        Singly- and doubly-symmetric (see
+        :meth:`flexural_strength_F5_top_flange`); DS is byte-identical to
+        the prior behaviour.
+        """
         br = self._require_bracing()
         return compute_flexural_strength_F5_slender_web_plate_girder(
-            section_properties=self.section_properties,
+            section_properties=self.section_properties_for("bot"),
             material=self.material,
             unbraced_length_Lb=br.unbraced_length_bot_flange_Lb_bot,
             lateral_torsional_buckling_modification_factor_Cb=(
@@ -730,11 +770,12 @@ class Element:
 
         Classifies per AISC B4.1b, routes flexure to F2 / F3 / F4 / F5
         accordingly, and runs G2 shear.  Singly-symmetric I-sections
-        always route to F4 (slender-web SS is not yet supported).
+        route to F4 (compact / non-compact web) or F5 (slender web -
+        AISC §F5 covers DS *and* SS).
 
         Requires `self.bracing` to be set.
         """
-        from apeSteel.checks import run_full_beam_check  # noqa: PLC0415
+        from apeSteel.checks.beam_check import run_full_beam_check  # noqa: PLC0415
 
         return run_full_beam_check(
             self,

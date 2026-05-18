@@ -67,10 +67,13 @@ from apeSteel.flexure._common import (
     FlexuralLimitState,
 )
 from apeSteel.flexure.lateral_torsional_buckling import compute_plastic_moment_Mp
+from apeSteel.sections.flexural_properties import FlexuralSectionProperties
 
 if TYPE_CHECKING:
     from apeSteel.classification import SectionConstruction
     from apeSteel.core.materials import SteelMaterial
+    from apeSteel.sections.compression_properties import SectionSymmetry
+    from apeSteel.sections.flexural_properties import FlexuralSectionKind
     from apeSteel.sections.properties import SectionProperties
 
 
@@ -396,20 +399,50 @@ def compute_flexural_strength_F4(  # noqa: PLR0912, PLR0915
 
     Fy: float = material.yield_stress_Fy
     E: float = material.elastic_modulus_E
-    Zx: float = section_properties.plastic_section_modulus_strong_axis_Zx
-    Sx: float = section_properties.elastic_section_modulus_strong_axis_Sx
+    # Lift the shipped I-only currency into the generalized Chapter-F
+    # model.  ``from_legacy`` copies the strength geometry verbatim
+    # (Zx/Sx/J/ho copied directly; Sxc/Sxt via the *same*
+    # ``resolved_*`` accessors §F4 used) so every §F4 limit-state number
+    # is bit-identical.  The B4.1b *classification* inputs
+    # (``lambda_w``/``lambda_f``/``hc``/``hp``/``iyc_over_iy`` + the
+    # classifier and the Case-16 ``lambda_pw`` call) deliberately keep
+    # reading ``section_properties`` exactly as shipped - the
+    # conservative classification path mandated by design note 10 §F-1
+    # (zero classification-number movement on the externally-anchored
+    # path).  §F4 covers DS NC-web and SS I (web at flange mid-width):
+    # ``c`` (Eq. F2-8a/8b) is not used by §F4 (it has its own rt/Lr).
+    # SS iff the geometry populated the plastic-zone depth hp (DS leaves
+    # it at the 0.0 sentinel) - the identical discriminator the shipped
+    # Case-16 branch below uses.  ``kind``/``symmetry`` do not influence
+    # any lifted numeric field (only ``c`` is kind-dependent, and §F4
+    # never reads ``c``); they are passed for call-site parity.
+    _is_ss: bool = section_properties.plastic_neutral_axis_depth_hp > 0.0
+    fsp_kind: FlexuralSectionKind = "singly_symmetric_I" if _is_ss else "doubly_symmetric_I"
+    fsp_symmetry: SectionSymmetry = "singly_symmetric" if _is_ss else "doubly_symmetric"
+    fsp: FlexuralSectionProperties = FlexuralSectionProperties.from_legacy(
+        section_properties,
+        kind=fsp_kind,
+        symmetry=fsp_symmetry,
+        construction=construction,
+    )
+    Zx: float = fsp.plastic_modulus_Zx
+    Sx: float = fsp.elastic_modulus_Sx
     tw: float = section_properties.web_thickness_tw
-    J: float = section_properties.torsional_constant_J
-    ho: float = section_properties.distance_between_flange_centroids_ho
+    J: float = fsp.torsional_constant_J
+    ho: float = fsp.distance_between_flange_centroids_ho
     lambda_w: float = section_properties.web_height_to_thickness_ratio_h_tw
     lambda_f: float = section_properties.flange_width_to_thickness_ratio_bf_2tf
     Cb: float = lateral_torsional_buckling_modification_factor_Cb
 
-    # Resolved (SS-aware) compression-side geometry
+    # Resolved (SS-aware) compression-side geometry.  bfc/tfc are not
+    # carried on the generalized model (it stores Sxc/Sxt/Iyc/hc, not
+    # the raw flange plate dims), so they stay on the resolver; Sxc/Sxt
+    # come from ``fsp`` where ``from_legacy`` lifted them through the
+    # identical ``resolved_Sxc()/resolved_Sxt()`` calls -> bit-identical.
     bfc: float = section_properties.resolved_compression_flange_width_bfc()
     tfc: float = section_properties.resolved_compression_flange_thickness_tfc()
-    Sxc: float = section_properties.resolved_Sxc()
-    Sxt: float = section_properties.resolved_Sxt()
+    Sxc: float = fsp.elastic_modulus_compression_flange_Sxc
+    Sxt: float = fsp.elastic_modulus_tension_flange_Sxt
     iyc_over_iy: float = section_properties.resolved_iyc_over_iy()
     hc: float = section_properties.resolved_hc()
 
