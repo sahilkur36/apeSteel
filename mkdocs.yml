@@ -1,12 +1,20 @@
 site_name: apeSteel
 site_description: Composition-based, strictly-typed steel-design library for AISC 360-22, 341-22, and 358-22.
+site_url: https://nmorabowen.github.io/apeSteel/
 repo_url: https://github.com/nmorabowen/apeSteel
 repo_name: nmorabowen/apeSteel
 edit_uri: edit/main/docs/
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
   features:
+    - navigation.instant
+    - navigation.tracking
     - navigation.tabs
     - navigation.sections
     - navigation.expand
@@ -14,22 +22,29 @@ theme:
     - navigation.top
     - content.code.copy
     - content.code.annotate
+    - search.suggest
+    - search.highlight
     - toc.follow
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-sunny
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-night
         name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
   - search

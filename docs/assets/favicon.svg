@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" aria-label="apeSteel favicon">
+  <g fill="#101820">
+    <!-- I-beam only (favicon reads cleanest as the pure beam silhouette) -->
+    <rect x="40" y="40" width="160" height="32"/>
+    <rect x="104" y="72" width="32" height="96"/>
+    <rect x="40" y="168" width="160" height="32"/>
+  </g>
+</svg>
