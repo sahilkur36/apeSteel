@@ -149,6 +149,6 @@ hide:
 
 ## Credits
 
-**Developed by:** Nicolás Mora Bowen
+**Developed by:** Nicolás Mora Bowen · Patricio Palacios · José Abell · Guppi
 
-Part of the *El Ladruño* research community.
+Part of José Abell's *El Ladruño Research Group*.
