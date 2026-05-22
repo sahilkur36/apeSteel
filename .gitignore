@@ -59,3 +59,6 @@ docs/design_notes/_aisc_src_extract/
 
 # Local-only experiments — anything under to_review/ stays out of the wheel
 # but is tracked in git for reference.
+
+# MkDocs build output
+site/

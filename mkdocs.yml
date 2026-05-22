@@ -1,0 +1,139 @@
+site_name: apeSteel
+site_description: Composition-based, strictly-typed steel-design library for AISC 360-22, 341-22, and 358-22.
+repo_url: https://github.com/nmorabowen/apeSteel
+repo_name: nmorabowen/apeSteel
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+            merge_init_into_class: true
+            docstring_section_style: table
+            heading_level: 2
+
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      linenums: true
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path:
+        - docs
+      check_paths: true
+  - pymdownx.caret
+  - pymdownx.tilde
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+not_in_nav: |
+  /design_notes/_*.md
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - User Guide:
+      - Sections & Catalogs: user_guide/sections.md
+      - Materials & Units: user_guide/materials.md
+      - Units & Conventions: UNITS_AND_CONVENTIONS.md
+      - The Element Composite: user_guide/element.md
+      - Bracing: user_guide/bracing.md
+  - AISC Chapters:
+      - "§B — Classification": aisc/B_classification.md
+      - "§E — Compression": aisc/E_compression.md
+      - "§F — Flexure": aisc/F_flexure.md
+      - "§G — Shear": aisc/G_shear.md
+      - "§H — Combined Forces": aisc/H_combined.md
+      - "AISC 341 — Seismic": aisc/seismic_341.md
+  - Plotting:
+      - Capacity Curves: plotting/capacity_curves.md
+      - Interaction Diagrams: plotting/interaction_diagrams.md
+  - Recipes:
+      - Beam Check: recipes/beam_check.md
+      - Beam-Column (H1.1): recipes/beam_column_H1.md
+      - Design-Family Overlay: recipes/design_family_overlay.md
+  - Design Notes:
+      - Section Catalog: design_notes/01_section_catalog.md
+      - Classification §B4: design_notes/02_classification_B4.md
+      - Seismic Compactness §341: design_notes/03_seismic_compactness_341.md
+      - Flexure §F2–F5: design_notes/04_flexure_F2_F3_F4_F5.md
+      - Shear §G2: design_notes/05_shear_G2.md
+      - Serviceability: design_notes/06_serviceability.md
+      - Panel Zone §341: design_notes/07_panel_zone_341.md
+      - Compression §E: design_notes/08_compression_E.md
+      - Combined §H: design_notes/09_combined_H.md
+      - Full Flexure §F: design_notes/10_flexure_full_F.md
+  - API Reference:
+      - Element: api/element.md
+      - Sections: api/sections.md
+      - Materials & Core: api/core.md
+      - Classification: api/classification.md
+      - Compression: api/compression.md
+      - Flexure: api/flexure.md
+      - Shear: api/shear.md
+      - Tension: api/tension.md
+      - Combined Forces: api/combined.md
+      - Serviceability: api/serviceability.md
+      - Seismic: api/seismic.md
+      - Beam-Column Connections: api/beam_column_connection.md
+      - Checks (Facades): api/checks.md
+      - Plotting: api/plotting.md
+  - Architecture: ARCHITECTURE.md
+  - Coding Style: CODING_STYLE.md
+  - Roadmap: ROADMAP.md
+  - Contributing: CONTRIBUTING.md
