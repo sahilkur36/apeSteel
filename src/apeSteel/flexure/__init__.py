@@ -18,6 +18,11 @@ Shipped:
   F4 Rpc/Rpt/rt/aw/FL, F4-13/14 CFLB, F4-15 TFY, Rpg, rt(F5)
 """
 
+from apeSteel.flexure.capacity_curve import (
+    FlexuralCurvePoint,
+    GoverningFlangeCurve,
+    RoutedFlexureChapterCurve,
+)
 from apeSteel.flexure.cb import compute_Cb_from_quarter_point_moments
 from apeSteel.flexure.F2_compact_doubly_symmetric import (
     FlexureF2Report,
@@ -92,6 +97,7 @@ from apeSteel.flexure.lateral_torsional_buckling import (
 )
 
 __all__ = [
+    "FlexuralCurvePoint",
     "FlexureF2Report",
     "FlexureF3Report",
     "FlexureF4Report",
@@ -103,6 +109,8 @@ __all__ = [
     "FlexureF10Report",
     "FlexureF11Report",
     "FlexureF12Report",
+    "GoverningFlangeCurve",
+    "RoutedFlexureChapterCurve",
     "SingleAngleBendingMode",
     "SingleAngleToeState",
     "compute_Cb_from_quarter_point_moments",
