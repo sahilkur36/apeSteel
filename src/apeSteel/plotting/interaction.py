@@ -119,14 +119,10 @@ def _resolve_capacities(
                 "element.with_bracing(Bracing(...))."
             )
         Lb_top_eff = (
-            Lb_top
-            if Lb_top is not None
-            else element.bracing.unbraced_length_top_flange_Lb_top
+            Lb_top if Lb_top is not None else element.bracing.unbraced_length_top_flange_Lb_top
         )
         Lb_bot_eff = (
-            Lb_bot
-            if Lb_bot is not None
-            else element.bracing.unbraced_length_bot_flange_Lb_bot
+            Lb_bot if Lb_bot is not None else element.bracing.unbraced_length_bot_flange_Lb_bot
         )
     else:
         Lb_top_eff = Lb_top
@@ -223,16 +219,12 @@ def _mm_envelope_vertices_at_P(
     return xs, ys
 
 
-def _unity_H1_1(
-    Pr: float, Mrx: float, Mry: float, Pc: float, Mcx: float, Mcy: float
-) -> float:
+def _unity_H1_1(Pr: float, Mrx: float, Mry: float, Pc: float, Mcx: float, Mcy: float) -> float:
     """Demand-to-capacity ratio per §H1.1 (no abs sign — caller passes magnitudes)."""
     if Pc <= 0.0:
         return float("inf")
     ratio_axial = abs(Pr) / Pc
-    moment_term = (abs(Mrx) / Mcx if Mcx > 0.0 else 0.0) + (
-        abs(Mry) / Mcy if Mcy > 0.0 else 0.0
-    )
+    moment_term = (abs(Mrx) / Mcx if Mcx > 0.0 else 0.0) + (abs(Mry) / Mcy if Mcy > 0.0 else 0.0)
     if ratio_axial >= H1_AXIAL_RATIO_BREAK:
         return ratio_axial + H1_1A_MOMENT_FACTOR * moment_term
     return ratio_axial / H1_1B_AXIAL_DIVISOR + moment_term
@@ -246,8 +238,7 @@ def _import_matplotlib() -> object:
         import matplotlib.pyplot as plt  # noqa: PLC0415
     except ImportError as exc:  # pragma: no cover
         raise ImportError(
-            "apeSteel.plotting requires matplotlib. "
-            'Install with: pip install "apeSteel[plot]"'
+            'apeSteel.plotting requires matplotlib. Install with: pip install "apeSteel[plot]"'
         ) from exc
     return plt
 
@@ -466,7 +457,9 @@ def plot_mm_interaction(
 
     if which in ("phi", "both"):
         _draw(
-            caps.Pc_phi, caps.Mcx_phi, caps.Mcy_phi,
+            caps.Pc_phi,
+            caps.Mcx_phi,
+            caps.Mcy_phi,
             dict(line_kwargs),
             label if which == "phi" else _suffix(label, "φ"),
         )
@@ -474,7 +467,9 @@ def plot_mm_interaction(
         kw = dict(line_kwargs)
         kw.setdefault("linestyle", "--")
         _draw(
-            caps.Pc_nominal, caps.Mcx_nominal, caps.Mcy_nominal,
+            caps.Pc_nominal,
+            caps.Mcx_nominal,
+            caps.Mcy_nominal,
             kw,
             label if which == "nominal" else _suffix(label, "nominal"),
         )

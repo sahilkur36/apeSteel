@@ -120,17 +120,13 @@ def test_pm_demand_inside_is_green_outside_is_red(element, fig_ax) -> None:
         element,
         ax=ax,
         demand_points=[
-            (10 * u.kN, 10 * u.kN * u.m, "tiny"),         # well inside
+            (10 * u.kN, 10 * u.kN * u.m, "tiny"),  # well inside
             (10_000 * u.kN, 10_000 * u.kN * u.m, "huge"),  # way outside
         ],
         **_BC,
     )
     # Demand markers are the only lines with a single (x, y) point.
-    point_colors = [
-        line.get_color()
-        for line in ax.lines
-        if len(line.get_xdata()) == 1
-    ]
+    point_colors = [line.get_color() for line in ax.lines if len(line.get_xdata()) == 1]
     assert "tab:green" in point_colors
     assert "tab:red" in point_colors
 

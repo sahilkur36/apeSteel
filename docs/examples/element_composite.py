@@ -61,9 +61,7 @@ def main() -> None:
 
     # F2 LTB — both flange unbraced lengths checked, governing returned.
     flexure = el_a.flexural_strength_F2_both_flanges()
-    print(
-        f"phi*Mn (F2)  : {flexure.governing_report.phi_strength_LRFD / (u.kN * u.m):7.1f} kN.m"
-    )
+    print(f"phi*Mn (F2)  : {flexure.governing_report.phi_strength_LRFD / (u.kN * u.m):7.1f} kN.m")
 
     # G2 web shear — Element wraps compute_shear_strength_G2_doubly_symmetric.
     shear = el_a.shear_strength_G2()
@@ -100,8 +98,7 @@ def main() -> None:
         unbraced_length_Lz=4.0 * u.m,
     )
     print(
-        f"H1.1 DCR     : {h1.demand_capacity_ratio:5.3f}"
-        f"   (governing Eq. {h1.governing_equation})"
+        f"H1.1 DCR     : {h1.demand_capacity_ratio:5.3f}   (governing Eq. {h1.governing_equation})"
     )
 
 
