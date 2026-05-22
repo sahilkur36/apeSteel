@@ -11,10 +11,10 @@ from __future__ import annotations
 
 from apeSteel import (
     A36,
-    A572_Gr50,
     A992,
     S355,
     S460,
+    A572_Gr50,
     SteelMaterial,
 )
 from apeSteel.core import units as u

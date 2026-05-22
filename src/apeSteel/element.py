@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from functools import cached_property
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Any, Literal
 
 from apeSteel.classification import (
     AxialCompressionClassificationReport,
@@ -560,7 +560,7 @@ class Element:
         color_by_limit_state: bool = False,
         project_lengths: Sequence[LengthProjection] | None = None,
         label: str | None = None,
-        **line_kwargs: object,
+        **line_kwargs: Any,
     ) -> Axes:
         """Plot the AISC 360-22 Chapter-E strength-vs-length curve.
 
@@ -574,7 +574,7 @@ class Element:
             plot_compression_curve,
         )
 
-        kwargs: dict[str, object] = dict(
+        kwargs: dict[str, Any] = dict(
             effective_length_factor_Kx=effective_length_factor_Kx,
             effective_length_factor_Ky=effective_length_factor_Ky,
             effective_length_factor_Kz=effective_length_factor_Kz,
@@ -608,7 +608,7 @@ class Element:
         project_lengths: Sequence[FlexuralLengthProjection] | None = None,
         show_landmarks: bool = False,
         label: str | None = None,
-        **line_kwargs: object,
+        **line_kwargs: Any,
     ) -> Axes:
         """Plot the AISC 360-22 Chapter-F φMn-vs-Lb curve.
 
@@ -621,7 +621,7 @@ class Element:
             plot_flexural_curve,
         )
 
-        kwargs: dict[str, object] = dict(
+        kwargs: dict[str, Any] = dict(
             lateral_torsional_buckling_modification_factor_Cb=(
                 lateral_torsional_buckling_modification_factor_Cb
             ),
@@ -831,7 +831,7 @@ class Element:
     # ------------------------------------------------------------------ #
     # φMn-vs-Lb capacity curve
     # ------------------------------------------------------------------ #
-    def phi_Mn_vs_Lb(
+    def phi_Mn_vs_Lb(  # noqa: PLR0912
         self,
         unbraced_lengths_Lb: Sequence[float],
         *,
@@ -870,15 +870,12 @@ class Element:
         tuple of FlexuralCurvePoint
         """
         from apeSteel.sections.geometry import (  # noqa: PLC0415
-            DoublySymmetricISection,
             SinglySymmetricISection,
         )
 
-        if not isinstance(self.section, DoublySymmetricISection | SinglySymmetricISection):
-            raise NotImplementedError(
-                "phi_Mn_vs_Lb is only implemented for I-sections "
-                "(DoublySymmetricISection or SinglySymmetricISection)."
-            )
+        # The Element spine restricts `section` to ISection
+        # (DoublySymmetricISection | SinglySymmetricISection) already, so
+        # an isinstance guard here would be tautological.
 
         classification = self.classify_flexural()
         is_singly_symmetric = isinstance(self.section, SinglySymmetricISection)
@@ -902,7 +899,10 @@ class Element:
         props_bot = self.section_properties_for("bot")
         Cb = lateral_torsional_buckling_modification_factor_Cb
 
-        def _evaluate(Lb: float, props):  # noqa: ANN001 - internal helper
+        def _evaluate(
+            Lb: float,
+            props: SectionProperties,
+        ) -> FlexureF2Report | FlexureF3Report | FlexureF4Report | FlexureF5Report:
             if routed == "F2":
                 return compute_flexural_strength_F2_compact_doubly_symmetric(
                     section_properties=props,
@@ -948,18 +948,27 @@ class Element:
                 chosen, chosen_flange = top_report, "top"
             else:
                 chosen, chosen_flange = bot_report, "bot"
+            # F2/F3 vs F4/F5 carry differently-named Lp/Lr fields
+            # (F4/F5 suffix the field name with _F4 / _F5).
+            if isinstance(chosen, FlexureF2Report | FlexureF3Report):
+                Lp = chosen.limiting_length_plastic_Lp
+                Lr = chosen.limiting_length_inelastic_LTB_Lr
+            elif isinstance(chosen, FlexureF4Report):
+                Lp = chosen.limiting_length_plastic_Lp_F4
+                Lr = chosen.limiting_length_inelastic_LTB_Lr_F4
+            else:  # FlexureF5Report
+                Lp = chosen.limiting_length_plastic_Lp_F5
+                Lr = chosen.limiting_length_inelastic_LTB_Lr_F5
             points.append(
                 FlexuralCurvePoint(
                     unbraced_length_Lb=Lb,
                     nominal_strength_Mn=chosen.nominal_strength,
                     design_strength_phi_Mn=chosen.phi_strength_LRFD,
                     routed_chapter=routed,
-                    governing_flange=chosen_flange,  # type: ignore[arg-type]
+                    governing_flange=chosen_flange,
                     governing_limit_state=chosen.governing_limit_state,
-                    limiting_length_plastic_Lp=chosen.limiting_length_plastic_Lp,
-                    limiting_length_inelastic_LTB_Lr=(
-                        chosen.limiting_length_inelastic_LTB_Lr
-                    ),
+                    limiting_length_plastic_Lp=Lp,
+                    limiting_length_inelastic_LTB_Lr=Lr,
                 )
             )
         return tuple(points)

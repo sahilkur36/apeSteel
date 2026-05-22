@@ -23,5 +23,19 @@
   "reportUnknownMemberType": "warning",
   "reportUnknownVariableType": "warning",
   "reportUnknownParameterType": "warning",
-  "reportUnknownArgumentType": "warning"
+  "reportUnknownArgumentType": "warning",
+  "executionEnvironments": [
+    {
+      "root": "src/apeSteel/plotting",
+      "_comment": "matplotlib's stubs are too loose for strict-mode typing; the plotters do heavy interop with ax.plot/fill_between/scatter/add_collection3d that pyright can't narrow. Exercised by tests/unit/test_plot_*.",
+      "reportArgumentType": "warning",
+      "reportOptionalMemberAccess": "warning",
+      "reportMissingParameterType": "warning",
+      "reportPrivateUsage": "warning",
+      "reportReturnType": "warning",
+      "reportPossiblyUnboundVariable": "warning",
+      "reportAttributeAccessIssue": "warning",
+      "reportCallIssue": "warning"
+    }
+  ]
 }

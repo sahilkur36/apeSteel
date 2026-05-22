@@ -25,7 +25,6 @@ from pathlib import Path
 
 import pytest
 
-
 _EXAMPLES_DIR = Path(__file__).resolve().parents[2] / "docs" / "examples"
 
 
@@ -41,7 +40,8 @@ def test_example_runs(example_path: Path) -> None:
     spec = importlib.util.spec_from_file_location(
         f"_docs_example_{example_path.stem}", example_path
     )
-    assert spec is not None and spec.loader is not None
+    assert spec is not None
+    assert spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     try:

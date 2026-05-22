@@ -1,3 +1,4 @@
+# pyright: basic, reportArgumentType=false, reportOptionalMemberAccess=false, reportPrivateUsage=false
 """Smoke tests for ``apeSteel.plotting.compression.plot_compression_curve``.
 
 These verify wiring (ax pass-through, xscale, label, projections) but

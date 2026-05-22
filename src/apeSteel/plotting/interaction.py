@@ -37,7 +37,7 @@ from apeSteel.combined._common import (
     H1_1B_AXIAL_DIVISOR,
     H1_AXIAL_RATIO_BREAK,
 )
-from apeSteel.core.units import MOMENT_DISPLAY_UNIT_kN_m, kN, m
+from apeSteel.core.units import MOMENT_DISPLAY_UNIT_kN_m, kN
 from apeSteel.flexure import compute_flexural_strength_F6_minor_axis
 
 if TYPE_CHECKING:
@@ -603,7 +603,9 @@ def plot_pmm_interaction_3d(
     fs = force_unit[0]
     ms = moment_unit[0]
 
-    def _scale(verts):  # noqa: ANN001
+    def _scale(
+        verts: list[tuple[float, float, float]],
+    ) -> list[tuple[float, float, float]]:
         return [(x / ms, y / ms, z / fs) for (x, y, z) in verts]
 
     base_s = _scale(base)
