@@ -10,7 +10,7 @@ the ``Element`` composite.
 
 from __future__ import annotations
 
-from apeSteel import A992, AISCv16Catalog, Bracing, EuropeanIPECatalog, S355
+from apeSteel import A992, S355, AISCv16Catalog, Bracing, EuropeanIPECatalog
 from apeSteel.core import units as u
 
 
@@ -36,9 +36,8 @@ def main() -> None:
         ),
     )
     flexure = w_element.flexural_strength_F2_both_flanges()
-    print(
-        f"W14X90 phi*Mn (F2) = {flexure.governing_report.phi_strength_LRFD / (u.kN * u.m):7.1f} kN.m"
-    )
+    phi_Mn = flexure.governing_report.phi_strength_LRFD / (u.kN * u.m)
+    print(f"W14X90 phi*Mn (F2) = {phi_Mn:7.1f} kN.m")
 
     # EN 10365 IPE subset — same SectionProperties currency.
     ipe = EuropeanIPECatalog()

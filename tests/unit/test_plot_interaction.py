@@ -1,3 +1,4 @@
+# pyright: basic, reportArgumentType=false, reportOptionalMemberAccess=false, reportPrivateUsage=false
 """Smoke tests for the §H1.1 interaction-diagram plotters."""
 
 from __future__ import annotations
@@ -10,12 +11,12 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 from apeSteel import A992, DoublySymmetricISection  # noqa: E402
 from apeSteel.bracing import Bracing  # noqa: E402
-from apeSteel.core import units as u  # noqa: E402
 from apeSteel.combined._common import (  # noqa: E402
     H1_1A_MOMENT_FACTOR,
     H1_1B_AXIAL_DIVISOR,
     H1_AXIAL_RATIO_BREAK,
 )
+from apeSteel.core import units as u  # noqa: E402
 from apeSteel.plotting.interaction import (  # noqa: E402
     _pm_envelope_vertices,
     _unity_H1_1,
@@ -119,17 +120,13 @@ def test_pm_demand_inside_is_green_outside_is_red(element, fig_ax) -> None:
         element,
         ax=ax,
         demand_points=[
-            (10 * u.kN, 10 * u.kN * u.m, "tiny"),         # well inside
+            (10 * u.kN, 10 * u.kN * u.m, "tiny"),  # well inside
             (10_000 * u.kN, 10_000 * u.kN * u.m, "huge"),  # way outside
         ],
         **_BC,
     )
     # Demand markers are the only lines with a single (x, y) point.
-    point_colors = [
-        line.get_color()
-        for line in ax.lines
-        if len(line.get_xdata()) == 1
-    ]
+    point_colors = [line.get_color() for line in ax.lines if len(line.get_xdata()) == 1]
     assert "tab:green" in point_colors
     assert "tab:red" in point_colors
 

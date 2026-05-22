@@ -47,6 +47,9 @@ ignore = [
 [lint.per-file-ignores]
 "tests/**/*.py" = ["PLR2004", "ANN", "D"]
 "src/apeSteel/**/__init__.py" = ["F401", "F403"]
+# Plotters are feature dispatchers: each optional knob (which/fill/
+# normalized/project_*/color_by_*/...) adds a legitimate branch.
+"src/apeSteel/plotting/**/*.py" = ["PLR0912", "PLR0915"]
 
 [lint.pydocstyle]
 convention = "numpy"

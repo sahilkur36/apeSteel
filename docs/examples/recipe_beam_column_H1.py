@@ -12,11 +12,11 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt
 
-from apeSteel import A992, DoublySymmetricISection  # noqa: E402
-from apeSteel.bracing import Bracing  # noqa: E402
-from apeSteel.core import units as u  # noqa: E402
+from apeSteel import A992, DoublySymmetricISection
+from apeSteel.bracing import Bracing
+from apeSteel.core import units as u
 
 _OUT = Path(__file__).resolve().parents[1] / "assets" / "plots"
 

@@ -1,3 +1,4 @@
+# pyright: basic, reportArgumentType=false, reportOptionalMemberAccess=false, reportPrivateUsage=false
 """Smoke tests for ``apeSteel.plotting.flexure.plot_flexural_curve``.
 
 Mirrors the compression-plotter smoke suite, plus a landmarks test.

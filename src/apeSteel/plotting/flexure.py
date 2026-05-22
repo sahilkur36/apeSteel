@@ -49,8 +49,7 @@ def _import_matplotlib() -> object:
         import matplotlib.pyplot as plt  # noqa: PLC0415
     except ImportError as exc:  # pragma: no cover
         raise ImportError(
-            "apeSteel.plotting requires matplotlib. "
-            'Install with: pip install "apeSteel[plot]"'
+            'apeSteel.plotting requires matplotlib. Install with: pip install "apeSteel[plot]"'
         ) from exc
     return plt
 

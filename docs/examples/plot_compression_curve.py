@@ -13,11 +13,11 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
+import matplotlib.pyplot as plt
+import numpy as np
 
-from apeSteel import A992, DoublySymmetricISection  # noqa: E402
-from apeSteel.core import units as u  # noqa: E402
+from apeSteel import A992, DoublySymmetricISection
+from apeSteel.core import units as u
 
 _OUT = Path(__file__).resolve().parents[1] / "assets" / "plots"
 
