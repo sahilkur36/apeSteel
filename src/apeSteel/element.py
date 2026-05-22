@@ -48,10 +48,12 @@ from apeSteel.compression import (
     compute_phi_Pn_vs_length,
 )
 from apeSteel.flexure import (
+    FlexuralCurvePoint,
     FlexureF2Report,
     FlexureF3Report,
     FlexureF4Report,
     FlexureF5Report,
+    RoutedFlexureChapterCurve,
     compute_flexural_strength_F2_compact_doubly_symmetric,
     compute_flexural_strength_F3_noncompact_or_slender_flange,
     compute_flexural_strength_F4,
@@ -78,10 +80,16 @@ from apeSteel.shear import (
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    from matplotlib.axes import Axes
+
     from apeSteel.beam_column_connection import BeamColumnConnection
     from apeSteel.bracing import Bracing
     from apeSteel.checks.beam_check import BeamCheckReport
     from apeSteel.core.materials import SteelMaterial
+    from apeSteel.plotting.compression import LengthProjection
+    from apeSteel.plotting.flexure import (
+        LengthProjection as FlexuralLengthProjection,
+    )
     from apeSteel.sections.geometry import (
         CompressionFlangeSide,
         ISection,
@@ -536,6 +544,144 @@ class Element:
             effective_length_factor_Kz=effective_length_factor_Kz,
         )
 
+    def plot_compression_curve(
+        self,
+        lengths_L: Sequence[float],
+        *,
+        effective_length_factor_Kx: float = 1.0,
+        effective_length_factor_Ky: float = 1.0,
+        effective_length_factor_Kz: float = 1.0,
+        ax: Axes | None = None,
+        xscale: Literal["linear", "log"] = "linear",
+        length_unit: tuple[float, str] | None = None,
+        force_unit: tuple[float, str] | None = None,
+        which: Literal["phi_Pn", "Pn", "both"] = "phi_Pn",
+        fill: bool = False,
+        color_by_limit_state: bool = False,
+        project_lengths: Sequence[LengthProjection] | None = None,
+        label: str | None = None,
+        **line_kwargs: object,
+    ) -> Axes:
+        """Plot the AISC 360-22 Chapter-E strength-vs-length curve.
+
+        Thin delegate to
+        :func:`apeSteel.plotting.compression.plot_compression_curve`;
+        see that function for the full parameter reference.  Requires
+        the optional ``plot`` extra (``pip install
+        "apeSteel[plot]"``).
+        """
+        from apeSteel.plotting.compression import (  # noqa: PLC0415
+            plot_compression_curve,
+        )
+
+        kwargs: dict[str, object] = dict(
+            effective_length_factor_Kx=effective_length_factor_Kx,
+            effective_length_factor_Ky=effective_length_factor_Ky,
+            effective_length_factor_Kz=effective_length_factor_Kz,
+            ax=ax,
+            xscale=xscale,
+            which=which,
+            fill=fill,
+            color_by_limit_state=color_by_limit_state,
+            project_lengths=project_lengths,
+            label=label,
+        )
+        if length_unit is not None:
+            kwargs["length_unit"] = length_unit
+        if force_unit is not None:
+            kwargs["force_unit"] = force_unit
+        return plot_compression_curve(self, lengths_L, **kwargs, **line_kwargs)
+
+    def plot_flexural_curve(
+        self,
+        unbraced_lengths_Lb: Sequence[float],
+        *,
+        lateral_torsional_buckling_modification_factor_Cb: float = 1.0,
+        flange: Literal["top", "bot", "governing"] = "governing",
+        ax: Axes | None = None,
+        xscale: Literal["linear", "log"] = "linear",
+        length_unit: tuple[float, str] | None = None,
+        moment_unit: tuple[float, str] | None = None,
+        which: Literal["phi_Mn", "Mn", "both"] = "phi_Mn",
+        fill: bool = False,
+        color_by_limit_state: bool = False,
+        project_lengths: Sequence[FlexuralLengthProjection] | None = None,
+        show_landmarks: bool = False,
+        label: str | None = None,
+        **line_kwargs: object,
+    ) -> Axes:
+        """Plot the AISC 360-22 Chapter-F φMn-vs-Lb curve.
+
+        Thin delegate to
+        :func:`apeSteel.plotting.flexure.plot_flexural_curve`; see that
+        function for the full parameter reference.  Requires the
+        optional ``plot`` extra (``pip install "apeSteel[plot]"``).
+        """
+        from apeSteel.plotting.flexure import (  # noqa: PLC0415
+            plot_flexural_curve,
+        )
+
+        kwargs: dict[str, object] = dict(
+            lateral_torsional_buckling_modification_factor_Cb=(
+                lateral_torsional_buckling_modification_factor_Cb
+            ),
+            flange=flange,
+            ax=ax,
+            xscale=xscale,
+            which=which,
+            fill=fill,
+            color_by_limit_state=color_by_limit_state,
+            project_lengths=project_lengths,
+            show_landmarks=show_landmarks,
+            label=label,
+        )
+        if length_unit is not None:
+            kwargs["length_unit"] = length_unit
+        if moment_unit is not None:
+            kwargs["moment_unit"] = moment_unit
+        return plot_flexural_curve(self, unbraced_lengths_Lb, **kwargs, **line_kwargs)
+
+    # ------------------------------------------------------------------ #
+    # §H1.1 interaction-diagram plots
+    # ------------------------------------------------------------------ #
+    def plot_pm_interaction(self, **kwargs: object) -> Axes:
+        """Plot the uniaxial §H1.1 P-Mx interaction envelope.
+
+        Thin delegate to
+        :func:`apeSteel.plotting.interaction.plot_pm_interaction`.  See
+        that function for the full parameter reference.
+        """
+        from apeSteel.plotting.interaction import (  # noqa: PLC0415
+            plot_pm_interaction,
+        )
+
+        return plot_pm_interaction(self, **kwargs)  # type: ignore[arg-type]
+
+    def plot_mm_interaction(self, **kwargs: object) -> Axes:
+        """Plot the §H1.1 Mrx-Mry envelope at a fixed Pr.
+
+        Thin delegate to
+        :func:`apeSteel.plotting.interaction.plot_mm_interaction`.
+        Requires ``axial_load_Pr`` as a keyword argument.
+        """
+        from apeSteel.plotting.interaction import (  # noqa: PLC0415
+            plot_mm_interaction,
+        )
+
+        return plot_mm_interaction(self, **kwargs)  # type: ignore[arg-type]
+
+    def plot_pmm_interaction_3d(self, **kwargs: object) -> Axes:
+        """Plot the full 3D §H1.1 P-Mx-My envelope.
+
+        Thin delegate to
+        :func:`apeSteel.plotting.interaction.plot_pmm_interaction_3d`.
+        """
+        from apeSteel.plotting.interaction import (  # noqa: PLC0415
+            plot_pmm_interaction_3d,
+        )
+
+        return plot_pmm_interaction_3d(self, **kwargs)  # type: ignore[arg-type]
+
     # ------------------------------------------------------------------ #
     # Combined flexure + axial - AISC 360-22 §H1.1 (Eq. H1-1a/H1-1b)
     # ------------------------------------------------------------------ #
@@ -681,6 +827,142 @@ class Element:
             governing_flange="bot",
             governing_report=bot,
         )
+
+    # ------------------------------------------------------------------ #
+    # φMn-vs-Lb capacity curve
+    # ------------------------------------------------------------------ #
+    def phi_Mn_vs_Lb(
+        self,
+        unbraced_lengths_Lb: Sequence[float],
+        *,
+        lateral_torsional_buckling_modification_factor_Cb: float = 1.0,
+        flange: Literal["top", "bot", "governing"] = "governing",
+    ) -> tuple[FlexuralCurvePoint, ...]:
+        """Sweep φMn as a function of unbraced length Lb (symmetric).
+
+        Classification is geometry-based, so the AISC §B4.1b classifier
+        runs **once** to pick the routed engine (F2 / F3 / F4 / F5).
+        That engine is then evaluated at each Lb in ``unbraced_lengths_Lb``.
+
+        The sweep is symmetric: at every point ``Lb_top = Lb_bot = Lb``.
+        Both flanges are checked and ``flange`` selects which value to
+        return:
+
+        * ``"governing"`` (default) — lower of top/bot φMn (changes
+          along the curve only for singly-symmetric sections).
+        * ``"top"`` / ``"bot"`` — force that flange.
+
+        ``Cb`` is taken from this parameter (default ``1.0``) rather
+        than from ``element.bracing``, since the bracing's Cb describes
+        the as-built case and the sweep is a parameter study.
+
+        Parameters
+        ----------
+        unbraced_lengths_Lb : sequence of float
+            Lb values to sweep (mm).  All must be positive.
+        lateral_torsional_buckling_modification_factor_Cb : float
+            Cb per AISC F1-1.  Default 1.0.
+        flange : {"top", "bot", "governing"}
+            Which flange's check to report.  Default ``"governing"``.
+
+        Returns
+        -------
+        tuple of FlexuralCurvePoint
+        """
+        from apeSteel.sections.geometry import (  # noqa: PLC0415
+            DoublySymmetricISection,
+            SinglySymmetricISection,
+        )
+
+        if not isinstance(self.section, DoublySymmetricISection | SinglySymmetricISection):
+            raise NotImplementedError(
+                "phi_Mn_vs_Lb is only implemented for I-sections "
+                "(DoublySymmetricISection or SinglySymmetricISection)."
+            )
+
+        classification = self.classify_flexural()
+        is_singly_symmetric = isinstance(self.section, SinglySymmetricISection)
+        web_class = classification.web.classification
+        flange_class = classification.flange.classification
+
+        routed: RoutedFlexureChapterCurve
+        if is_singly_symmetric:
+            routed = "F5" if web_class == "slender" else "F4"
+        elif web_class == "slender":
+            routed = "F5"
+        elif web_class == "non_compact":
+            routed = "F4"
+        elif flange_class == "compact":
+            routed = "F2"
+        else:
+            routed = "F3"
+
+        # Pre-compute per-flange section_properties (matters for SS).
+        props_top = self.section_properties_for("top")
+        props_bot = self.section_properties_for("bot")
+        Cb = lateral_torsional_buckling_modification_factor_Cb
+
+        def _evaluate(Lb: float, props):  # noqa: ANN001 - internal helper
+            if routed == "F2":
+                return compute_flexural_strength_F2_compact_doubly_symmetric(
+                    section_properties=props,
+                    material=self.material,
+                    unbraced_length_Lb=Lb,
+                    lateral_torsional_buckling_modification_factor_Cb=Cb,
+                )
+            if routed == "F3":
+                return compute_flexural_strength_F3_noncompact_or_slender_flange(
+                    section_properties=props,
+                    material=self.material,
+                    unbraced_length_Lb=Lb,
+                    lateral_torsional_buckling_modification_factor_Cb=Cb,
+                    construction=self.construction,
+                )
+            if routed == "F4":
+                return compute_flexural_strength_F4(
+                    section_properties=props,
+                    material=self.material,
+                    unbraced_length_Lb=Lb,
+                    lateral_torsional_buckling_modification_factor_Cb=Cb,
+                    construction=self.construction,
+                )
+            return compute_flexural_strength_F5_slender_web_plate_girder(
+                section_properties=props,
+                material=self.material,
+                unbraced_length_Lb=Lb,
+                lateral_torsional_buckling_modification_factor_Cb=Cb,
+                construction=self.construction,
+            )
+
+        points: list[FlexuralCurvePoint] = []
+        for Lb in unbraced_lengths_Lb:
+            if Lb <= 0.0:
+                raise ValueError(f"unbraced_lengths_Lb must all be positive, got {Lb!r}")
+            top_report = _evaluate(Lb, props_top)
+            bot_report = _evaluate(Lb, props_bot)
+            if flange == "top":
+                chosen, chosen_flange = top_report, "top"
+            elif flange == "bot":
+                chosen, chosen_flange = bot_report, "bot"
+            elif top_report.phi_strength_LRFD <= bot_report.phi_strength_LRFD:
+                chosen, chosen_flange = top_report, "top"
+            else:
+                chosen, chosen_flange = bot_report, "bot"
+            points.append(
+                FlexuralCurvePoint(
+                    unbraced_length_Lb=Lb,
+                    nominal_strength_Mn=chosen.nominal_strength,
+                    design_strength_phi_Mn=chosen.phi_strength_LRFD,
+                    routed_chapter=routed,
+                    governing_flange=chosen_flange,  # type: ignore[arg-type]
+                    governing_limit_state=chosen.governing_limit_state,
+                    limiting_length_plastic_Lp=chosen.limiting_length_plastic_Lp,
+                    limiting_length_inelastic_LTB_Lr=(
+                        chosen.limiting_length_inelastic_LTB_Lr
+                    ),
+                )
+            )
+        return tuple(points)
 
     # ------------------------------------------------------------------ #
     # Serviceability - elastic deflections (Phase 8b)
