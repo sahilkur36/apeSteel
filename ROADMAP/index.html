@@ -1,0 +1,3268 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Composition-based, strictly-typed steel-design library for AISC 360-22, 341-22, and 358-22.">
+      
+      
+      
+        <link rel="canonical" href="https://nmorabowen.github.io/apeSteel/ROADMAP/">
+      
+      
+        <link rel="prev" href="../CODING_STYLE/">
+      
+      
+        <link rel="next" href="../CONTRIBUTING/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Roadmap - apeSteel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#apesteel-roadmap" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="apeSteel" class="md-header__button md-logo" aria-label="apeSteel" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apeSteel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Roadmap
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nmorabowen/apeSteel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nmorabowen/apeSteel
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../user_guide/sections/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../aisc/B_classification/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AISC Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../plotting/capacity_curves/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Plotting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../recipes/beam_check/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Recipes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../design_notes/01_section_catalog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Design Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/element/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ARCHITECTURE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../CODING_STYLE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Coding Style
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../CONTRIBUTING/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="apeSteel" class="md-nav__button md-logo" aria-label="apeSteel" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    apeSteel
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nmorabowen/apeSteel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nmorabowen/apeSteel
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/sections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sections & Catalogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Units
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UNITS_AND_CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Units & Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Element Composite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide/bracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AISC Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AISC Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/B_classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §B — Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/E_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §E — Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/F_flexure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §F — Flexure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/G_shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §G — Shear
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/H_combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §H — Combined Forces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aisc/seismic_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AISC 341 — Seismic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plotting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/capacity_curves/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capacity Curves
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/interaction_diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interaction Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recipes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/beam_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam Check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/beam_column_H1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam-Column (H1.1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/design_family_overlay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design-Family Overlay
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/01_section_catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section Catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/02_classification_B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification §B4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/03_seismic_compactness_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seismic Compactness §341
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/04_flexure_F2_F3_F4_F5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexure §F2–F5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/05_shear_G2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shear §G2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/06_serviceability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serviceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/07_panel_zone_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Panel Zone §341
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/08_compression_E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compression §E
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/09_combined_H/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combined §H
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_notes/10_flexure_full_F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Flexure §F
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Element
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/sections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/flexure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shear
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/tension/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tension
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combined Forces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/serviceability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serviceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/seismic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seismic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/beam_column_connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam-Column Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checks (Facades)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CODING_STYLE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding Style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-scaffolding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 — Scaffolding 🟦
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-section-geometry-properties-user-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — Section geometry &amp; properties (user-defined) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — Classification 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-flexure-f2-compact-doubly-symmetric-i-both-flanges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 — Flexure §F2 (compact doubly-symmetric I, both flanges) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-flexure-f3-non-compact-slender-flange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 — Flexure §F3 (non-compact / slender flange) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-shear-g2-unstiffened-then-stiffened-then-tfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5 — Shear §G2 (unstiffened, then stiffened, then TFA) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-section-catalog-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6 — Section catalog ⬛ ✅ DONE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-beamcheck-facade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7 — BeamCheck facade 🟩
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-plate-girder-f5-serviceability-panel-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8 — Plate-girder §F5, serviceability, panel zone 🟧 🟧 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-e-aisc-360-22-chapter-e-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase E — AISC 360-22 Chapter E (Compression) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-h-aisc-360-22-chapter-h-combined-forces-torsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase H — AISC 360-22 Chapter H (Combined forces + torsion) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-f-full-aisc-360-22-chapter-f-all-section-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase F — Full AISC 360-22 Chapter F (all section families) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-v1-explicit-non-goals-for-later-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After v1 — explicit non-goals (for later phases)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bookkeeping-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bookkeeping rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-0-scaffolding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0 — Scaffolding 🟦
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-section-geometry-properties-user-defined" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — Section geometry &amp; properties (user-defined) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — Classification 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-flexure-f2-compact-doubly-symmetric-i-both-flanges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3 — Flexure §F2 (compact doubly-symmetric I, both flanges) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-flexure-f3-non-compact-slender-flange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 — Flexure §F3 (non-compact / slender flange) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-shear-g2-unstiffened-then-stiffened-then-tfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5 — Shear §G2 (unstiffened, then stiffened, then TFA) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-section-catalog-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6 — Section catalog ⬛ ✅ DONE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-beamcheck-facade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7 — BeamCheck facade 🟩
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-plate-girder-f5-serviceability-panel-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8 — Plate-girder §F5, serviceability, panel zone 🟧 🟧 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-e-aisc-360-22-chapter-e-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase E — AISC 360-22 Chapter E (Compression) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-h-aisc-360-22-chapter-h-combined-forces-torsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase H — AISC 360-22 Chapter H (Combined forces + torsion) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-f-full-aisc-360-22-chapter-f-all-section-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase F — Full AISC 360-22 Chapter F (all section families) 🟧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-v1-explicit-non-goals-for-later-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After v1 — explicit non-goals (for later phases)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bookkeeping-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bookkeeping rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="apesteel-roadmap">apeSteel — roadmap<a class="headerlink" href="#apesteel-roadmap" title="Permanent link">&para;</a></h1>
+<p>The port from the original Excel spreadsheet (<code>Vigas - Seccion I -
+Diseno LTB.xlsx</code>) plus the <code>to_review/steelProperties/</code> Python prototype
+is broken into <strong>eight phases</strong>. Each phase ends with a green golden-test
+file pinning the spreadsheet's exact numerical output.</p>
+<p>The phases are ordered so that each one can stand on its own: at the end
+of phase N the library has a working public API for the topics ≤ N and
+nothing else.</p>
+<hr />
+<h2 id="legend">Legend<a class="headerlink" href="#legend" title="Permanent link">&para;</a></h2>
+<ul>
+<li>🟦 <code>[scaffolding]</code> — pure plumbing, no engineering.</li>
+<li>🟧 <code>[engine]</code> — AISC equation port; produces a <code>Report</code> dataclass.</li>
+<li>🟩 <code>[facade]</code> — orchestration layer (<code>BeamCheck</code>).</li>
+<li>⬛ <code>[catalog]</code> — section database integration.</li>
+</ul>
+<hr />
+<h2 id="phase-0-scaffolding">Phase 0 — Scaffolding 🟦<a class="headerlink" href="#phase-0-scaffolding" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> the repo can install, type-check, lint, and run an empty test
+suite. No engineering yet.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>pyproject.toml</code> with deps (<code>numpy</code>, <code>pandas</code>, <code>pydantic&gt;=2</code>,
+  <code>rapidfuzz</code>, <code>baseUnits @ git+https://github.com/nmorabowen/baseUnits.git</code>),
+  dev extras, ruff and pytest config sections.</li>
+<li><code>pyrightconfig.json</code> (strict mode).</li>
+<li><code>ruff.toml</code> (rules per <code>CODING_STYLE.md</code>).</li>
+<li>Empty <code>src/apeSteel/__init__.py</code> exposing <code>__version__ = "0.0.0"</code>.</li>
+<li><code>apeSteel.core.units</code> — re-export of baseUnits + the BASE assertion.</li>
+<li><code>apeSteel.core.materials.SteelMaterial</code> (frozen dataclass) +
+  <code>A992</code>, <code>A572_Gr50</code>, <code>S355</code> instances.</li>
+<li><code>apeSteel.core.result_types.AISCClauseReference</code> + <code>Report</code> base.</li>
+<li><code>tests/test_smoke.py</code> — imports the package, asserts <code>u.BASE</code>, asserts
+  <code>A992.yield_stress_Fy / u.MPa == 345.0</code>.</li>
+<li>CI: GitHub Actions workflow running <code>ruff</code>, <code>pyright</code>, <code>pytest</code>.</li>
+</ul>
+<p><strong>Done when:</strong> <code>pip install -e .[dev] &amp;&amp; pyright &amp;&amp; ruff check &amp;&amp; pytest</code>
+all pass on a fresh clone.</p>
+<hr />
+<h2 id="phase-1-section-geometry-properties-user-defined">Phase 1 — Section geometry &amp; properties (user-defined) 🟧<a class="headerlink" href="#phase-1-section-geometry-properties-user-defined" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> reproduce cells <code>B39</code> – <code>B56</code> of the <code>Seccion Tipo I</code> sheet for
+the spreadsheet's default <code>100×6 / 300×4</code> plate-built I.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.sections.properties.SectionProperties</code> (frozen dataclass).</li>
+<li><code>apeSteel.sections.geometry.DoublySymmetricISection</code> with
+  <code>.compute_section_properties()</code>.</li>
+<li>Closed-form formulas for <code>Ag, Ix, Iy, Sx, Sy, Zx, Zy, ry, rx, J, Cw,
+  ho, rts</code>, with each one constant-named and AISC-cited (DG 9 for <code>J</code> /
+  <code>Cw</code> of welded I).</li>
+<li>Unit tests in <code>tests/unit/test_doubly_symmetric_i_section.py</code>.</li>
+<li>Golden test <code>tests/golden/section_properties_doubly_symmetric_i.csv</code>
+  with the spreadsheet's exact output for at least four (bf, tf, hw, tw)
+  combinations.</li>
+<li>Cross-check: numerical integration via <code>scipy.integrate</code> over the plate
+  cross-section, agreeing to <code>rel_tol = 1e-9</code>.</li>
+</ul>
+<p><strong>Done when:</strong> the golden CSV passes; the cross-check passes; pyright +
+ruff are green.</p>
+<p><strong>Cells reproduced:</strong> <code>B39</code> – <code>B56</code>.</p>
+<hr />
+<h2 id="phase-2-classification">Phase 2 — Classification 🟧<a class="headerlink" href="#phase-2-classification" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> reproduce cells <code>B57</code> – <code>B68</code> of <code>Seccion Tipo I</code>.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.classification.flexural_compactness_B4.classify_flexural_compactness_B4</code>
+  → <code>FlexuralCompactnessReport</code>.</li>
+<li><code>apeSteel.classification.seismic_compactness_341_D1.classify_seismic_compactness_341_D1</code>
+  → <code>SeismicCompactnessReport</code>.</li>
+<li>Unit + golden tests.</li>
+</ul>
+<p><strong>Cells reproduced:</strong> <code>B57</code> – <code>B68</code>, <code>B71</code>, <code>B85</code>.</p>
+<hr />
+<h2 id="phase-3-flexure-f2-compact-doubly-symmetric-i-both-flanges">Phase 3 — Flexure §F2 (compact doubly-symmetric I, both flanges) 🟧<a class="headerlink" href="#phase-3-flexure-f2-compact-doubly-symmetric-i-both-flanges" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> reproduce the LTB strength block <code>B69</code> – <code>B82</code> + <code>B83</code> – <code>B96</code>.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.flexure.lateral_torsional_buckling</code> with the three primitive
+  functions (<code>Lp</code>, <code>Lr</code>, <code>Mcr</code>).</li>
+<li><code>apeSteel.flexure.F2_compact_doubly_symmetric.compute_flexural_strength_F2_compact_doubly_symmetric</code>.</li>
+<li><code>apeSteel.flexure.cb.compute_Cb_from_quarter_point_moments</code>
+  (helper for Eq. F1-1).</li>
+<li>Reports include the regime label (<code>"yielding" | "inelastic_LTB" |
+  "elastic_LTB"</code>).</li>
+<li>Golden CSV pins the spreadsheet's <code>Mn</code> for both top and bottom flanges
+  across the three regimes.</li>
+</ul>
+<p><strong>Cells reproduced:</strong> <code>B69</code> – <code>B96</code> (both flanges).</p>
+<hr />
+<h2 id="phase-4-flexure-f3-non-compact-slender-flange">Phase 4 — Flexure §F3 (non-compact / slender flange) 🟧<a class="headerlink" href="#phase-4-flexure-f3-non-compact-slender-flange" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> reproduce <code>B97</code> – <code>B99</code>.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.flexure.F3_noncompact_flange.compute_flexural_strength_F3_noncompact_or_slender_flange</code>.</li>
+<li>Optional <code>kc</code> welded-flange path (off by default for v1 parity).</li>
+</ul>
+<p><strong>Cells reproduced:</strong> <code>B97</code> – <code>B99</code>.</p>
+<hr />
+<h2 id="phase-5-shear-g2-unstiffened-then-stiffened-then-tfa">Phase 5 — Shear §G2 (unstiffened, then stiffened, then TFA) 🟧<a class="headerlink" href="#phase-5-shear-g2-unstiffened-then-stiffened-then-tfa" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> reproduce <code>B100</code> – <code>B107</code> and the relevant Plate-Girders TFA
+block.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.shear.G2_doubly_symmetric.compute_shear_strength_G2_doubly_symmetric</code>.</li>
+<li>TFA eligibility checker that raises with a descriptive error when one
+  of the four conditions fails.</li>
+</ul>
+<p><strong>Cells reproduced:</strong> <code>B100</code> – <code>B107</code> of <code>Seccion Tipo I</code>; <code>B79</code> – <code>B82</code>
+of <code>Plate Girders</code>.</p>
+<hr />
+<h2 id="phase-6-section-catalog-done">Phase 6 — Section catalog ⬛  ✅ DONE<a class="headerlink" href="#phase-6-section-catalog-done" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> port the <code>to_review</code> <code>AISCDatabase</code> and add the European IPE
+table embedded in the spreadsheet at <code>R44:V88</code>.</p>
+<p>Deliverables (all shipped):</p>
+<ul>
+<li>✅ <code>apeSteel.sections.catalog.AISCv16Catalog</code> with RapidFuzz fallback
+  and a typed <code>CatalogRowAISCv16</code> (pydantic v2). All 13 AISC v16
+  section types (W, M, S, HP, C, MC, L, 2L, WT, MT, ST, HSS, PIPE) load
+  through the same model.</li>
+<li>✅ <code>apeSteel.sections.catalog.EuropeanIPECatalog</code> shipping an EN
+  10365-verified subset (IPE 200, 300, 400, 500, 600). Eurocode-to-
+  AISC axis renaming handled inside the adapter. Users extend by
+  editing <code>data/european_IPE_subset.csv</code> or pointing the catalog at
+  their own CSV.</li>
+<li>✅ Both catalogs implement <code>get_section_properties</code> →
+  <code>SectionProperties</code> and <code>get_doubly_symmetric_i_geometry</code> →
+  plate-built <code>DoublySymmetricISection</code>.</li>
+<li>✅ Catalog-derived golden test (<code>tests/golden/test_catalog_flexure_F2_golden.py</code>,
+  pinning W24X94 + A992/S355 across the three LTB regimes).</li>
+<li>✅ Plate-built vs catalog cross-check baked into unit tests
+  (<code>TestGetDoublySymmetricIGeometry</code>, <code>TestPlateBuiltReconstruction</code>):
+  rolled-vs-plate-built gap is &lt; 2 % for W shapes, &lt; 7 % for IPE
+  (k-radii contribute proportionally more in IPE sections).</li>
+<li>✅ Data ingestion: <code>tools/build_aisc_v16_csv.py</code> generates the
+  shipped <code>data/AISC_v16_shapes.csv</code> from the legacy pickle in
+  <code>to_review/</code>. CSV preserves AISC v16 SI Manual mixed-prefix units
+  exactly (mm, kg/m, 10⁶ mm⁴, 10³ mm³, 10⁹ mm⁶) so a row can be
+  diffed against a printed page; per-column scaling to
+  <code>N-mm-tonne-s</code> base happens in <code>_unit_conversion.py</code> at load time.</li>
+</ul>
+<p>Test impact: +86 tests (1085 → 1171 passing).</p>
+<hr />
+<h2 id="phase-7-beamcheck-facade">Phase 7 — BeamCheck facade 🟩<a class="headerlink" href="#phase-7-beamcheck-facade" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> the user-facing API.</p>
+<p>Deliverables:</p>
+<ul>
+<li><code>apeSteel.checks.doubly_symmetric_i_beam_check.DoublySymmetricIBeamCheck</code>
+  bundling Phase 1 – 5 + Phase 6 catalog access.</li>
+<li><code>BeamCheckReport</code> aggregating every sub-report and producing a
+  human-readable <code>format()</code> matching the spreadsheet's "Resumen" block
+  (cells <code>L1</code> – <code>L23</code>).</li>
+<li>End-to-end test reproducing the full default section and Fy in the
+  spreadsheet (<code>100×6 / 300×4</code> at A992) and comparing <code>φMn</code>, <code>φVn</code>, and
+  the deflection block.</li>
+</ul>
+<hr />
+<h2 id="phase-8-plate-girder-f5-serviceability-panel-zone">Phase 8 — Plate-girder §F5, serviceability, panel zone 🟧 🟧 🟧<a class="headerlink" href="#phase-8-plate-girder-f5-serviceability-panel-zone" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> complete the original spreadsheet coverage.</p>
+<p>Deliverables (in order):</p>
+<ol>
+<li>✅ <code>apeSteel.flexure.F5_slender_web_plate_girder</code> (RPG, F5-1 to F5-8).</li>
+<li>✅ <code>apeSteel.serviceability.simple_beam_deflections</code> (Phase 8b).
+   Four cases: simply-supported UDL, simply-supported PL at mid-span,
+   simply-supported PL at arbitrary <code>a</code> (returns mid-span + max
+   deflection + location of max), and cantilever UDL + tip load.
+   Camber recommendation via <code>recommend_camber_from_dead_load_deflection</code>
+   (0.8 × δ_dead, no rounding — caller picks shop-practice rounding).
+   Composite API on <code>Element</code>: <code>element.serviceability_simply_supported_udl(...)</code>
+   and three sibling methods. Golden test in
+   <code>tests/golden/serviceability.csv</code> pins 11 representative cases.</li>
+<li>✅ <code>apeSteel.seismic.panel_zone_341.check_column_flange_tension_341</code>
+   (Phase 8c). Port + fix of <code>to_review</code> <code>panelZone</code> class. Adds
+   <code>PanelZoneColumnFlangeTensionReport</code> with Tu / Rn / phi*Rn / two
+   tcf_min limits / DCR / acceptance flags; cites AISC 341-22 §E3.6e,
+   AISC 358-22 §5.3.1, and AISC 360-22 §J10.1 Eq. J10-2. New top-level
+   composite <code>BeamColumnConnection</code> aggregates (beam: Element,
+   column: Element) and exposes
+   <code>joint.check_panel_zone_column_flange_tension()</code>. Builder
+   <code>element.connected_to(column_element)</code> chains both. Phase 1
+   <code>SectionProperties</code> extended with <code>flange_width_bf</code> and
+   <code>flange_thickness_tf</code> (defaults 0.0); the plate-built geometry,
+   AISC v16 catalog, and European IPE catalog all populate them.
+   Test impact: +33 tests (25 unit + 8 golden).</li>
+</ol>
+<p><strong>Phase 8c companions</strong> (panel-zone shear + doubler-plate
+   sizing + continuity-plate need-check):</p>
+<ul>
+<li>✅ <code>apeSteel.seismic.panel_zone_shear_J10_6.check_panel_zone_shear_341</code><ul>
+<li>all four AISC 360 §J10.6 nominal-strength equations
+ (J10-9 through J10-12), one-sided and two-sided beam
+ attachments, column-axial reduction, panel-zone-deformation
+ boost, doubler-plate contribution via
+ <code>additional_doubler_plate_thickness_t_dp</code>.  Demand uses
+ <code>Mpr = Cpr * Ry * Fy * Zx</code> with <code>Cpr = (Fy+Fu)/(2Fy) &lt;= 1.2</code>
+ (fallback 1.15 when <code>Fu</code> not on the material).</li>
+</ul>
+</li>
+<li>✅ <code>apeSteel.seismic.doubler_plate_design.recommend_doubler_plate_thickness_341</code><ul>
+<li>solves the shear and the local-buckling
+ <code>(tw + tdp) &gt;= (db + dc)/90</code> constraints simultaneously and
+ rounds up to a shop-practical increment (default 2 mm).</li>
+</ul>
+</li>
+<li>✅ <code>apeSteel.seismic.continuity_plate_design.check_continuity_plates_required_358</code><ul>
+<li>AISC 358 §2.4.4 need-check + AISC 360 §J10.8 minimum
+ <code>(t_cp, b_cp)</code> dimensions, 1-sided vs 2-sided aware.</li>
+</ul>
+</li>
+<li>All three exposed on <code>BeamColumnConnection</code>:
+     <code>joint.check_panel_zone_shear(...)</code>,
+     <code>joint.recommend_doubler_plate(...)</code>,
+     <code>joint.check_continuity_plates(...)</code>.</li>
+<li>Test impact: +49 tests (43 unit + 6 golden);
+     project total 1243 -&gt; 1292.</li>
+<li>✅ <code>BeamCheck</code> facade routes to F5 when geometry is a slender-web
+   plate girder.</li>
+</ul>
+<p><strong>Cells reproduced:</strong> the full <code>Plate Girders</code> sheet (Phase 8); the
+right-side serviceability block of <code>Seccion Tipo I</code> (Phase 8b); the
+panel-zone block from the legacy <code>panelZone</code> class is the remaining
+work (Phase 8c).</p>
+<hr />
+<h2 id="phase-e-aisc-360-22-chapter-e-compression">Phase E — AISC 360-22 Chapter E (Compression) 🟧<a class="headerlink" href="#phase-e-aisc-360-22-chapter-e-compression" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> a complete, section-family-by-section-family compression-strength
+calculator anchored to an independent AISC 360-22 oracle and (for
+edition-independent quantities) to the engineer's AISC 360-16 Excel workbook.
+Mirrors the flexure-layer architecture: pure functions, frozen Reports, two
+independent correctness anchors.</p>
+<p>Design note: <code>docs/design_notes/08_compression_E.md</code>.</p>
+<p>Sub-items:</p>
+<ul>
+<li>
+<p>✅ <strong>E-0 — Scaffold.</strong> <code>CompressionSectionProperties</code> input contract;
+  <code>compression/</code> module stubs; standalone stdlib oracle
+  (<code>tests/golden/_chapterE_aisc_oracle.py</code>). pyright/ruff clean.</p>
+</li>
+<li>
+<p>✅ <strong>E-1 — W-shape (doubly-symmetric I).</strong> <code>flexural_buckling_E3.py</code>,
+  <code>torsional_flexural_E4.py</code> (torsional path, Eq. E4-2),
+  <code>slender_elements_E7.py</code> (effective-width §E7.2, Eq. E7-2),
+  <code>compression_strength.py</code> W-shape orchestrator.
+  Test impact: +13 tests (10 oracle bit-exact + 3 Excel anchor; Fe / Fe,torsion
+  / Pn non-slender all edition-independent; §E7 divergence from 360-16 is
+  bounded, documented, expected).
+  Project total: <strong>1398 tests passing</strong>; pyright strict clean; ruff clean.</p>
+</li>
+<li>
+<p>✅ <strong>E-2 — Tee and channel.</strong> <code>TeeSection</code> / <code>ChannelSection</code>
+  plate-built geometries (properties transcribed verbatim from the
+  validated workbook); §E4 singly-symmetric flexural–torsional path
+  (Eq. E4-3 / E4-7, axis-of-symmetry selection: tee→Fey, channel→Fex).
+  Test impact: +12 tests (10 oracle bit-exact incl. FT-governing across
+  4 grades + 2 Excel geometry anchors: Ag/Ix/Iy/rx/ry/J/Cw/xo·yo/H all
+  bit-match the workbook). Project total: <strong>1410 tests passing</strong>;
+  pyright strict clean; ruff clean.</p>
+</li>
+<li>
+<p>✅ <strong>E-3 — Rectangular and round HSS.</strong> <code>RectangularHSS</code> / <code>RoundHSS</code>
+  geometries; facade + oracle skip §E4 for closed HSS (§E3-only).
+  §E7.2 rect-HSS-wall effective width (Table E7.1 HSS-wall c1/c2);
+  §E7.2(c) round-HSS reduced area (Eq. E7-6/E7-7, retained from
+  360-16). +10 tests: 8 oracle bit-exact (incl. slender HSS); 2 Excel
+  anchors bit-match the workbook's <strong>full governing φPn</strong> (non-slender
+  ⇒ 360-16 == 360-22 — the strongest external anchor).</p>
+</li>
+<li>
+<p>✅ <strong>E-4 — Single and double angle.</strong> <code>SingleAngleSection</code> (equal-leg,
+  principal-axis Mohr rotation) with §E5 modified <code>Lc/r</code>
+  (Eq. E5-1…E5-4) and §E3+§E4; <code>DoubleAngleSection</code> (back-to-back) with
+  §E6 modified slenderness (Eq. E6-1/E6-2) wired through the facade.
+  +21 tests: 11 oracle bit-exact (E5 cases a/b, E6 snug/welded across
+  grades); 2 Excel geometry anchors (the Excel caught &amp; fixed a
+  back-to-back built-up-Iy convention error). Project total: <strong>1433
+  tests passing</strong>; pyright strict 0 errors; ruff/format clean.</p>
+</li>
+<li>
+<p>✅ <strong>E-5 — Element integration + φPn-vs-length curve.</strong>
+  <code>compression/capacity_curve.py</code> (<code>compute_phi_Pn_vs_length</code> →
+  <code>CapacityCurvePoint</code> tuple, the workbook's Data-Table column as a
+  pure function); <code>Element.compression_strength(Kx,Lx,Ky,Ly,Kz,Lz)</code> and
+  <code>Element.phi_Pn_vs_length(...)</code> for doubly-symmetric I (SS-I guarded
+  with <code>NotImplementedError</code>, as F2/F3/F5); top-level <code>apeSteel</code>
+  re-exports. Tee/channel/HSS/angle compression use the dedicated
+  geometries with <code>apeSteel.compression.compute_compression_strength</code>.
+  +4 tests (Element≡free-function, curve monotone &amp; point-consistent,
+  SS-I guard, non-positive-length guard).</p>
+</li>
+</ul>
+<p><strong>Done when:</strong> all five sub-items green; oracle + Excel-anchor suites pass;
+pyright + ruff clean; coverage ≥ 90 %.  <strong>DONE</strong> — 1437 tests passing;
+pyright strict 0 errors; ruff + ruff-format clean; coverage 95 %.</p>
+<hr />
+<h2 id="phase-h-aisc-360-22-chapter-h-combined-forces-torsion">Phase H — AISC 360-22 Chapter H (Combined forces + torsion) 🟧<a class="headerlink" href="#phase-h-aisc-360-22-chapter-h-combined-forces-torsion" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> the <strong>full</strong> Chapter H — §H1.1, §H1.2, §H1.3, §H2, and
+§H3.1/3.2/3.3 — anchored to an independent AISC 360-22 oracle and (for
+edition-independent quantities) to the engineer's Chapter-H Excel
+workbook. Chapter H is a <em>consumer</em> layer: §H1/§H2 compose the existing
+Chapter-E <code>φ·Pn</code> and Chapter-F <code>φ·Mn</code> (no changes to those layers);
+the only nominal strength that originates here is the §H3.1 HSS
+torsional <code>Tn</code>. Second-order <code>Mr</code> is caller-supplied (DAM) — no
+Appendix-8 B1/B2. §H1.2 consumes a thin <code>apeSteel.tension</code> slice
+(D2-1 gross-section yielding only; D2-2 rupture out of scope).</p>
+<p>Design note: <code>docs/design_notes/09_combined_H.md</code>.</p>
+<p>Sub-items:</p>
+<ul>
+<li>
+<p>✅ <strong>H-0 — Scaffold + oracle.</strong> <code>combined/</code> + <code>tension/</code> module stubs
+  (every calculator raises <code>NotImplementedError</code> pointing at the design
+  note); standalone stdlib oracle
+  (<code>tests/golden/_chapterH_aisc_oracle.py</code>) re-deriving §H1.1/1.2/1.3,
+  §H2, §H3.1/3.2/3.3; design note 09; this ROADMAP section.
+  pyright strict / ruff / ruff-format clean; suite green.</p>
+</li>
+<li>
+<p>✅ <strong>H-1 — §H1.1.</strong> Eq. H1-1a/H1-1b calculator + <code>CombinedH1Report</code>;
+  9-case oracle grid bit-exact (both regimes + biaxial + boundary) +
+  5 reviewer hand calcs.</p>
+</li>
+<li>
+<p>✅ <strong>H-2 — §H1.2.</strong> <code>tension/yielding_D2.py</code> (Eq. D2-1, <code>φt=0.90</code>) +
+  flexure+tension interaction (<code>Pc=φt·Pn</code>) + <code>compute_Pey_H1_2</code> +
+  <code>Cb</code> amplifier <code>√(1+α·Pr/Pey)</code> (LRFD/ASD <code>α</code>).  Oracle bit-exact +
+  hand calcs.  <code>Mn≤Mp</code> cap is applied by the caller/facade (pure-
+  consumer layering, design note 09 §2/§4).</p>
+</li>
+<li>
+<p>✅ <strong>H-3 — §H1.3.</strong> In-plane Eq. H1-1 + out-of-plane Eq. H1-2
+  (<code>Cb·Mcx</code> capped at <code>φb·Mp</code>) + <code>ensure_h1_3_applicable</code> guard
+  (DS / rolled / compact / <code>KLz≤KLy</code>).  Oracle bit-exact (cap
+  active/inactive, both governing) + hand calcs.</p>
+</li>
+<li>
+<p>✅ <strong>H-4 — §H2.</strong> Eq. H2-1 signed elastic-stress interaction.
+  Oracle bit-exact + hand calcs (incl. the sign-convention case).</p>
+</li>
+<li>
+<p>✅ <strong>H-5 — §H3.</strong> Round/rect HSS <code>Tn=Fcr·C</code> (Eq. H3-1..H3-5,
+  <code>φT=0.90</code>); Eq. H3-6 HSS combined (with <code>Tr≤0.2·Tc</code> neglect path);
+  §H3.3 limiting <code>Fn</code> (Eq. H3-7/8/9; DG 9 warping out of scope).
+  Oracle bit-exact (every regime/branch + guards) + hand calcs.</p>
+</li>
+<li>
+<p>✅ <strong>H-6 — Excel anchor.</strong> <code>tools/dump_excel_workbook.py</code> dumps the
+  engineer-confirmed <code>Diseño Flexo-Compresion Viga I.xlsm</code> to
+  <code>tests/golden/data/_combined_excel_raw.json</code>;
+  <code>test_combined_excel_anchor.py</code> bit-matches apeSteel's §H1.1 DCR to
+  the workbook's <code>W!J29</code> (an independent Excel/VBA Eq. H1-1a/1b) at
+  <code>rel_tol=1e-9</code>, using the workbook's own <code>Pc</code>/<code>Mc</code> so the check is
+  isolated from any 360-16-vs-360-22 upstream difference.  The
+  workbook ships only the §H1.1 example; §H1.2/1.3/§H2/§H3 stay
+  oracle+hand-calc anchored (documented, not hidden).</p>
+</li>
+<li>
+<p>✅ <strong>H-7 — Element/facade integration.</strong> <code>Element.combined_strength_H1</code>
+  resolves <code>Pc</code> from Chapter E + <code>Mcx</code> from the governing Chapter-F
+  result and evaluates §H1.1 (DS-only, biaxial requires explicit
+  <code>Mcy</code> — no §F6 in apeSteel); the §H1.2/1.3/H2/H3 pure calculators
+  are re-exported at <code>apeSteel.*</code> for direct use; ROADMAP ticked;
+  design note status updated.</p>
+</li>
+</ul>
+<p><strong>Done when:</strong> all sub-items green; oracle + Excel-anchor suites pass;
+pyright + ruff clean; coverage ≥ 90 %.  <strong>DONE</strong> (H-0..H-7) — 1534
+tests passing; pyright strict 0 errors; ruff + ruff-format clean;
+coverage 95 %; <code>combined/*</code> &amp; <code>tension/*</code> at 100 %.  Engine + facade
+landed in PR #5; the H-6 Excel anchor (<code>Diseño Flexo-Compresion Viga
+I.xlsm</code> → <code>W!J29</code> §H1.1 bit-match) landed in the H-6 follow-up PR.</p>
+<hr />
+<h2 id="phase-f-full-aisc-360-22-chapter-f-all-section-families">Phase F — Full AISC 360-22 Chapter F (all section families) 🟧<a class="headerlink" href="#phase-f-full-aisc-360-22-chapter-f-all-section-families" title="Permanent link">&para;</a></h2>
+<p><strong>Goal:</strong> complete the <strong>entire</strong> Chapter F. Today only the major-axis
+I-shape suite ships (§F2–§F5, DS; §F4 also SS). This phase adds §F6–§F12
+<strong>and refactors §F2–§F5 onto a generalized section-kind data model</strong>
+(the engineer's locked architecture decision — mirrors Phase E's
+<code>CompressionSectionProperties</code>). Two-tier anchor: an independent stdlib
+oracle (bit-exact <code>rel_tol=1e-9</code>, primary) <strong>plus</strong> an AISC Manual v15.1
+Vol.1 worked-example cross-check for §F6–§F12 (catalog properties,
+Manual sig-figs). Senior-engineer-orchestrated: one Opus-4.7 agent per
+sub-item against the contract, gated before the next starts.</p>
+<p>Design note: <code>docs/design_notes/10_flexure_full_F.md</code>.
+Citation source-of-truth: <code>docs/design_notes/_chapterF_citation_reference.md</code>
+(an F-0 deliverable).</p>
+<p>Critical path is <strong>serial through F-1</strong>; F-2…F-7 parallelise in
+isolated worktrees once F-1 is bit-exact; F-8 integrates.</p>
+<p>Sub-items:</p>
+<ul>
+<li>
+<p>✅ <strong>F-0 — Generalized model + full classifier + oracle scaffold.</strong>
+  <code>sections/flexural_properties.py</code> (<code>FlexuralSectionProperties</code> +
+  <code>FlexuralPlateElement</code> + <code>from_legacy</code>); <code>classify_flexural_compactness</code>
+  covering every Table B4.1b case F2–F12 needs;
+  <code>tests/golden/_chapterF_full_aisc_oracle.py</code> skeleton;
+  <code>_chapterF_citation_reference.md</code>. <strong>No behaviour change</strong> (model +
+  classifier + oracle skeleton only; gated-accepted, frozen).</p>
+</li>
+<li>
+<p>✅ <strong>F-1 — Refactor §F2–§F5 onto the model; close I-shape gaps.</strong>
+  F2–F5 consume <code>FlexuralSectionProperties</code> via <code>from_legacy</code>
+  (signatures unchanged); added channel <code>c</code> (Eq. F2-8b); added SS
+  slender-web §F5 (deleted the <code>NotImplementedError</code>). Gate met:
+  every shipped golden + <code>test_chapterF_independent</code> + the §F2 Excel
+  anchor passed <strong>unchanged</strong> at <code>rel_tol=1e-9</code> (orchestrator
+  line-by-line diff review); gated-accepted, frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-2 — §F8 round HSS / Pipe.</strong> <code>RoundHSS.compute_section_properties</code>;
+  Eq. F8-1/F8-2/F8-3/F8-4; no LTB. Independent §F8 oracle (bit-exact)</p>
+</li>
+<li>
+<p>AISC Manual v15.1 Ex. F.9A/B (Pipe). Gated-accepted, frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-3 — §F7 square/rectangular HSS &amp; box.</strong>
+  <code>RectangularHSS.compute_section_properties</code> (both axes); Eq. F7-1
+  yield, F7-2..F7-5 FLB, F7-6..F7-9 WLB, F7-10/F7-11 LTB. Independent
+  §F7 oracle + Manual Ex. F.6/F.7A-B/F.8A-B. Gated-accepted, frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-4 — §F6 minor-axis I.</strong> <code>Zy/Sy</code> + minor-axis FLB
+  (Eq. F6-1..F6-4); I-shapes (DS &amp; SS), rolled + welded. Independent
+  §F6 oracle + Manual Ex. F.5. (Channel §F6 and the
+  <code>Element.combined_strength_H1</code> <code>Mcy</code> wiring were the F-4-deferred,
+  F-8-owned items - delivered in F-8 below.) Gated-accepted, frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-5 — §F9 tees &amp; double angles (plane of symmetry).</strong>
+  <code>TeeSection</code>/<code>DoubleAngleSection.compute_section_properties</code>; yield
+  (stem tension/compression caps), LTB (B factor), FLB, stem/leg LB;
+  stem-in-compression ductility flag. Independent §F9 oracle + Manual
+  Ex. F.10 (WT) + 2L first-principles hand-calc.  (The §F9.2(b)(2)
+  2L-web-leg-compression LTB was conservatively bounded pending §F10 -
+  ENGINEER-CONFIRM F9-EC-1, now <strong>resolved in F-8</strong>.) Gated-accepted,
+  frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-6 — §F10 single angles.</strong> <code>SingleAngleSection.compute_section_properties</code>
+  (principal axes; geometric-axis option); Eq. F10-1..F10-8.
+  Independent §F10 oracle + Manual Ex. F.11A/B/C. Gated-accepted,
+  frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-7 — §F11 bars/rounds + §F12 unsymmetrical.</strong> New
+  <code>RectangularBar</code>/<code>RoundBar</code> geometry; Eq. F11-1..F11-5; §F12 elastic
+  <code>Fn·S</code> catch-all. Closes the Chapter-F equation set. Independent
+  §F11/§F12 oracle + Manual Ex. F.12/F.13 (F7tail-EC-1 resolved -
+  <code>manual_F13_roundbar.txt</code>). Gated-accepted, frozen.</p>
+</li>
+<li>
+<p>✅ <strong>F-8 — Facade + catalog + element integration (this PR).</strong>
+  <code>section_kind</code> non-I flexural dispatch
+  (<code>apeSteel.checks.flexure_dispatch</code>: channel→§F2(major)/§F6(minor),
+  HSS→§F7/§F8, tee/2L→§F9, single angle→§F10, bar→§F11,
+  unsymmetric→§F12) - an <strong>additive</strong> sibling of the byte-unchanged
+  I-shape <code>run_full_beam_check</code>/<code>Element</code> path (mirrors the
+  compression-facade precedent).  <code>ChannelSection.compute_section_
+  properties() → FlexuralSectionProperties</code> + channel §F6
+  (full-flange-width <code>b</code>).  <code>AISCv16Catalog.get_flexural_section_
+  properties</code> → <code>FlexuralSectionProperties</code> for W/M/S/HP (bit-
+  identical legacy lift), C/MC, HSS, PIPE, WT/MT/ST, L (2L documented
+  as a catalog-data gap - the AISC v16 2L row publishes no J/ry §F9
+  needs).  <code>Element.combined_strength_H1</code> auto-resolves <code>Mcy</code> from §F6
+  when biaxial (closes the design-note-09 H-7 gap; explicit-<code>Mcy</code> /
+  uniaxial paths byte-unchanged).  <strong>F9-EC-1 resolved</strong>: §F9.2(b)(2)
+  2L-web-leg-compression LTB now uses the exact §F10 Eq. F10-2/F10-3
+  reduction (intra-<code>flexure</code> import of §F10's <code>_mn_ltb_from_me</code>); the
+  §F9 oracle + that one golden sub-case updated, all other §F9 numbers
+  bit-identical.  §F10.3 leg-LB DRY: duplication <strong>deliberately kept</strong>
+  (bit-exactness &gt; DRY) with cross-citing comments in §F9/§F10.  Full
+  <code>apeSteel.*</code> re-exports of every §F6–§F12 calculator +
+  <code>FlexuralSectionProperties</code> + the new geometries.  New
+  catalog-anchored golden (<code>test_catalog_flexure_full_F_golden.py</code>:
+  HSS12X8X1/2→§F7 + WT5X6→§F9, bit-exact vs the §F7/§F9 oracles on
+  catalog-published properties + the Manual Ex. F.10 WT5X6 sig-fig
+  anchor).  ENGINEER-CONFIRM ledger consolidated in
+  <code>_chapterF_citation_reference.md</code>.  Test impact: +catalog-F golden</p>
+</li>
+<li>H1 auto-<code>Mcy</code> element tests (exact count confirmed at the gate).</li>
+</ul>
+<p><strong>Done when:</strong> all sub-items green; oracle + Manual-anchor + golden
+suites pass; pyright strict 0; ruff + ruff-format clean; coverage
+≥ 90 %. A sub-item cannot merge if it imports from a later sub-item's
+module (the <code>ARCHITECTURE.md §1</code> layer rule).  <strong>DONE (F-0..F-8)</strong> —
+the I-shape <code>Element</code>/<code>run_full_beam_check</code>/§F2–§F5 golden/oracle/
+Manual/catalog/Chapter-H paths are bit-unchanged (<code>rel_tol=1e-9</code>);
+the non-I §F dispatch + catalog-F path are additive.</p>
+<hr />
+<h2 id="after-v1-explicit-non-goals-for-later-phases">After v1 — explicit non-goals (for later phases)<a class="headerlink" href="#after-v1-explicit-non-goals-for-later-phases" title="Permanent link">&para;</a></h2>
+<ul>
+<li>AISC §F (flexure) — full Chapter F (§F6–§F12 + §F2–§F5 refactor) is
+  <strong>Phase F above</strong>; §F2–§F5 I-shapes shipped in Phases 3/4/8/9.</li>
+<li>AISC §E (compression) — <strong>done (Phase E above)</strong>.</li>
+<li>AISC §H (combined loading) — <strong>done (Phase H above)</strong>.</li>
+<li>AISC §D (tension) — full chapter (D2-2 net-section rupture, §J4 block
+  shear) for braces / hangers; Phase H ships only the thin D2-1 slice
+  that §H1.2 consumes.</li>
+<li>AISC §I (composite construction).</li>
+<li>AISC §J / §K (connections — bolts, welds, plate-element checks).</li>
+<li>AISC 358 prequalified moment connections (RBS, BFP, BUEEP, …).</li>
+<li>AISC 341 system-level checks (SMF/IMF/OMF criteria,
+  capacity-design Vu, doubler/continuity plates).</li>
+<li><strong>AISC Design Guide 9 — open-section torsion (feeds §H3.3).</strong> Phase H
+  ships only the §H3.3 <em>code-level limiting stress</em> <code>Fn</code> (Eq. H3-7/8/9);
+  the warping normal stress <code>σw</code>, St-Venant shear <code>τsv</code> and warping
+  shear <code>τw</code> <em>demand</em> on W/C/WT members under torsion are out of scope.
+  A future DG-9 phase adds a dedicated <em>demand</em> layer (σ, τ from the
+  torsion differential equation for the relevant warping-BC cases) that
+  feeds the existing <code>combined.torsion_H3</code> §H3.3 capacity unchanged —
+  exactly as Chapters E/F feed §H1. See design note 09 §7.</li>
+<li>AISC Design Guide 11 floor vibrations.</li>
+</ul>
+<p>Each of these will get its own design note and roadmap update when we
+start it.</p>
+<hr />
+<h2 id="bookkeeping-rules">Bookkeeping rules<a class="headerlink" href="#bookkeeping-rules" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Every PR that closes a phase line item updates this file (ticks the
+  box, attaches the golden-test row count).</li>
+<li>A phase is "done" only when its golden tests + unit tests are green,
+  pyright is green, ruff is green, and coverage on the touched code is
+  ≥ 90 %.</li>
+<li>A phase <strong>cannot be merged</strong> if it imports from a module belonging to
+  a later phase (the layer-dependency rule from <code>ARCHITECTURE.md</code> §1).</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

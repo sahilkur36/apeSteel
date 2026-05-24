@@ -1,0 +1,4098 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Composition-based, strictly-typed steel-design library for AISC 360-22, 341-22, and 358-22.">
+      
+      
+      
+        <link rel="canonical" href="https://nmorabowen.github.io/apeSteel/api/serviceability/">
+      
+      
+        <link rel="prev" href="../combined/">
+      
+      
+        <link rel="next" href="../seismic/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Serviceability - apeSteel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#serviceability" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="apeSteel" class="md-header__button md-logo" aria-label="apeSteel" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            apeSteel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Serviceability
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nmorabowen/apeSteel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nmorabowen/apeSteel
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user_guide/sections/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../aisc/B_classification/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AISC Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../plotting/capacity_curves/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Plotting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../recipes/beam_check/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Recipes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design_notes/01_section_catalog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Design Notes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../element/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ARCHITECTURE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CODING_STYLE/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Coding Style
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CONTRIBUTING/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="apeSteel" class="md-nav__button md-logo" aria-label="apeSteel" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    apeSteel
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nmorabowen/apeSteel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nmorabowen/apeSteel
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/sections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sections & Catalogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Units
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UNITS_AND_CONVENTIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Units & Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Element Composite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/bracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AISC Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AISC Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/B_classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §B — Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/E_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §E — Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/F_flexure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §F — Flexure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/G_shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §G — Shear
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/H_combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    §H — Combined Forces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aisc/seismic_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AISC 341 — Seismic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plotting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plotting/capacity_curves/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capacity Curves
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plotting/interaction_diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interaction Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Recipes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/beam_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam Check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/beam_column_H1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam-Column (H1.1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/design_family_overlay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design-Family Overlay
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Design Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/01_section_catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Section Catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/02_classification_B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification §B4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/03_seismic_compactness_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seismic Compactness §341
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/04_flexure_F2_F3_F4_F5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexure §F2–F5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/05_shear_G2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shear §G2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/06_serviceability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serviceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/07_panel_zone_341/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Panel Zone §341
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/08_compression_E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compression §E
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/09_combined_H/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combined §H
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design_notes/10_flexure_full_F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Flexure §F
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Element
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials & Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flexure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flexure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shear/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shear
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tension/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tension
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../combined/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combined Forces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serviceability
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serviceability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apeSteel.serviceability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;serviceability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" serviceability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.CantileverUDLAndTipLoadDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;CantileverUDLAndTipLoadDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedPointLoadArbitraryDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedPointLoadArbitraryDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedPointLoadMidspanDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedPointLoadMidspanDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedUDLDeflectionReport
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" SimplySupportedUDLDeflectionReport">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_cantilever_udl_and_tip_load
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" compute_deflection_cantilever_udl_and_tip_load">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_arbitrary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_point_load_arbitrary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_midspan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_point_load_midspan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_udl
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" compute_deflection_simply_supported_udl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.recommend_camber_from_dead_load_deflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;recommend_camber_from_dead_load_deflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seismic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seismic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beam_column_connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam-Column Connections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checks (Facades)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plotting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plotting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CODING_STYLE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding Style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apeSteel.serviceability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;serviceability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" serviceability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.CantileverUDLAndTipLoadDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;CantileverUDLAndTipLoadDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedPointLoadArbitraryDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedPointLoadArbitraryDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedPointLoadMidspanDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedPointLoadMidspanDeflectionReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;SimplySupportedUDLDeflectionReport
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" SimplySupportedUDLDeflectionReport">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport--attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_cantilever_udl_and_tip_load
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" compute_deflection_cantilever_udl_and_tip_load">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_arbitrary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_point_load_arbitrary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_midspan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_point_load_midspan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;compute_deflection_simply_supported_udl
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" compute_deflection_simply_supported_udl">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apeSteel.serviceability.recommend_camber_from_dead_load_deflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;recommend_camber_from_dead_load_deflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="serviceability">Serviceability<a class="headerlink" href="#serviceability" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="apeSteel.serviceability" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">serviceability</span>
+
+
+<a href="#apeSteel.serviceability" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Serviceability - elastic deflections and camber (Phase 8b).</p>
+<p>See <code>docs/design_notes/06_serviceability.md</code> for the design.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="apeSteel.serviceability.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.8</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Default camber as a fraction of the deflection under unfactored
+dead load. Shop practice varies between 0.75 and 1.0; 0.8 matches
+the spreadsheet's default.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">360.0</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Default <code>L / live_limit</code> ratio - typical AISC live-load limit
+for floor beams supporting plastered ceilings (Table 1604.3 IBC).</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">240.0</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Default <code>L / total_limit</code> ratio - typical total-load limit for
+floor beams.</p>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="apeSteel.serviceability.CantileverUDLAndTipLoadDeflectionReport" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">CantileverUDLAndTipLoadDeflectionReport</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.CantileverUDLAndTipLoadDeflectionReport" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">CantileverUDLAndTipLoadDeflectionReport</span><span class="p">(</span><span class="n">cited_clauses</span><span class="p">:</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="apeSteel.core.result_types.AISCClauseReference">AISCClauseReference</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">(),</span> <span class="n">governing_limit_state</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">phi_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">nominal_strength</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">phi_strength_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">omega_strength_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">elastic_modulus_E</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">moment_of_inertia_Ix</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">cantilever_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_w</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">tip_point_load_P</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_from_udl_delta_udl</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_from_tip_load_delta_tip_load</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_at_tip_delta_tip</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">is_tip_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="apeSteel.core.result_types.Report">Report</span></code></p>
+
+
+
+        <p>Tip deflection of a cantilever under UDL <code>w</code> plus tip load <code>P</code>.</p>
+<p>The two contributions are linear-elastic and superpose exactly:</p>
+<p>.. math::</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>\delta_{tip} = \frac{w L^{4}}{8 E I_x} + \frac{P L^{3}}{3 E I_x}.
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="apeSteel.serviceability.SimplySupportedPointLoadArbitraryDeflectionReport" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SimplySupportedPointLoadArbitraryDeflectionReport</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.SimplySupportedPointLoadArbitraryDeflectionReport" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimplySupportedPointLoadArbitraryDeflectionReport</span><span class="p">(</span><span class="n">cited_clauses</span><span class="p">:</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="apeSteel.core.result_types.AISCClauseReference">AISCClauseReference</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">(),</span> <span class="n">governing_limit_state</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">phi_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">nominal_strength</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">phi_strength_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">omega_strength_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">elastic_modulus_E</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">moment_of_inertia_Ix</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distance_from_left_support_a</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distance_from_right_support_b</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">point_load_total_P_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_at_midspan_delta_midspan</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_maximum_delta_max</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">location_of_max_from_left_support_x_max</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">is_max_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="apeSteel.core.result_types.Report">Report</span></code></p>
+
+
+
+        <p>Elastic deflection of a simply-supported beam under a point load
+applied at distance <code>a</code> from the left support.</p>
+<p>Reports both the mid-span deflection (the value typically compared
+against <code>L/ratio</code>) and the absolute-maximum deflection along the
+span (which occurs between the load and the farther support).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="apeSteel.serviceability.SimplySupportedPointLoadMidspanDeflectionReport" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SimplySupportedPointLoadMidspanDeflectionReport</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.SimplySupportedPointLoadMidspanDeflectionReport" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimplySupportedPointLoadMidspanDeflectionReport</span><span class="p">(</span><span class="n">cited_clauses</span><span class="p">:</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="apeSteel.core.result_types.AISCClauseReference">AISCClauseReference</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">(),</span> <span class="n">governing_limit_state</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">phi_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">nominal_strength</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">phi_strength_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">omega_strength_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">elastic_modulus_E</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">moment_of_inertia_Ix</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">point_load_dead_P_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">point_load_live_P_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">point_load_total_P_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_live_load_delta_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_total_load_delta_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_dead_load_delta_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">is_live_load_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_total_load_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="apeSteel.core.result_types.Report">Report</span></code></p>
+
+
+
+        <p>Mid-span elastic deflection of a simply-supported beam under a
+centred point load.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="apeSteel.serviceability.SimplySupportedUDLDeflectionReport" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SimplySupportedUDLDeflectionReport</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimplySupportedUDLDeflectionReport</span><span class="p">(</span><span class="n">cited_clauses</span><span class="p">:</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">[</span><span class="n"><span title="apeSteel.core.result_types.AISCClauseReference">AISCClauseReference</span></span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n"><span title="tuple">tuple</span></span><span class="p">(),</span> <span class="n">governing_limit_state</span><span class="p">:</span> <span class="n"><span title="str">str</span></span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">phi_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">omega_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">nominal_strength</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">phi_strength_LRFD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">omega_strength_ASD</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">elastic_modulus_E</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">moment_of_inertia_Ix</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_dead_w_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_superdead_w_sd</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_live_w_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_total_w_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_live_load_delta_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_total_load_delta_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_under_dead_load_delta_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">is_live_load_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_total_load_deflection_acceptable</span><span class="p">:</span> <span class="n"><span title="bool">bool</span></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="apeSteel.core.result_types.Report">Report</span></code></p>
+
+
+
+        <p>Mid-span elastic deflection of a simply-supported beam under UDL.</p>
+<p>All quantities are in apeSteel base <code>N-mm-tonne-s</code> units.</p>
+<h5 id="apeSteel.serviceability.SimplySupportedUDLDeflectionReport--attributes">Attributes<a class="headerlink" href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport--attributes" title="Permanent link">&para;</a></h5>
+<p>elastic_modulus_E, moment_of_inertia_Ix, span_length_L : float
+    Echoed inputs.
+distributed_load_dead_w_dead, distributed_load_superdead_w_sd,
+distributed_load_live_w_live : float
+    Echoed UDL inputs (N/mm).
+distributed_load_total_w_total : float
+    <code>w_dead + w_sd + w_live</code>.
+deflection_under_live_load_delta_live : float
+    :math:<code>\delta_{live} = 5 w_{live} L^{4} / (384 E I_x)</code>.
+deflection_under_total_load_delta_total : float
+    :math:<code>\delta_{total} = 5 w_{total} L^{4} / (384 E I_x)</code>.
+deflection_under_dead_load_delta_dead : float
+    Convenience: :math:<code>5 w_{dead} L^{4} / (384 E I_x)</code> - input for
+    the camber recommendation.
+deflection_limit_live : float
+    <code>L / live_load_limit_denominator</code>.
+deflection_limit_total : float
+    <code>L / total_load_limit_denominator</code>.
+is_live_load_deflection_acceptable, is_total_load_deflection_acceptable : bool</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">compute_deflection_cantilever_udl_and_tip_load</span>
+
+
+<a href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compute_deflection_cantilever_udl_and_tip_load</span><span class="p">(</span><span class="n">section_properties</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="            SectionProperties
+
+
+  
+      dataclass
+   (apeSteel.sections.properties.SectionProperties)" href="../sections/#apeSteel.sections.SectionProperties">SectionProperties</a></span><span class="p">,</span> <span class="n">material</span><span class="p">:</span> <span class="n"><span title="apeSteel.core.materials.SteelMaterial">SteelMaterial</span></span><span class="p">,</span> <span class="n">cantilever_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">distributed_load_w</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">tip_point_load_P</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">deflection_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="            CantileverUDLAndTipLoadDeflectionReport
+
+
+  
+      dataclass
+   (apeSteel.serviceability.simple_beam_deflections.CantileverUDLAndTipLoadDeflectionReport)" href="#apeSteel.serviceability.CantileverUDLAndTipLoadDeflectionReport">CantileverUDLAndTipLoadDeflectionReport</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Tip deflection of a cantilever under combined UDL + tip load.</p>
+<p>.. math::</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>\delta_{tip} = \frac{w L^{4}}{8 E I_x} + \frac{P L^{3}}{3 E I_x}
+</code></pre></div></td></tr></table></div>
+<h5 id="apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load--parameters">Parameters<a class="headerlink" href="#apeSteel.serviceability.compute_deflection_cantilever_udl_and_tip_load--parameters" title="Permanent link">&para;</a></h5>
+<p>section_properties, material : as elsewhere.
+cantilever_length_L : float
+    Cantilever span (mm).
+distributed_load_w : float
+    UDL on the cantilever (N/mm).
+tip_point_load_P : float
+    Concentrated tip load (N).
+deflection_limit_denominator : float
+    For a cantilever, AISC typically allows <code>L / 180</code> to
+    <code>L / 360</code> depending on use.  We expose the denominator so
+    the caller picks; default 360 to be conservative.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/apeSteel/serviceability/simple_beam_deflections.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-459">459</a></span>
+<span class="normal"><a href="#__codelineno-0-460">460</a></span>
+<span class="normal"><a href="#__codelineno-0-461">461</a></span>
+<span class="normal"><a href="#__codelineno-0-462">462</a></span>
+<span class="normal"><a href="#__codelineno-0-463">463</a></span>
+<span class="normal"><a href="#__codelineno-0-464">464</a></span>
+<span class="normal"><a href="#__codelineno-0-465">465</a></span>
+<span class="normal"><a href="#__codelineno-0-466">466</a></span>
+<span class="normal"><a href="#__codelineno-0-467">467</a></span>
+<span class="normal"><a href="#__codelineno-0-468">468</a></span>
+<span class="normal"><a href="#__codelineno-0-469">469</a></span>
+<span class="normal"><a href="#__codelineno-0-470">470</a></span>
+<span class="normal"><a href="#__codelineno-0-471">471</a></span>
+<span class="normal"><a href="#__codelineno-0-472">472</a></span>
+<span class="normal"><a href="#__codelineno-0-473">473</a></span>
+<span class="normal"><a href="#__codelineno-0-474">474</a></span>
+<span class="normal"><a href="#__codelineno-0-475">475</a></span>
+<span class="normal"><a href="#__codelineno-0-476">476</a></span>
+<span class="normal"><a href="#__codelineno-0-477">477</a></span>
+<span class="normal"><a href="#__codelineno-0-478">478</a></span>
+<span class="normal"><a href="#__codelineno-0-479">479</a></span>
+<span class="normal"><a href="#__codelineno-0-480">480</a></span>
+<span class="normal"><a href="#__codelineno-0-481">481</a></span>
+<span class="normal"><a href="#__codelineno-0-482">482</a></span>
+<span class="normal"><a href="#__codelineno-0-483">483</a></span>
+<span class="normal"><a href="#__codelineno-0-484">484</a></span>
+<span class="normal"><a href="#__codelineno-0-485">485</a></span>
+<span class="normal"><a href="#__codelineno-0-486">486</a></span>
+<span class="normal"><a href="#__codelineno-0-487">487</a></span>
+<span class="normal"><a href="#__codelineno-0-488">488</a></span>
+<span class="normal"><a href="#__codelineno-0-489">489</a></span>
+<span class="normal"><a href="#__codelineno-0-490">490</a></span>
+<span class="normal"><a href="#__codelineno-0-491">491</a></span>
+<span class="normal"><a href="#__codelineno-0-492">492</a></span>
+<span class="normal"><a href="#__codelineno-0-493">493</a></span>
+<span class="normal"><a href="#__codelineno-0-494">494</a></span>
+<span class="normal"><a href="#__codelineno-0-495">495</a></span>
+<span class="normal"><a href="#__codelineno-0-496">496</a></span>
+<span class="normal"><a href="#__codelineno-0-497">497</a></span>
+<span class="normal"><a href="#__codelineno-0-498">498</a></span>
+<span class="normal"><a href="#__codelineno-0-499">499</a></span>
+<span class="normal"><a href="#__codelineno-0-500">500</a></span>
+<span class="normal"><a href="#__codelineno-0-501">501</a></span>
+<span class="normal"><a href="#__codelineno-0-502">502</a></span>
+<span class="normal"><a href="#__codelineno-0-503">503</a></span>
+<span class="normal"><a href="#__codelineno-0-504">504</a></span>
+<span class="normal"><a href="#__codelineno-0-505">505</a></span>
+<span class="normal"><a href="#__codelineno-0-506">506</a></span>
+<span class="normal"><a href="#__codelineno-0-507">507</a></span>
+<span class="normal"><a href="#__codelineno-0-508">508</a></span>
+<span class="normal"><a href="#__codelineno-0-509">509</a></span>
+<span class="normal"><a href="#__codelineno-0-510">510</a></span>
+<span class="normal"><a href="#__codelineno-0-511">511</a></span>
+<span class="normal"><a href="#__codelineno-0-512">512</a></span>
+<span class="normal"><a href="#__codelineno-0-513">513</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-459" name="__codelineno-0-459"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_deflection_cantilever_udl_and_tip_load</span><span class="p">(</span>
+<a id="__codelineno-0-460" name="__codelineno-0-460"></a>    <span class="n">section_properties</span><span class="p">:</span> <span class="n">SectionProperties</span><span class="p">,</span>
+<a id="__codelineno-0-461" name="__codelineno-0-461"></a>    <span class="n">material</span><span class="p">:</span> <span class="n">SteelMaterial</span><span class="p">,</span>
+<a id="__codelineno-0-462" name="__codelineno-0-462"></a>    <span class="n">cantilever_length_L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-463" name="__codelineno-0-463"></a>    <span class="n">distributed_load_w</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-464" name="__codelineno-0-464"></a>    <span class="n">tip_point_load_P</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-465" name="__codelineno-0-465"></a>    <span class="n">deflection_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-466" name="__codelineno-0-466"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CantileverUDLAndTipLoadDeflectionReport</span><span class="p">:</span>
+<a id="__codelineno-0-467" name="__codelineno-0-467"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Tip deflection of a cantilever under combined UDL + tip load.</span>
+<a id="__codelineno-0-468" name="__codelineno-0-468"></a>
+<a id="__codelineno-0-469" name="__codelineno-0-469"></a><span class="sd">    .. math::</span>
+<a id="__codelineno-0-470" name="__codelineno-0-470"></a>
+<a id="__codelineno-0-471" name="__codelineno-0-471"></a><span class="sd">        \\delta_{tip} = \\frac{w L^{4}}{8 E I_x} + \\frac{P L^{3}}{3 E I_x}</span>
+<a id="__codelineno-0-472" name="__codelineno-0-472"></a>
+<a id="__codelineno-0-473" name="__codelineno-0-473"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-0-474" name="__codelineno-0-474"></a><span class="sd">    ----------</span>
+<a id="__codelineno-0-475" name="__codelineno-0-475"></a><span class="sd">    section_properties, material : as elsewhere.</span>
+<a id="__codelineno-0-476" name="__codelineno-0-476"></a><span class="sd">    cantilever_length_L : float</span>
+<a id="__codelineno-0-477" name="__codelineno-0-477"></a><span class="sd">        Cantilever span (mm).</span>
+<a id="__codelineno-0-478" name="__codelineno-0-478"></a><span class="sd">    distributed_load_w : float</span>
+<a id="__codelineno-0-479" name="__codelineno-0-479"></a><span class="sd">        UDL on the cantilever (N/mm).</span>
+<a id="__codelineno-0-480" name="__codelineno-0-480"></a><span class="sd">    tip_point_load_P : float</span>
+<a id="__codelineno-0-481" name="__codelineno-0-481"></a><span class="sd">        Concentrated tip load (N).</span>
+<a id="__codelineno-0-482" name="__codelineno-0-482"></a><span class="sd">    deflection_limit_denominator : float</span>
+<a id="__codelineno-0-483" name="__codelineno-0-483"></a><span class="sd">        For a cantilever, AISC typically allows ``L / 180`` to</span>
+<a id="__codelineno-0-484" name="__codelineno-0-484"></a><span class="sd">        ``L / 360`` depending on use.  We expose the denominator so</span>
+<a id="__codelineno-0-485" name="__codelineno-0-485"></a><span class="sd">        the caller picks; default 360 to be conservative.</span>
+<a id="__codelineno-0-486" name="__codelineno-0-486"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-487" name="__codelineno-0-487"></a>    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">elastic_modulus_E</span>
+<a id="__codelineno-0-488" name="__codelineno-0-488"></a>    <span class="n">Ix</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">section_properties</span><span class="o">.</span><span class="n">moment_of_inertia_strong_axis_Ix</span>
+<a id="__codelineno-0-489" name="__codelineno-0-489"></a>    <span class="n">L</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">cantilever_length_L</span>
+<a id="__codelineno-0-490" name="__codelineno-0-490"></a>
+<a id="__codelineno-0-491" name="__codelineno-0-491"></a>    <span class="n">delta_udl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">distributed_load_w</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-492" name="__codelineno-0-492"></a>    <span class="n">delta_tip_load</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">tip_point_load_P</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-493" name="__codelineno-0-493"></a>    <span class="n">delta_tip</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">delta_udl</span> <span class="o">+</span> <span class="n">delta_tip_load</span>
+<a id="__codelineno-0-494" name="__codelineno-0-494"></a>
+<a id="__codelineno-0-495" name="__codelineno-0-495"></a>    <span class="n">deflection_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">deflection_limit_denominator</span>
+<a id="__codelineno-0-496" name="__codelineno-0-496"></a>    <span class="n">is_tip_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_tip</span> <span class="o">&lt;=</span> <span class="n">deflection_limit</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a>
+<a id="__codelineno-0-498" name="__codelineno-0-498"></a>    <span class="n">governing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;deflection_acceptable&quot;</span> <span class="k">if</span> <span class="n">is_tip_ok</span> <span class="k">else</span> <span class="s2">&quot;tip_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-499" name="__codelineno-0-499"></a>
+<a id="__codelineno-0-500" name="__codelineno-0-500"></a>    <span class="k">return</span> <span class="n">CantileverUDLAndTipLoadDeflectionReport</span><span class="p">(</span>
+<a id="__codelineno-0-501" name="__codelineno-0-501"></a>        <span class="n">cited_clauses</span><span class="o">=</span><span class="n">_CITATIONS_SERVICEABILITY</span><span class="p">,</span>
+<a id="__codelineno-0-502" name="__codelineno-0-502"></a>        <span class="n">governing_limit_state</span><span class="o">=</span><span class="n">governing</span><span class="p">,</span>
+<a id="__codelineno-0-503" name="__codelineno-0-503"></a>        <span class="n">elastic_modulus_E</span><span class="o">=</span><span class="n">E</span><span class="p">,</span>
+<a id="__codelineno-0-504" name="__codelineno-0-504"></a>        <span class="n">moment_of_inertia_Ix</span><span class="o">=</span><span class="n">Ix</span><span class="p">,</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a>        <span class="n">cantilever_length_L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span>
+<a id="__codelineno-0-506" name="__codelineno-0-506"></a>        <span class="n">distributed_load_w</span><span class="o">=</span><span class="n">distributed_load_w</span><span class="p">,</span>
+<a id="__codelineno-0-507" name="__codelineno-0-507"></a>        <span class="n">tip_point_load_P</span><span class="o">=</span><span class="n">tip_point_load_P</span><span class="p">,</span>
+<a id="__codelineno-0-508" name="__codelineno-0-508"></a>        <span class="n">deflection_from_udl_delta_udl</span><span class="o">=</span><span class="n">delta_udl</span><span class="p">,</span>
+<a id="__codelineno-0-509" name="__codelineno-0-509"></a>        <span class="n">deflection_from_tip_load_delta_tip_load</span><span class="o">=</span><span class="n">delta_tip_load</span><span class="p">,</span>
+<a id="__codelineno-0-510" name="__codelineno-0-510"></a>        <span class="n">deflection_at_tip_delta_tip</span><span class="o">=</span><span class="n">delta_tip</span><span class="p">,</span>
+<a id="__codelineno-0-511" name="__codelineno-0-511"></a>        <span class="n">deflection_limit</span><span class="o">=</span><span class="n">deflection_limit</span><span class="p">,</span>
+<a id="__codelineno-0-512" name="__codelineno-0-512"></a>        <span class="n">is_tip_deflection_acceptable</span><span class="o">=</span><span class="n">is_tip_ok</span><span class="p">,</span>
+<a id="__codelineno-0-513" name="__codelineno-0-513"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="apeSteel.serviceability.compute_deflection_simply_supported_point_load_arbitrary" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">compute_deflection_simply_supported_point_load_arbitrary</span>
+
+
+<a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_arbitrary" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compute_deflection_simply_supported_point_load_arbitrary</span><span class="p">(</span><span class="n">section_properties</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="            SectionProperties
+
+
+  
+      dataclass
+   (apeSteel.sections.properties.SectionProperties)" href="../sections/#apeSteel.sections.SectionProperties">SectionProperties</a></span><span class="p">,</span> <span class="n">material</span><span class="p">:</span> <span class="n"><span title="apeSteel.core.materials.SteelMaterial">SteelMaterial</span></span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">distance_from_left_support_a</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">point_load_total_P_total</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="            SimplySupportedPointLoadArbitraryDeflectionReport
+
+
+  
+      dataclass
+   (apeSteel.serviceability.simple_beam_deflections.SimplySupportedPointLoadArbitraryDeflectionReport)" href="#apeSteel.serviceability.SimplySupportedPointLoadArbitraryDeflectionReport">SimplySupportedPointLoadArbitraryDeflectionReport</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Deflection of a simply-supported beam under a point load at
+distance <code>a</code> from the left support.</p>
+<p>Reports both the mid-span deflection and the absolute-maximum
+deflection.</p>
+<p>Closed-form (Roark Table 8.1, case 5):</p>
+<p>Let <code>b = L - a</code>.  Assume without loss of generality that ``a</p>
+<blockquote>
+<p>= b`` (otherwise swap a and b - the maximum lives on the longer
+segment).  Then the maximum deflection occurs at</p>
+</blockquote>
+<p>.. math::</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>x_{max} = \sqrt{(L^{2} - b^{2}) / 3}
+</code></pre></div></td></tr></table></div>
+<p>measured from the left support, with magnitude</p>
+<p>.. math::</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>\delta_{max} = \frac{P b (L^{2} - b^{2})^{3/2}}{9 \sqrt{3} L E I}.
+</code></pre></div></td></tr></table></div>
+<p>The mid-span deflection (compared against <code>L / N</code>) is:</p>
+<p>.. math::</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>\delta_{midspan} = \frac{P b (3 L^{2} - 4 b^{2})}{48 E I}
+\quad \text{(midspan on the longer segment).}
+</code></pre></div></td></tr></table></div>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/apeSteel/serviceability/simple_beam_deflections.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-356">356</a></span>
+<span class="normal"><a href="#__codelineno-0-357">357</a></span>
+<span class="normal"><a href="#__codelineno-0-358">358</a></span>
+<span class="normal"><a href="#__codelineno-0-359">359</a></span>
+<span class="normal"><a href="#__codelineno-0-360">360</a></span>
+<span class="normal"><a href="#__codelineno-0-361">361</a></span>
+<span class="normal"><a href="#__codelineno-0-362">362</a></span>
+<span class="normal"><a href="#__codelineno-0-363">363</a></span>
+<span class="normal"><a href="#__codelineno-0-364">364</a></span>
+<span class="normal"><a href="#__codelineno-0-365">365</a></span>
+<span class="normal"><a href="#__codelineno-0-366">366</a></span>
+<span class="normal"><a href="#__codelineno-0-367">367</a></span>
+<span class="normal"><a href="#__codelineno-0-368">368</a></span>
+<span class="normal"><a href="#__codelineno-0-369">369</a></span>
+<span class="normal"><a href="#__codelineno-0-370">370</a></span>
+<span class="normal"><a href="#__codelineno-0-371">371</a></span>
+<span class="normal"><a href="#__codelineno-0-372">372</a></span>
+<span class="normal"><a href="#__codelineno-0-373">373</a></span>
+<span class="normal"><a href="#__codelineno-0-374">374</a></span>
+<span class="normal"><a href="#__codelineno-0-375">375</a></span>
+<span class="normal"><a href="#__codelineno-0-376">376</a></span>
+<span class="normal"><a href="#__codelineno-0-377">377</a></span>
+<span class="normal"><a href="#__codelineno-0-378">378</a></span>
+<span class="normal"><a href="#__codelineno-0-379">379</a></span>
+<span class="normal"><a href="#__codelineno-0-380">380</a></span>
+<span class="normal"><a href="#__codelineno-0-381">381</a></span>
+<span class="normal"><a href="#__codelineno-0-382">382</a></span>
+<span class="normal"><a href="#__codelineno-0-383">383</a></span>
+<span class="normal"><a href="#__codelineno-0-384">384</a></span>
+<span class="normal"><a href="#__codelineno-0-385">385</a></span>
+<span class="normal"><a href="#__codelineno-0-386">386</a></span>
+<span class="normal"><a href="#__codelineno-0-387">387</a></span>
+<span class="normal"><a href="#__codelineno-0-388">388</a></span>
+<span class="normal"><a href="#__codelineno-0-389">389</a></span>
+<span class="normal"><a href="#__codelineno-0-390">390</a></span>
+<span class="normal"><a href="#__codelineno-0-391">391</a></span>
+<span class="normal"><a href="#__codelineno-0-392">392</a></span>
+<span class="normal"><a href="#__codelineno-0-393">393</a></span>
+<span class="normal"><a href="#__codelineno-0-394">394</a></span>
+<span class="normal"><a href="#__codelineno-0-395">395</a></span>
+<span class="normal"><a href="#__codelineno-0-396">396</a></span>
+<span class="normal"><a href="#__codelineno-0-397">397</a></span>
+<span class="normal"><a href="#__codelineno-0-398">398</a></span>
+<span class="normal"><a href="#__codelineno-0-399">399</a></span>
+<span class="normal"><a href="#__codelineno-0-400">400</a></span>
+<span class="normal"><a href="#__codelineno-0-401">401</a></span>
+<span class="normal"><a href="#__codelineno-0-402">402</a></span>
+<span class="normal"><a href="#__codelineno-0-403">403</a></span>
+<span class="normal"><a href="#__codelineno-0-404">404</a></span>
+<span class="normal"><a href="#__codelineno-0-405">405</a></span>
+<span class="normal"><a href="#__codelineno-0-406">406</a></span>
+<span class="normal"><a href="#__codelineno-0-407">407</a></span>
+<span class="normal"><a href="#__codelineno-0-408">408</a></span>
+<span class="normal"><a href="#__codelineno-0-409">409</a></span>
+<span class="normal"><a href="#__codelineno-0-410">410</a></span>
+<span class="normal"><a href="#__codelineno-0-411">411</a></span>
+<span class="normal"><a href="#__codelineno-0-412">412</a></span>
+<span class="normal"><a href="#__codelineno-0-413">413</a></span>
+<span class="normal"><a href="#__codelineno-0-414">414</a></span>
+<span class="normal"><a href="#__codelineno-0-415">415</a></span>
+<span class="normal"><a href="#__codelineno-0-416">416</a></span>
+<span class="normal"><a href="#__codelineno-0-417">417</a></span>
+<span class="normal"><a href="#__codelineno-0-418">418</a></span>
+<span class="normal"><a href="#__codelineno-0-419">419</a></span>
+<span class="normal"><a href="#__codelineno-0-420">420</a></span>
+<span class="normal"><a href="#__codelineno-0-421">421</a></span>
+<span class="normal"><a href="#__codelineno-0-422">422</a></span>
+<span class="normal"><a href="#__codelineno-0-423">423</a></span>
+<span class="normal"><a href="#__codelineno-0-424">424</a></span>
+<span class="normal"><a href="#__codelineno-0-425">425</a></span>
+<span class="normal"><a href="#__codelineno-0-426">426</a></span>
+<span class="normal"><a href="#__codelineno-0-427">427</a></span>
+<span class="normal"><a href="#__codelineno-0-428">428</a></span>
+<span class="normal"><a href="#__codelineno-0-429">429</a></span>
+<span class="normal"><a href="#__codelineno-0-430">430</a></span>
+<span class="normal"><a href="#__codelineno-0-431">431</a></span>
+<span class="normal"><a href="#__codelineno-0-432">432</a></span>
+<span class="normal"><a href="#__codelineno-0-433">433</a></span>
+<span class="normal"><a href="#__codelineno-0-434">434</a></span>
+<span class="normal"><a href="#__codelineno-0-435">435</a></span>
+<span class="normal"><a href="#__codelineno-0-436">436</a></span>
+<span class="normal"><a href="#__codelineno-0-437">437</a></span>
+<span class="normal"><a href="#__codelineno-0-438">438</a></span>
+<span class="normal"><a href="#__codelineno-0-439">439</a></span>
+<span class="normal"><a href="#__codelineno-0-440">440</a></span>
+<span class="normal"><a href="#__codelineno-0-441">441</a></span>
+<span class="normal"><a href="#__codelineno-0-442">442</a></span>
+<span class="normal"><a href="#__codelineno-0-443">443</a></span>
+<span class="normal"><a href="#__codelineno-0-444">444</a></span>
+<span class="normal"><a href="#__codelineno-0-445">445</a></span>
+<span class="normal"><a href="#__codelineno-0-446">446</a></span>
+<span class="normal"><a href="#__codelineno-0-447">447</a></span>
+<span class="normal"><a href="#__codelineno-0-448">448</a></span>
+<span class="normal"><a href="#__codelineno-0-449">449</a></span>
+<span class="normal"><a href="#__codelineno-0-450">450</a></span>
+<span class="normal"><a href="#__codelineno-0-451">451</a></span>
+<span class="normal"><a href="#__codelineno-0-452">452</a></span>
+<span class="normal"><a href="#__codelineno-0-453">453</a></span>
+<span class="normal"><a href="#__codelineno-0-454">454</a></span>
+<span class="normal"><a href="#__codelineno-0-455">455</a></span>
+<span class="normal"><a href="#__codelineno-0-456">456</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-356" name="__codelineno-0-356"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_deflection_simply_supported_point_load_arbitrary</span><span class="p">(</span>
+<a id="__codelineno-0-357" name="__codelineno-0-357"></a>    <span class="n">section_properties</span><span class="p">:</span> <span class="n">SectionProperties</span><span class="p">,</span>
+<a id="__codelineno-0-358" name="__codelineno-0-358"></a>    <span class="n">material</span><span class="p">:</span> <span class="n">SteelMaterial</span><span class="p">,</span>
+<a id="__codelineno-0-359" name="__codelineno-0-359"></a>    <span class="n">span_length_L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-360" name="__codelineno-0-360"></a>    <span class="n">distance_from_left_support_a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-361" name="__codelineno-0-361"></a>    <span class="n">point_load_total_P_total</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-362" name="__codelineno-0-362"></a>    <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-363" name="__codelineno-0-363"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimplySupportedPointLoadArbitraryDeflectionReport</span><span class="p">:</span>
+<a id="__codelineno-0-364" name="__codelineno-0-364"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Deflection of a simply-supported beam under a point load at</span>
+<a id="__codelineno-0-365" name="__codelineno-0-365"></a><span class="sd">    distance ``a`` from the left support.</span>
+<a id="__codelineno-0-366" name="__codelineno-0-366"></a>
+<a id="__codelineno-0-367" name="__codelineno-0-367"></a><span class="sd">    Reports both the mid-span deflection and the absolute-maximum</span>
+<a id="__codelineno-0-368" name="__codelineno-0-368"></a><span class="sd">    deflection.</span>
+<a id="__codelineno-0-369" name="__codelineno-0-369"></a>
+<a id="__codelineno-0-370" name="__codelineno-0-370"></a><span class="sd">    Closed-form (Roark Table 8.1, case 5):</span>
+<a id="__codelineno-0-371" name="__codelineno-0-371"></a>
+<a id="__codelineno-0-372" name="__codelineno-0-372"></a><span class="sd">    Let ``b = L - a``.  Assume without loss of generality that ``a</span>
+<a id="__codelineno-0-373" name="__codelineno-0-373"></a><span class="sd">    &gt;= b`` (otherwise swap a and b - the maximum lives on the longer</span>
+<a id="__codelineno-0-374" name="__codelineno-0-374"></a><span class="sd">    segment).  Then the maximum deflection occurs at</span>
+<a id="__codelineno-0-375" name="__codelineno-0-375"></a>
+<a id="__codelineno-0-376" name="__codelineno-0-376"></a><span class="sd">    .. math::</span>
+<a id="__codelineno-0-377" name="__codelineno-0-377"></a>
+<a id="__codelineno-0-378" name="__codelineno-0-378"></a><span class="sd">        x_{max} = \\sqrt{(L^{2} - b^{2}) / 3}</span>
+<a id="__codelineno-0-379" name="__codelineno-0-379"></a>
+<a id="__codelineno-0-380" name="__codelineno-0-380"></a><span class="sd">    measured from the left support, with magnitude</span>
+<a id="__codelineno-0-381" name="__codelineno-0-381"></a>
+<a id="__codelineno-0-382" name="__codelineno-0-382"></a><span class="sd">    .. math::</span>
+<a id="__codelineno-0-383" name="__codelineno-0-383"></a>
+<a id="__codelineno-0-384" name="__codelineno-0-384"></a><span class="sd">        \\delta_{max} = \\frac{P b (L^{2} - b^{2})^{3/2}}{9 \\sqrt{3} L E I}.</span>
+<a id="__codelineno-0-385" name="__codelineno-0-385"></a>
+<a id="__codelineno-0-386" name="__codelineno-0-386"></a><span class="sd">    The mid-span deflection (compared against ``L / N``) is:</span>
+<a id="__codelineno-0-387" name="__codelineno-0-387"></a>
+<a id="__codelineno-0-388" name="__codelineno-0-388"></a><span class="sd">    .. math::</span>
+<a id="__codelineno-0-389" name="__codelineno-0-389"></a>
+<a id="__codelineno-0-390" name="__codelineno-0-390"></a><span class="sd">        \\delta_{midspan} = \\frac{P b (3 L^{2} - 4 b^{2})}{48 E I}</span>
+<a id="__codelineno-0-391" name="__codelineno-0-391"></a><span class="sd">        \\quad \\text{(midspan on the longer segment).}</span>
+<a id="__codelineno-0-392" name="__codelineno-0-392"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-393" name="__codelineno-0-393"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">distance_from_left_support_a</span> <span class="o">&lt;</span> <span class="n">span_length_L</span><span class="p">:</span>
+<a id="__codelineno-0-394" name="__codelineno-0-394"></a>        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-395" name="__codelineno-0-395"></a>            <span class="s2">&quot;distance_from_left_support_a must satisfy 0 &lt; a &lt; L, &quot;</span>
+<a id="__codelineno-0-396" name="__codelineno-0-396"></a>            <span class="sa">f</span><span class="s2">&quot;got a=</span><span class="si">{</span><span class="n">distance_from_left_support_a</span><span class="si">}</span><span class="s2">, L=</span><span class="si">{</span><span class="n">span_length_L</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-0-397" name="__codelineno-0-397"></a>        <span class="p">)</span>
+<a id="__codelineno-0-398" name="__codelineno-0-398"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-0-399" name="__codelineno-0-399"></a>
+<a id="__codelineno-0-400" name="__codelineno-0-400"></a>    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">elastic_modulus_E</span>
+<a id="__codelineno-0-401" name="__codelineno-0-401"></a>    <span class="n">Ix</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">section_properties</span><span class="o">.</span><span class="n">moment_of_inertia_strong_axis_Ix</span>
+<a id="__codelineno-0-402" name="__codelineno-0-402"></a>    <span class="n">L</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">span_length_L</span>
+<a id="__codelineno-0-403" name="__codelineno-0-403"></a>    <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">distance_from_left_support_a</span>
+<a id="__codelineno-0-404" name="__codelineno-0-404"></a>    <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="n">a</span>
+<a id="__codelineno-0-405" name="__codelineno-0-405"></a>
+<a id="__codelineno-0-406" name="__codelineno-0-406"></a>    <span class="c1"># Identify the shorter of the two load-to-support distances; the</span>
+<a id="__codelineno-0-407" name="__codelineno-0-407"></a>    <span class="c1"># Roark closed-form expresses both delta_max and its location</span>
+<a id="__codelineno-0-408" name="__codelineno-0-408"></a>    <span class="c1"># entirely in terms of that shorter distance (call it ``c`` here).</span>
+<a id="__codelineno-0-409" name="__codelineno-0-409"></a>    <span class="n">shorter_distance_c</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<a id="__codelineno-0-410" name="__codelineno-0-410"></a>    <span class="n">longer_distance_d</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<a id="__codelineno-0-411" name="__codelineno-0-411"></a>
+<a id="__codelineno-0-412" name="__codelineno-0-412"></a>    <span class="c1"># Roark Table 8.1 case 5e:</span>
+<a id="__codelineno-0-413" name="__codelineno-0-413"></a>    <span class="c1">#   delta_max = P c (L^2 - c^2)^(3/2) / (9 sqrt(3) L E I)</span>
+<a id="__codelineno-0-414" name="__codelineno-0-414"></a>    <span class="c1"># located at x_far = sqrt((L^2 - c^2) / 3) measured from the support</span>
+<a id="__codelineno-0-415" name="__codelineno-0-415"></a>    <span class="c1"># ADJACENT to the longer segment (i.e. the support farther from the</span>
+<a id="__codelineno-0-416" name="__codelineno-0-416"></a>    <span class="c1"># load).</span>
+<a id="__codelineno-0-417" name="__codelineno-0-417"></a>    <span class="n">L_squared</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-0-418" name="__codelineno-0-418"></a>    <span class="n">shorter_squared</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">shorter_distance_c</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-0-419" name="__codelineno-0-419"></a>    <span class="n">delta_max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-420" name="__codelineno-0-420"></a>        <span class="n">point_load_total_P_total</span> <span class="o">*</span> <span class="n">shorter_distance_c</span> <span class="o">*</span> <span class="p">(</span><span class="n">L_squared</span> <span class="o">-</span> <span class="n">shorter_squared</span><span class="p">)</span> <span class="o">**</span> <span class="mf">1.5</span>
+<a id="__codelineno-0-421" name="__codelineno-0-421"></a>    <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">9.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">L</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-422" name="__codelineno-0-422"></a>    <span class="n">x_max_from_far_support</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">L_squared</span> <span class="o">-</span> <span class="n">shorter_squared</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+<a id="__codelineno-0-423" name="__codelineno-0-423"></a>    <span class="c1"># Convert to a left-support origin.  The &quot;far support&quot; is end A</span>
+<a id="__codelineno-0-424" name="__codelineno-0-424"></a>    <span class="c1"># when the load is closer to end B (a &gt; b), else end B.</span>
+<a id="__codelineno-0-425" name="__codelineno-0-425"></a>    <span class="n">location_of_max_from_left</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-426" name="__codelineno-0-426"></a>        <span class="n">x_max_from_far_support</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="k">else</span> <span class="n">L</span> <span class="o">-</span> <span class="n">x_max_from_far_support</span>
+<a id="__codelineno-0-427" name="__codelineno-0-427"></a>    <span class="p">)</span>
+<a id="__codelineno-0-428" name="__codelineno-0-428"></a>
+<a id="__codelineno-0-429" name="__codelineno-0-429"></a>    <span class="c1"># Mid-span deflection.  By symmetry, Pa(3L^2 - 4a^2)/(48 EI) uses</span>
+<a id="__codelineno-0-430" name="__codelineno-0-430"></a>    <span class="c1"># the SHORTER of the two distances in place of `a`.</span>
+<a id="__codelineno-0-431" name="__codelineno-0-431"></a>    <span class="n">delta_midspan</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-432" name="__codelineno-0-432"></a>        <span class="n">point_load_total_P_total</span> <span class="o">*</span> <span class="n">shorter_distance_c</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">L_squared</span> <span class="o">-</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">shorter_squared</span><span class="p">)</span>
+<a id="__codelineno-0-433" name="__codelineno-0-433"></a>    <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">48.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-434" name="__codelineno-0-434"></a>    <span class="c1"># Silence unused-variable warning - kept for trace clarity.</span>
+<a id="__codelineno-0-435" name="__codelineno-0-435"></a>    <span class="n">_</span> <span class="o">=</span> <span class="n">longer_distance_d</span>
+<a id="__codelineno-0-436" name="__codelineno-0-436"></a>
+<a id="__codelineno-0-437" name="__codelineno-0-437"></a>    <span class="n">limit_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">total_load_limit_denominator</span>
+<a id="__codelineno-0-438" name="__codelineno-0-438"></a>    <span class="n">is_max_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_max</span> <span class="o">&lt;=</span> <span class="n">limit_total</span>
+<a id="__codelineno-0-439" name="__codelineno-0-439"></a>
+<a id="__codelineno-0-440" name="__codelineno-0-440"></a>    <span class="n">governing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;deflection_acceptable&quot;</span> <span class="k">if</span> <span class="n">is_max_ok</span> <span class="k">else</span> <span class="s2">&quot;max_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-441" name="__codelineno-0-441"></a>
+<a id="__codelineno-0-442" name="__codelineno-0-442"></a>    <span class="k">return</span> <span class="n">SimplySupportedPointLoadArbitraryDeflectionReport</span><span class="p">(</span>
+<a id="__codelineno-0-443" name="__codelineno-0-443"></a>        <span class="n">cited_clauses</span><span class="o">=</span><span class="n">_CITATIONS_SERVICEABILITY</span><span class="p">,</span>
+<a id="__codelineno-0-444" name="__codelineno-0-444"></a>        <span class="n">governing_limit_state</span><span class="o">=</span><span class="n">governing</span><span class="p">,</span>
+<a id="__codelineno-0-445" name="__codelineno-0-445"></a>        <span class="n">elastic_modulus_E</span><span class="o">=</span><span class="n">E</span><span class="p">,</span>
+<a id="__codelineno-0-446" name="__codelineno-0-446"></a>        <span class="n">moment_of_inertia_Ix</span><span class="o">=</span><span class="n">Ix</span><span class="p">,</span>
+<a id="__codelineno-0-447" name="__codelineno-0-447"></a>        <span class="n">span_length_L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span>
+<a id="__codelineno-0-448" name="__codelineno-0-448"></a>        <span class="n">distance_from_left_support_a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span>
+<a id="__codelineno-0-449" name="__codelineno-0-449"></a>        <span class="n">distance_from_right_support_b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
+<a id="__codelineno-0-450" name="__codelineno-0-450"></a>        <span class="n">point_load_total_P_total</span><span class="o">=</span><span class="n">point_load_total_P_total</span><span class="p">,</span>
+<a id="__codelineno-0-451" name="__codelineno-0-451"></a>        <span class="n">deflection_at_midspan_delta_midspan</span><span class="o">=</span><span class="n">delta_midspan</span><span class="p">,</span>
+<a id="__codelineno-0-452" name="__codelineno-0-452"></a>        <span class="n">deflection_maximum_delta_max</span><span class="o">=</span><span class="n">delta_max</span><span class="p">,</span>
+<a id="__codelineno-0-453" name="__codelineno-0-453"></a>        <span class="n">location_of_max_from_left_support_x_max</span><span class="o">=</span><span class="n">location_of_max_from_left</span><span class="p">,</span>
+<a id="__codelineno-0-454" name="__codelineno-0-454"></a>        <span class="n">deflection_limit_total</span><span class="o">=</span><span class="n">limit_total</span><span class="p">,</span>
+<a id="__codelineno-0-455" name="__codelineno-0-455"></a>        <span class="n">is_max_deflection_acceptable</span><span class="o">=</span><span class="n">is_max_ok</span><span class="p">,</span>
+<a id="__codelineno-0-456" name="__codelineno-0-456"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="apeSteel.serviceability.compute_deflection_simply_supported_point_load_midspan" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">compute_deflection_simply_supported_point_load_midspan</span>
+
+
+<a href="#apeSteel.serviceability.compute_deflection_simply_supported_point_load_midspan" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compute_deflection_simply_supported_point_load_midspan</span><span class="p">(</span><span class="n">section_properties</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="            SectionProperties
+
+
+  
+      dataclass
+   (apeSteel.sections.properties.SectionProperties)" href="../sections/#apeSteel.sections.SectionProperties">SectionProperties</a></span><span class="p">,</span> <span class="n">material</span><span class="p">:</span> <span class="n"><span title="apeSteel.core.materials.SteelMaterial">SteelMaterial</span></span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">point_load_dead_P_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">point_load_live_P_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">live_load_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">,</span> <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="            SimplySupportedPointLoadMidspanDeflectionReport
+
+
+  
+      dataclass
+   (apeSteel.serviceability.simple_beam_deflections.SimplySupportedPointLoadMidspanDeflectionReport)" href="#apeSteel.serviceability.SimplySupportedPointLoadMidspanDeflectionReport">SimplySupportedPointLoadMidspanDeflectionReport</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Mid-span deflection of a simply-supported beam under a centred
+point load.</p>
+<p>:math:<code>\delta_{midspan} = P L^{3} / (48 E I_x)</code>.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/apeSteel/serviceability/simple_beam_deflections.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-299">299</a></span>
+<span class="normal"><a href="#__codelineno-0-300">300</a></span>
+<span class="normal"><a href="#__codelineno-0-301">301</a></span>
+<span class="normal"><a href="#__codelineno-0-302">302</a></span>
+<span class="normal"><a href="#__codelineno-0-303">303</a></span>
+<span class="normal"><a href="#__codelineno-0-304">304</a></span>
+<span class="normal"><a href="#__codelineno-0-305">305</a></span>
+<span class="normal"><a href="#__codelineno-0-306">306</a></span>
+<span class="normal"><a href="#__codelineno-0-307">307</a></span>
+<span class="normal"><a href="#__codelineno-0-308">308</a></span>
+<span class="normal"><a href="#__codelineno-0-309">309</a></span>
+<span class="normal"><a href="#__codelineno-0-310">310</a></span>
+<span class="normal"><a href="#__codelineno-0-311">311</a></span>
+<span class="normal"><a href="#__codelineno-0-312">312</a></span>
+<span class="normal"><a href="#__codelineno-0-313">313</a></span>
+<span class="normal"><a href="#__codelineno-0-314">314</a></span>
+<span class="normal"><a href="#__codelineno-0-315">315</a></span>
+<span class="normal"><a href="#__codelineno-0-316">316</a></span>
+<span class="normal"><a href="#__codelineno-0-317">317</a></span>
+<span class="normal"><a href="#__codelineno-0-318">318</a></span>
+<span class="normal"><a href="#__codelineno-0-319">319</a></span>
+<span class="normal"><a href="#__codelineno-0-320">320</a></span>
+<span class="normal"><a href="#__codelineno-0-321">321</a></span>
+<span class="normal"><a href="#__codelineno-0-322">322</a></span>
+<span class="normal"><a href="#__codelineno-0-323">323</a></span>
+<span class="normal"><a href="#__codelineno-0-324">324</a></span>
+<span class="normal"><a href="#__codelineno-0-325">325</a></span>
+<span class="normal"><a href="#__codelineno-0-326">326</a></span>
+<span class="normal"><a href="#__codelineno-0-327">327</a></span>
+<span class="normal"><a href="#__codelineno-0-328">328</a></span>
+<span class="normal"><a href="#__codelineno-0-329">329</a></span>
+<span class="normal"><a href="#__codelineno-0-330">330</a></span>
+<span class="normal"><a href="#__codelineno-0-331">331</a></span>
+<span class="normal"><a href="#__codelineno-0-332">332</a></span>
+<span class="normal"><a href="#__codelineno-0-333">333</a></span>
+<span class="normal"><a href="#__codelineno-0-334">334</a></span>
+<span class="normal"><a href="#__codelineno-0-335">335</a></span>
+<span class="normal"><a href="#__codelineno-0-336">336</a></span>
+<span class="normal"><a href="#__codelineno-0-337">337</a></span>
+<span class="normal"><a href="#__codelineno-0-338">338</a></span>
+<span class="normal"><a href="#__codelineno-0-339">339</a></span>
+<span class="normal"><a href="#__codelineno-0-340">340</a></span>
+<span class="normal"><a href="#__codelineno-0-341">341</a></span>
+<span class="normal"><a href="#__codelineno-0-342">342</a></span>
+<span class="normal"><a href="#__codelineno-0-343">343</a></span>
+<span class="normal"><a href="#__codelineno-0-344">344</a></span>
+<span class="normal"><a href="#__codelineno-0-345">345</a></span>
+<span class="normal"><a href="#__codelineno-0-346">346</a></span>
+<span class="normal"><a href="#__codelineno-0-347">347</a></span>
+<span class="normal"><a href="#__codelineno-0-348">348</a></span>
+<span class="normal"><a href="#__codelineno-0-349">349</a></span>
+<span class="normal"><a href="#__codelineno-0-350">350</a></span>
+<span class="normal"><a href="#__codelineno-0-351">351</a></span>
+<span class="normal"><a href="#__codelineno-0-352">352</a></span>
+<span class="normal"><a href="#__codelineno-0-353">353</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-299" name="__codelineno-0-299"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_deflection_simply_supported_point_load_midspan</span><span class="p">(</span>
+<a id="__codelineno-0-300" name="__codelineno-0-300"></a>    <span class="n">section_properties</span><span class="p">:</span> <span class="n">SectionProperties</span><span class="p">,</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>    <span class="n">material</span><span class="p">:</span> <span class="n">SteelMaterial</span><span class="p">,</span>
+<a id="__codelineno-0-302" name="__codelineno-0-302"></a>    <span class="n">span_length_L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-303" name="__codelineno-0-303"></a>    <span class="n">point_load_dead_P_dead</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-304" name="__codelineno-0-304"></a>    <span class="n">point_load_live_P_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-305" name="__codelineno-0-305"></a>    <span class="n">live_load_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-306" name="__codelineno-0-306"></a>    <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimplySupportedPointLoadMidspanDeflectionReport</span><span class="p">:</span>
+<a id="__codelineno-0-308" name="__codelineno-0-308"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Mid-span deflection of a simply-supported beam under a centred</span>
+<a id="__codelineno-0-309" name="__codelineno-0-309"></a><span class="sd">    point load.</span>
+<a id="__codelineno-0-310" name="__codelineno-0-310"></a>
+<a id="__codelineno-0-311" name="__codelineno-0-311"></a><span class="sd">    :math:`\\delta_{midspan} = P L^{3} / (48 E I_x)`.</span>
+<a id="__codelineno-0-312" name="__codelineno-0-312"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-313" name="__codelineno-0-313"></a>    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">elastic_modulus_E</span>
+<a id="__codelineno-0-314" name="__codelineno-0-314"></a>    <span class="n">Ix</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">section_properties</span><span class="o">.</span><span class="n">moment_of_inertia_strong_axis_Ix</span>
+<a id="__codelineno-0-315" name="__codelineno-0-315"></a>    <span class="n">L</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">span_length_L</span>
+<a id="__codelineno-0-316" name="__codelineno-0-316"></a>    <span class="n">P_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">point_load_dead_P_dead</span> <span class="o">+</span> <span class="n">point_load_live_P_live</span>
+<a id="__codelineno-0-317" name="__codelineno-0-317"></a>    <span class="n">L_cubed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">3</span>
+<a id="__codelineno-0-318" name="__codelineno-0-318"></a>
+<a id="__codelineno-0-319" name="__codelineno-0-319"></a>    <span class="n">delta_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">point_load_live_P_live</span> <span class="o">*</span> <span class="n">L_cubed</span> <span class="o">/</span> <span class="p">(</span><span class="mf">48.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-320" name="__codelineno-0-320"></a>    <span class="n">delta_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">P_total</span> <span class="o">*</span> <span class="n">L_cubed</span> <span class="o">/</span> <span class="p">(</span><span class="mf">48.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-321" name="__codelineno-0-321"></a>    <span class="n">delta_dead</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">point_load_dead_P_dead</span> <span class="o">*</span> <span class="n">L_cubed</span> <span class="o">/</span> <span class="p">(</span><span class="mf">48.0</span> <span class="o">*</span> <span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-322" name="__codelineno-0-322"></a>
+<a id="__codelineno-0-323" name="__codelineno-0-323"></a>    <span class="n">limit_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">live_load_limit_denominator</span>
+<a id="__codelineno-0-324" name="__codelineno-0-324"></a>    <span class="n">limit_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">total_load_limit_denominator</span>
+<a id="__codelineno-0-325" name="__codelineno-0-325"></a>    <span class="n">is_live_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_live</span> <span class="o">&lt;=</span> <span class="n">limit_live</span>
+<a id="__codelineno-0-326" name="__codelineno-0-326"></a>    <span class="n">is_total_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_total</span> <span class="o">&lt;=</span> <span class="n">limit_total</span>
+<a id="__codelineno-0-327" name="__codelineno-0-327"></a>
+<a id="__codelineno-0-328" name="__codelineno-0-328"></a>    <span class="k">if</span> <span class="n">is_live_ok</span> <span class="ow">and</span> <span class="n">is_total_ok</span><span class="p">:</span>
+<a id="__codelineno-0-329" name="__codelineno-0-329"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;deflection_acceptable&quot;</span>
+<a id="__codelineno-0-330" name="__codelineno-0-330"></a>    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_live_ok</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_total_ok</span><span class="p">:</span>
+<a id="__codelineno-0-331" name="__codelineno-0-331"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;live_and_total_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-332" name="__codelineno-0-332"></a>    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_live_ok</span><span class="p">:</span>
+<a id="__codelineno-0-333" name="__codelineno-0-333"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;live_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-334" name="__codelineno-0-334"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-335" name="__codelineno-0-335"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;total_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-336" name="__codelineno-0-336"></a>
+<a id="__codelineno-0-337" name="__codelineno-0-337"></a>    <span class="k">return</span> <span class="n">SimplySupportedPointLoadMidspanDeflectionReport</span><span class="p">(</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338"></a>        <span class="n">cited_clauses</span><span class="o">=</span><span class="n">_CITATIONS_SERVICEABILITY</span><span class="p">,</span>
+<a id="__codelineno-0-339" name="__codelineno-0-339"></a>        <span class="n">governing_limit_state</span><span class="o">=</span><span class="n">governing</span><span class="p">,</span>
+<a id="__codelineno-0-340" name="__codelineno-0-340"></a>        <span class="n">elastic_modulus_E</span><span class="o">=</span><span class="n">E</span><span class="p">,</span>
+<a id="__codelineno-0-341" name="__codelineno-0-341"></a>        <span class="n">moment_of_inertia_Ix</span><span class="o">=</span><span class="n">Ix</span><span class="p">,</span>
+<a id="__codelineno-0-342" name="__codelineno-0-342"></a>        <span class="n">span_length_L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span>
+<a id="__codelineno-0-343" name="__codelineno-0-343"></a>        <span class="n">point_load_dead_P_dead</span><span class="o">=</span><span class="n">point_load_dead_P_dead</span><span class="p">,</span>
+<a id="__codelineno-0-344" name="__codelineno-0-344"></a>        <span class="n">point_load_live_P_live</span><span class="o">=</span><span class="n">point_load_live_P_live</span><span class="p">,</span>
+<a id="__codelineno-0-345" name="__codelineno-0-345"></a>        <span class="n">point_load_total_P_total</span><span class="o">=</span><span class="n">P_total</span><span class="p">,</span>
+<a id="__codelineno-0-346" name="__codelineno-0-346"></a>        <span class="n">deflection_under_live_load_delta_live</span><span class="o">=</span><span class="n">delta_live</span><span class="p">,</span>
+<a id="__codelineno-0-347" name="__codelineno-0-347"></a>        <span class="n">deflection_under_total_load_delta_total</span><span class="o">=</span><span class="n">delta_total</span><span class="p">,</span>
+<a id="__codelineno-0-348" name="__codelineno-0-348"></a>        <span class="n">deflection_under_dead_load_delta_dead</span><span class="o">=</span><span class="n">delta_dead</span><span class="p">,</span>
+<a id="__codelineno-0-349" name="__codelineno-0-349"></a>        <span class="n">deflection_limit_live</span><span class="o">=</span><span class="n">limit_live</span><span class="p">,</span>
+<a id="__codelineno-0-350" name="__codelineno-0-350"></a>        <span class="n">deflection_limit_total</span><span class="o">=</span><span class="n">limit_total</span><span class="p">,</span>
+<a id="__codelineno-0-351" name="__codelineno-0-351"></a>        <span class="n">is_live_load_deflection_acceptable</span><span class="o">=</span><span class="n">is_live_ok</span><span class="p">,</span>
+<a id="__codelineno-0-352" name="__codelineno-0-352"></a>        <span class="n">is_total_load_deflection_acceptable</span><span class="o">=</span><span class="n">is_total_ok</span><span class="p">,</span>
+<a id="__codelineno-0-353" name="__codelineno-0-353"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="apeSteel.serviceability.compute_deflection_simply_supported_udl" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">compute_deflection_simply_supported_udl</span>
+
+
+<a href="#apeSteel.serviceability.compute_deflection_simply_supported_udl" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">compute_deflection_simply_supported_udl</span><span class="p">(</span><span class="n">section_properties</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="            SectionProperties
+
+
+  
+      dataclass
+   (apeSteel.sections.properties.SectionProperties)" href="../sections/#apeSteel.sections.SectionProperties">SectionProperties</a></span><span class="p">,</span> <span class="n">material</span><span class="p">:</span> <span class="n"><span title="apeSteel.core.materials.SteelMaterial">SteelMaterial</span></span><span class="p">,</span> <span class="n">span_length_L</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">distributed_load_dead_w_dead</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_superdead_w_sd</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">distributed_load_live_w_live</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">live_load_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">,</span> <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR)" href="#apeSteel.serviceability.DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="            SimplySupportedUDLDeflectionReport
+
+
+  
+      dataclass
+   (apeSteel.serviceability.simple_beam_deflections.SimplySupportedUDLDeflectionReport)" href="#apeSteel.serviceability.SimplySupportedUDLDeflectionReport">SimplySupportedUDLDeflectionReport</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Mid-span deflection of a simply-supported beam under UDL.</p>
+<p>Computes the elastic mid-span deflection
+:math:<code>\delta = 5 w L^{4} / (384 E I_x)</code> for live load, dead load,
+and the total <code>w_dead + w_sd + w_live</code> UDL.</p>
+<h5 id="apeSteel.serviceability.compute_deflection_simply_supported_udl--parameters">Parameters<a class="headerlink" href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--parameters" title="Permanent link">&para;</a></h5>
+<p>section_properties : SectionProperties
+    Source of <code>I_x</code> (strong-axis moment of inertia).
+material : SteelMaterial
+    Source of <code>E</code>.
+span_length_L : float
+    Beam span (mm).
+distributed_load_dead_w_dead, distributed_load_superdead_w_sd,
+distributed_load_live_w_live : float
+    UDL components (N/mm).  Defaults to zero so any subset can be
+    supplied.
+live_load_limit_denominator : float
+    Denominator of the live-load deflection limit <code>L / N</code>.
+    Default 360.
+total_load_limit_denominator : float
+    Denominator of the total-load deflection limit <code>L / N</code>.
+    Default 240.</p>
+<h5 id="apeSteel.serviceability.compute_deflection_simply_supported_udl--returns">Returns<a class="headerlink" href="#apeSteel.serviceability.compute_deflection_simply_supported_udl--returns" title="Permanent link">&para;</a></h5>
+<p>SimplySupportedUDLDeflectionReport
+    Frozen report.  <code>governing_limit_state</code> is <code>"deflection_acceptable"</code>
+    if both checks pass, otherwise names the failing check.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/apeSteel/serviceability/simple_beam_deflections.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-203">203</a></span>
+<span class="normal"><a href="#__codelineno-0-204">204</a></span>
+<span class="normal"><a href="#__codelineno-0-205">205</a></span>
+<span class="normal"><a href="#__codelineno-0-206">206</a></span>
+<span class="normal"><a href="#__codelineno-0-207">207</a></span>
+<span class="normal"><a href="#__codelineno-0-208">208</a></span>
+<span class="normal"><a href="#__codelineno-0-209">209</a></span>
+<span class="normal"><a href="#__codelineno-0-210">210</a></span>
+<span class="normal"><a href="#__codelineno-0-211">211</a></span>
+<span class="normal"><a href="#__codelineno-0-212">212</a></span>
+<span class="normal"><a href="#__codelineno-0-213">213</a></span>
+<span class="normal"><a href="#__codelineno-0-214">214</a></span>
+<span class="normal"><a href="#__codelineno-0-215">215</a></span>
+<span class="normal"><a href="#__codelineno-0-216">216</a></span>
+<span class="normal"><a href="#__codelineno-0-217">217</a></span>
+<span class="normal"><a href="#__codelineno-0-218">218</a></span>
+<span class="normal"><a href="#__codelineno-0-219">219</a></span>
+<span class="normal"><a href="#__codelineno-0-220">220</a></span>
+<span class="normal"><a href="#__codelineno-0-221">221</a></span>
+<span class="normal"><a href="#__codelineno-0-222">222</a></span>
+<span class="normal"><a href="#__codelineno-0-223">223</a></span>
+<span class="normal"><a href="#__codelineno-0-224">224</a></span>
+<span class="normal"><a href="#__codelineno-0-225">225</a></span>
+<span class="normal"><a href="#__codelineno-0-226">226</a></span>
+<span class="normal"><a href="#__codelineno-0-227">227</a></span>
+<span class="normal"><a href="#__codelineno-0-228">228</a></span>
+<span class="normal"><a href="#__codelineno-0-229">229</a></span>
+<span class="normal"><a href="#__codelineno-0-230">230</a></span>
+<span class="normal"><a href="#__codelineno-0-231">231</a></span>
+<span class="normal"><a href="#__codelineno-0-232">232</a></span>
+<span class="normal"><a href="#__codelineno-0-233">233</a></span>
+<span class="normal"><a href="#__codelineno-0-234">234</a></span>
+<span class="normal"><a href="#__codelineno-0-235">235</a></span>
+<span class="normal"><a href="#__codelineno-0-236">236</a></span>
+<span class="normal"><a href="#__codelineno-0-237">237</a></span>
+<span class="normal"><a href="#__codelineno-0-238">238</a></span>
+<span class="normal"><a href="#__codelineno-0-239">239</a></span>
+<span class="normal"><a href="#__codelineno-0-240">240</a></span>
+<span class="normal"><a href="#__codelineno-0-241">241</a></span>
+<span class="normal"><a href="#__codelineno-0-242">242</a></span>
+<span class="normal"><a href="#__codelineno-0-243">243</a></span>
+<span class="normal"><a href="#__codelineno-0-244">244</a></span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span>
+<span class="normal"><a href="#__codelineno-0-250">250</a></span>
+<span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span>
+<span class="normal"><a href="#__codelineno-0-262">262</a></span>
+<span class="normal"><a href="#__codelineno-0-263">263</a></span>
+<span class="normal"><a href="#__codelineno-0-264">264</a></span>
+<span class="normal"><a href="#__codelineno-0-265">265</a></span>
+<span class="normal"><a href="#__codelineno-0-266">266</a></span>
+<span class="normal"><a href="#__codelineno-0-267">267</a></span>
+<span class="normal"><a href="#__codelineno-0-268">268</a></span>
+<span class="normal"><a href="#__codelineno-0-269">269</a></span>
+<span class="normal"><a href="#__codelineno-0-270">270</a></span>
+<span class="normal"><a href="#__codelineno-0-271">271</a></span>
+<span class="normal"><a href="#__codelineno-0-272">272</a></span>
+<span class="normal"><a href="#__codelineno-0-273">273</a></span>
+<span class="normal"><a href="#__codelineno-0-274">274</a></span>
+<span class="normal"><a href="#__codelineno-0-275">275</a></span>
+<span class="normal"><a href="#__codelineno-0-276">276</a></span>
+<span class="normal"><a href="#__codelineno-0-277">277</a></span>
+<span class="normal"><a href="#__codelineno-0-278">278</a></span>
+<span class="normal"><a href="#__codelineno-0-279">279</a></span>
+<span class="normal"><a href="#__codelineno-0-280">280</a></span>
+<span class="normal"><a href="#__codelineno-0-281">281</a></span>
+<span class="normal"><a href="#__codelineno-0-282">282</a></span>
+<span class="normal"><a href="#__codelineno-0-283">283</a></span>
+<span class="normal"><a href="#__codelineno-0-284">284</a></span>
+<span class="normal"><a href="#__codelineno-0-285">285</a></span>
+<span class="normal"><a href="#__codelineno-0-286">286</a></span>
+<span class="normal"><a href="#__codelineno-0-287">287</a></span>
+<span class="normal"><a href="#__codelineno-0-288">288</a></span>
+<span class="normal"><a href="#__codelineno-0-289">289</a></span>
+<span class="normal"><a href="#__codelineno-0-290">290</a></span>
+<span class="normal"><a href="#__codelineno-0-291">291</a></span>
+<span class="normal"><a href="#__codelineno-0-292">292</a></span>
+<span class="normal"><a href="#__codelineno-0-293">293</a></span>
+<span class="normal"><a href="#__codelineno-0-294">294</a></span>
+<span class="normal"><a href="#__codelineno-0-295">295</a></span>
+<span class="normal"><a href="#__codelineno-0-296">296</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-203" name="__codelineno-0-203"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_deflection_simply_supported_udl</span><span class="p">(</span>
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>    <span class="n">section_properties</span><span class="p">:</span> <span class="n">SectionProperties</span><span class="p">,</span>
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a>    <span class="n">material</span><span class="p">:</span> <span class="n">SteelMaterial</span><span class="p">,</span>
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a>    <span class="n">span_length_L</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a>    <span class="n">distributed_load_dead_w_dead</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a>    <span class="n">distributed_load_superdead_w_sd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a>    <span class="n">distributed_load_live_w_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>    <span class="n">live_load_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_LIVE_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>    <span class="n">total_load_limit_denominator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_TOTAL_LOAD_DEFLECTION_LIMIT_DENOMINATOR</span><span class="p">,</span>
+<a id="__codelineno-0-212" name="__codelineno-0-212"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimplySupportedUDLDeflectionReport</span><span class="p">:</span>
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Mid-span deflection of a simply-supported beam under UDL.</span>
+<a id="__codelineno-0-214" name="__codelineno-0-214"></a>
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a><span class="sd">    Computes the elastic mid-span deflection</span>
+<a id="__codelineno-0-216" name="__codelineno-0-216"></a><span class="sd">    :math:`\\delta = 5 w L^{4} / (384 E I_x)` for live load, dead load,</span>
+<a id="__codelineno-0-217" name="__codelineno-0-217"></a><span class="sd">    and the total ``w_dead + w_sd + w_live`` UDL.</span>
+<a id="__codelineno-0-218" name="__codelineno-0-218"></a>
+<a id="__codelineno-0-219" name="__codelineno-0-219"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-0-220" name="__codelineno-0-220"></a><span class="sd">    ----------</span>
+<a id="__codelineno-0-221" name="__codelineno-0-221"></a><span class="sd">    section_properties : SectionProperties</span>
+<a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="sd">        Source of ``I_x`` (strong-axis moment of inertia).</span>
+<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="sd">    material : SteelMaterial</span>
+<a id="__codelineno-0-224" name="__codelineno-0-224"></a><span class="sd">        Source of ``E``.</span>
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a><span class="sd">    span_length_L : float</span>
+<a id="__codelineno-0-226" name="__codelineno-0-226"></a><span class="sd">        Beam span (mm).</span>
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a><span class="sd">    distributed_load_dead_w_dead, distributed_load_superdead_w_sd,</span>
+<a id="__codelineno-0-228" name="__codelineno-0-228"></a><span class="sd">    distributed_load_live_w_live : float</span>
+<a id="__codelineno-0-229" name="__codelineno-0-229"></a><span class="sd">        UDL components (N/mm).  Defaults to zero so any subset can be</span>
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a><span class="sd">        supplied.</span>
+<a id="__codelineno-0-231" name="__codelineno-0-231"></a><span class="sd">    live_load_limit_denominator : float</span>
+<a id="__codelineno-0-232" name="__codelineno-0-232"></a><span class="sd">        Denominator of the live-load deflection limit ``L / N``.</span>
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a><span class="sd">        Default 360.</span>
+<a id="__codelineno-0-234" name="__codelineno-0-234"></a><span class="sd">    total_load_limit_denominator : float</span>
+<a id="__codelineno-0-235" name="__codelineno-0-235"></a><span class="sd">        Denominator of the total-load deflection limit ``L / N``.</span>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a><span class="sd">        Default 240.</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a><span class="sd">    Returns</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a><span class="sd">    -------</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a><span class="sd">    SimplySupportedUDLDeflectionReport</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a><span class="sd">        Frozen report.  ``governing_limit_state`` is ``&quot;deflection_acceptable&quot;``</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a><span class="sd">        if both checks pass, otherwise names the failing check.</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a>    <span class="n">E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">elastic_modulus_E</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>    <span class="n">Ix</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">section_properties</span><span class="o">.</span><span class="n">moment_of_inertia_strong_axis_Ix</span>
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a>    <span class="n">L</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">span_length_L</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a>    <span class="n">w_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a>        <span class="n">distributed_load_dead_w_dead</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a>        <span class="o">+</span> <span class="n">distributed_load_superdead_w_sd</span>
+<a id="__codelineno-0-251" name="__codelineno-0-251"></a>        <span class="o">+</span> <span class="n">distributed_load_live_w_live</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a>    <span class="p">)</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a>
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a>    <span class="c1"># 5 w L^4 / (384 E I)</span>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>    <span class="n">constant_5_over_384</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mf">384.0</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>    <span class="n">L_to_the_fourth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span><span class="o">**</span><span class="mi">4</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>    <span class="n">delta_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>        <span class="n">constant_5_over_384</span> <span class="o">*</span> <span class="n">distributed_load_live_w_live</span> <span class="o">*</span> <span class="n">L_to_the_fourth</span> <span class="o">/</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>    <span class="p">)</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>    <span class="n">delta_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">constant_5_over_384</span> <span class="o">*</span> <span class="n">w_total</span> <span class="o">*</span> <span class="n">L_to_the_fourth</span> <span class="o">/</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>    <span class="n">delta_dead</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>        <span class="n">constant_5_over_384</span> <span class="o">*</span> <span class="n">distributed_load_dead_w_dead</span> <span class="o">*</span> <span class="n">L_to_the_fourth</span> <span class="o">/</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">Ix</span><span class="p">)</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>    <span class="p">)</span>
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a>
+<a id="__codelineno-0-265" name="__codelineno-0-265"></a>    <span class="n">limit_live</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">live_load_limit_denominator</span>
+<a id="__codelineno-0-266" name="__codelineno-0-266"></a>    <span class="n">limit_total</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">L</span> <span class="o">/</span> <span class="n">total_load_limit_denominator</span>
+<a id="__codelineno-0-267" name="__codelineno-0-267"></a>    <span class="n">is_live_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_live</span> <span class="o">&lt;=</span> <span class="n">limit_live</span>
+<a id="__codelineno-0-268" name="__codelineno-0-268"></a>    <span class="n">is_total_ok</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">delta_total</span> <span class="o">&lt;=</span> <span class="n">limit_total</span>
+<a id="__codelineno-0-269" name="__codelineno-0-269"></a>
+<a id="__codelineno-0-270" name="__codelineno-0-270"></a>    <span class="k">if</span> <span class="n">is_live_ok</span> <span class="ow">and</span> <span class="n">is_total_ok</span><span class="p">:</span>
+<a id="__codelineno-0-271" name="__codelineno-0-271"></a>        <span class="n">governing</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;deflection_acceptable&quot;</span>
+<a id="__codelineno-0-272" name="__codelineno-0-272"></a>    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_live_ok</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_total_ok</span><span class="p">:</span>
+<a id="__codelineno-0-273" name="__codelineno-0-273"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;live_and_total_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-274" name="__codelineno-0-274"></a>    <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_live_ok</span><span class="p">:</span>
+<a id="__codelineno-0-275" name="__codelineno-0-275"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;live_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-276" name="__codelineno-0-276"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-277" name="__codelineno-0-277"></a>        <span class="n">governing</span> <span class="o">=</span> <span class="s2">&quot;total_load_deflection_exceeded&quot;</span>
+<a id="__codelineno-0-278" name="__codelineno-0-278"></a>
+<a id="__codelineno-0-279" name="__codelineno-0-279"></a>    <span class="k">return</span> <span class="n">SimplySupportedUDLDeflectionReport</span><span class="p">(</span>
+<a id="__codelineno-0-280" name="__codelineno-0-280"></a>        <span class="n">cited_clauses</span><span class="o">=</span><span class="n">_CITATIONS_SERVICEABILITY</span><span class="p">,</span>
+<a id="__codelineno-0-281" name="__codelineno-0-281"></a>        <span class="n">governing_limit_state</span><span class="o">=</span><span class="n">governing</span><span class="p">,</span>
+<a id="__codelineno-0-282" name="__codelineno-0-282"></a>        <span class="n">elastic_modulus_E</span><span class="o">=</span><span class="n">E</span><span class="p">,</span>
+<a id="__codelineno-0-283" name="__codelineno-0-283"></a>        <span class="n">moment_of_inertia_Ix</span><span class="o">=</span><span class="n">Ix</span><span class="p">,</span>
+<a id="__codelineno-0-284" name="__codelineno-0-284"></a>        <span class="n">span_length_L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span>
+<a id="__codelineno-0-285" name="__codelineno-0-285"></a>        <span class="n">distributed_load_dead_w_dead</span><span class="o">=</span><span class="n">distributed_load_dead_w_dead</span><span class="p">,</span>
+<a id="__codelineno-0-286" name="__codelineno-0-286"></a>        <span class="n">distributed_load_superdead_w_sd</span><span class="o">=</span><span class="n">distributed_load_superdead_w_sd</span><span class="p">,</span>
+<a id="__codelineno-0-287" name="__codelineno-0-287"></a>        <span class="n">distributed_load_live_w_live</span><span class="o">=</span><span class="n">distributed_load_live_w_live</span><span class="p">,</span>
+<a id="__codelineno-0-288" name="__codelineno-0-288"></a>        <span class="n">distributed_load_total_w_total</span><span class="o">=</span><span class="n">w_total</span><span class="p">,</span>
+<a id="__codelineno-0-289" name="__codelineno-0-289"></a>        <span class="n">deflection_under_live_load_delta_live</span><span class="o">=</span><span class="n">delta_live</span><span class="p">,</span>
+<a id="__codelineno-0-290" name="__codelineno-0-290"></a>        <span class="n">deflection_under_total_load_delta_total</span><span class="o">=</span><span class="n">delta_total</span><span class="p">,</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291"></a>        <span class="n">deflection_under_dead_load_delta_dead</span><span class="o">=</span><span class="n">delta_dead</span><span class="p">,</span>
+<a id="__codelineno-0-292" name="__codelineno-0-292"></a>        <span class="n">deflection_limit_live</span><span class="o">=</span><span class="n">limit_live</span><span class="p">,</span>
+<a id="__codelineno-0-293" name="__codelineno-0-293"></a>        <span class="n">deflection_limit_total</span><span class="o">=</span><span class="n">limit_total</span><span class="p">,</span>
+<a id="__codelineno-0-294" name="__codelineno-0-294"></a>        <span class="n">is_live_load_deflection_acceptable</span><span class="o">=</span><span class="n">is_live_ok</span><span class="p">,</span>
+<a id="__codelineno-0-295" name="__codelineno-0-295"></a>        <span class="n">is_total_load_deflection_acceptable</span><span class="o">=</span><span class="n">is_total_ok</span><span class="p">,</span>
+<a id="__codelineno-0-296" name="__codelineno-0-296"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="apeSteel.serviceability.recommend_camber_from_dead_load_deflection" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">recommend_camber_from_dead_load_deflection</span>
+
+
+<a href="#apeSteel.serviceability.recommend_camber_from_dead_load_deflection" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">recommend_camber_from_dead_load_deflection</span><span class="p">(</span><span class="n">deflection_under_dead_load</span><span class="p">:</span> <span class="n"><span title="float">float</span></span><span class="p">,</span> <span class="n">camber_factor</span><span class="p">:</span> <span class="n"><span title="float">float</span></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-internal" title="            DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION
+
+
+  
+      module-attribute
+   (apeSteel.serviceability.simple_beam_deflections.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION)" href="#apeSteel.serviceability.DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION">DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="float">float</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>camber_factor * deflection_under_dead_load</code> (mm).</p>
+<p>The spreadsheet's default <code>camber_factor</code> is 0.8 - shop practice
+typically rounds the result to the nearest 1/4 inch in US shops
+or 5 mm in metric shops.  apeSteel does <strong>not</strong> round; the caller
+is expected to apply rounding appropriate to their shop's
+practice.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/apeSteel/serviceability/simple_beam_deflections.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-516">516</a></span>
+<span class="normal"><a href="#__codelineno-0-517">517</a></span>
+<span class="normal"><a href="#__codelineno-0-518">518</a></span>
+<span class="normal"><a href="#__codelineno-0-519">519</a></span>
+<span class="normal"><a href="#__codelineno-0-520">520</a></span>
+<span class="normal"><a href="#__codelineno-0-521">521</a></span>
+<span class="normal"><a href="#__codelineno-0-522">522</a></span>
+<span class="normal"><a href="#__codelineno-0-523">523</a></span>
+<span class="normal"><a href="#__codelineno-0-524">524</a></span>
+<span class="normal"><a href="#__codelineno-0-525">525</a></span>
+<span class="normal"><a href="#__codelineno-0-526">526</a></span>
+<span class="normal"><a href="#__codelineno-0-527">527</a></span>
+<span class="normal"><a href="#__codelineno-0-528">528</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-516" name="__codelineno-0-516"></a><span class="k">def</span><span class="w"> </span><span class="nf">recommend_camber_from_dead_load_deflection</span><span class="p">(</span>
+<a id="__codelineno-0-517" name="__codelineno-0-517"></a>    <span class="n">deflection_under_dead_load</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-518" name="__codelineno-0-518"></a>    <span class="n">camber_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_CAMBER_FRACTION_OF_DEAD_LOAD_DEFLECTION</span><span class="p">,</span>
+<a id="__codelineno-0-519" name="__codelineno-0-519"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<a id="__codelineno-0-520" name="__codelineno-0-520"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ``camber_factor * deflection_under_dead_load`` (mm).</span>
+<a id="__codelineno-0-521" name="__codelineno-0-521"></a>
+<a id="__codelineno-0-522" name="__codelineno-0-522"></a><span class="sd">    The spreadsheet&#39;s default ``camber_factor`` is 0.8 - shop practice</span>
+<a id="__codelineno-0-523" name="__codelineno-0-523"></a><span class="sd">    typically rounds the result to the nearest 1/4 inch in US shops</span>
+<a id="__codelineno-0-524" name="__codelineno-0-524"></a><span class="sd">    or 5 mm in metric shops.  apeSteel does **not** round; the caller</span>
+<a id="__codelineno-0-525" name="__codelineno-0-525"></a><span class="sd">    is expected to apply rounding appropriate to their shop&#39;s</span>
+<a id="__codelineno-0-526" name="__codelineno-0-526"></a><span class="sd">    practice.</span>
+<a id="__codelineno-0-527" name="__codelineno-0-527"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-528" name="__codelineno-0-528"></a>    <span class="k">return</span> <span class="n">camber_factor</span> <span class="o">*</span> <span class="n">deflection_under_dead_load</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
